@@ -1,26 +1,13 @@
 package testNTR.model;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
-@JacksonXmlRootElement(localName = "Account")
 public class Account {
-    @JacksonXmlProperty
     private int id;
-
-    @JacksonXmlProperty
     private String ownerName;
-
-    @JacksonXmlProperty
     private String ownerSurname;
-
-    @JacksonXmlProperty
     private double balance;
-
-    @JacksonXmlProperty
     private ArrayList<Double> history;
 
     public Account() {
