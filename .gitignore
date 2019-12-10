@@ -37,7 +37,7 @@ pom.xml.tag
 .idea/modules.xml
 .idea/*.iml
 .idea/modules
-*.iml
+#*.iml
 *.iws
 *.ipr
 .idea
