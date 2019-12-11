@@ -26,10 +26,19 @@ public class UserService {
      * CRUD des Users
      * @param user
      */
-    public User saveNewUser(User user) {
+    public User saveUser(User user) {
         user.setPassword(encodePassword(user.getPassword()));
         log.info("saveNewUser() : {}", user.toString());
         return userRepository.save(user);
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public boolean deleteUser(User user) {
+        this.userRepository.delete(user);
+        return this.userRepository.findByEmail(user.getEmail()) == null;
     }
 
     public User findUserById(long id) {
