@@ -18,7 +18,7 @@ public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping
+    @GetMapping("/user/all")
     @ResponseBody
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update")
+    @PostMapping("/user/update")
     @ResponseBody
     public ResponseEntity<String> update(@RequestParam("email") String email,
                                  @RequestParam(value = "password") String password,
@@ -81,7 +81,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/user/delete")
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam("email") String email,
                                          @RequestParam(value = "password") String password) {
