@@ -1,5 +1,7 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,12 +10,13 @@ import java.util.Date;
 public class Event {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne()
     @JoinColumn(name = "event_type_id")
-    private EventType eventTypeId;
+    private EventType eventType;
 
     private String name;
 
@@ -24,7 +27,7 @@ public class Event {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    private String description;
+    private boolean active;
 
     public Integer getId() {
         return id;
@@ -34,12 +37,12 @@ public class Event {
         this.id = id;
     }
 
-    public EventType getEventTypeId() {
-        return eventTypeId;
+    public EventType getEventType() {
+        return eventType;
     }
 
-    public void setEventTypeId(EventType eventTypeId) {
-        this.eventTypeId = eventTypeId;
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
     public String getName() {
@@ -67,10 +70,14 @@ public class Event {
     }
 
     public String getDescription() {
-        return description;
+        return eventType.getDescription();
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
