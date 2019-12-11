@@ -25,7 +25,6 @@ pom.xml.tag
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
-.idea
 
 # Gradle
 .idea/**/gradle.xml
@@ -41,6 +40,7 @@ pom.xml.tag
 *.iml
 *.iws
 *.ipr
+.idea
 
 # Maven
 target/
