@@ -17,7 +17,7 @@ public class CapteurController {
      @Autowired
      CapteurService capteurService;
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(CapteurController.class);
 
     /**
      * Récupération d'un capteur

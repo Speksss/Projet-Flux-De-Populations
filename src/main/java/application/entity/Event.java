@@ -14,18 +14,18 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String name;
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date date;
+
     @ManyToOne()
     @JoinColumn(name = "event_type_id")
     private EventType eventType;
 
-    private String name;
-
     @ManyToOne()
-    @JoinColumn(name = "location_id")
-    private Location location;
-
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date date;
+    @JoinColumn(name = "area_id")
+    private Area area;
 
     private boolean active;
 
@@ -37,28 +37,12 @@ public class Event {
         this.id = id;
     }
 
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public Date getDate() {
@@ -70,7 +54,23 @@ public class Event {
     }
 
     public String getDescription() {
-        return eventType.getDescription();
+        return eventType == null ? "" : eventType.getDescription();
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area userLocation) {
+        this.area = userLocation;
     }
 
     public boolean isActive() {

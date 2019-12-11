@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "location")
-public class Location {
+@Table(name = "user_location")
+public class UserLocation {
 
     @Id
     @JsonIgnore
@@ -16,9 +16,6 @@ public class Location {
     private double latitude;
 
     private double longitude;
-
-    @Column(name = "entity_type")
-    private String entityType;
 
     public Integer getId() {
         return id;
@@ -43,13 +40,4 @@ public class Location {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
-    public String getEntityType() {
-        return entityType;
-    }
-
-    public void setEntityType(String entityType) {
-        this.entityType = entityType;
-    }
-
 }

@@ -18,7 +18,6 @@ public class EventController {
 
     private static final Logger log = LoggerFactory.getLogger(EventController.class);
 
-
     @Autowired
     private EventService eventService;
 
@@ -41,7 +40,7 @@ public class EventController {
             //            Location location = new Location();
             //            location.setLatitude(Double.parseDouble(latitude));
             //            location.setLongitude(Double.parseDouble(longitude));
-            event.setLocation(null);
+            event.setArea(null);
             event.setEventType(type);
             event.setName(type.getName());
             eventService.saveNewEvent(event);
@@ -50,10 +49,16 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/events")
+    @GetMapping("/event/all")
     @ResponseBody
-    public ResponseEntity<List<Event>> all() {
+    public ResponseEntity<List<Event>> findAll() {
         return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK);
+    }
+
+    @GetMapping("/event/all/actives")
+    @ResponseBody
+    public ResponseEntity<List<Event>> findAllActives() {
+        return new ResponseEntity<>(eventService.findAllActiveEvents(), HttpStatus.OK);
     }
 
 }
