@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, minimum-scale=0.25"/>
+    <meta name="viewport" content="width=device-width, maximum-scale=5.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Administration</title>
+    <meta name="description" content="Administration"/>
+    <link rel="icon" href="#" />
+    <link rel="stylesheet" th:href="@{css/main.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+<div class="container-fluid bg-dark sticky-top">
+    <nav class="navbar navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand" id="logo">Administration</a>
+        <a href="#"><button class="btn btn-danger my-2 my-sm-0">Déconnexion</button></a>
+    </nav>
+</div>
+<div class="container-side">
+    <div class="row sidebar">
+        <div class="col-2 bg-dark">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="link-menu nav-link " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Panel</a>
+                <a class="link-menu nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Manage</a>
+                <a class="link-menu nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Gestion Utilisateurs</a>
+                <a class="link-menu nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Evenements</a>
+                <a class="link-menu nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Alerte</a>
+            </div>
+        </div>
+        <div class="col-8">
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni quas architecto ratione. Provident voluptatibus sit atque perspiciatis id, numquam, soluta tempore, rem illo nisi quam quas labore ea? Ipsam, molestias?</p>
+        </div>
+    </div>
+</div>
+</html>
