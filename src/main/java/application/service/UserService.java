@@ -2,13 +2,13 @@ package application.service;
 
 import application.entity.User;
 import application.repository.UserRepository;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,26 +26,37 @@ public class UserService {
      * CRUD des Users
      * @param user
      */
-    public void saveNewUser(User user) {
-        user.setPassword(encodePassword(user));
-        userRepository.save(user);
+    public User saveNewUser(User user) {
+        user.setPassword(encodePassword(user.getPassword()));
         log.info("saveNewUser() : {}", user.toString());
+        return userRepository.save(user);
     }
 
-    /**
-     * Retourne les informations principales de l'utilisateur
-     * @param u Utilisateur
-     * @return Informations au format JSON
-     */
-    public String getUserInfo(User u){
-        JSONObject json = new JSONObject();
-        json.put("nom",u.getNom());
-        json.put("prenom",u.getPrenom());
-        json.put("email",u.getEmail());
-        return json.toJSONString();
+    public User findUserById(long id) {
+        return this.userRepository.findById(id);
     }
 
-    public String encodePassword(User user) {
-        return bCryptPasswordEncoder.encode(user.getPassword());
+    public User findUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
+
+    public List<User> findUsersByLastName(String lastName) {
+        return this.userRepository.findByLastName(lastName);
+    }
+
+    public List<User> findUsersByFirstName(String firstName) {
+        return this.userRepository.findByFirstName(firstName);
+    }
+
+    public List<User> findAllUsers() {
+        return this.userRepository.findAll();
+    }
+
+    public String encodePassword(String password) {
+        return bCryptPasswordEncoder.encode(password);
+    }
+
+    public boolean comparePassword(String rawPassword, String encryptedPassword) {
+        return bCryptPasswordEncoder.matches(rawPassword, encryptedPassword);
     }
 }
