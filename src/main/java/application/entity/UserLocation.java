@@ -11,6 +11,7 @@ public class UserLocation {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_location_id")
     private Integer id;
 
     private double latitude;

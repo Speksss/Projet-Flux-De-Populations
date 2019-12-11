@@ -12,6 +12,7 @@ public class Event {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="event_id")
     private Integer id;
 
     private String name;

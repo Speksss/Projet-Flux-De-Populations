@@ -1,5 +1,7 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,9 @@ import javax.persistence.*;
 public class EventType {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="event_type_id")
     private Integer id;
 
     private String name;
