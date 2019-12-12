@@ -18,14 +18,20 @@ public class EventTypeService {
     @Autowired
     private EventTypeRepository eventTypeRepository;
 
-    /**
-     * CRUD Event
-     *
-     * @param event
-     */
-    public EventType saveNewEventType(EventType event) {
-        log.info("save New EventType() : {}", event.toString());
-        return eventTypeRepository.save(event);
+    public EventType saveNewEventType(EventType eventType) {
+        log.info("save New EventType() : {}", eventType.toString());
+        return this.eventTypeRepository.save(eventType);
+    }
+
+    public EventType editEventType(EventType eventType) {
+        log.info("edit EventType() : {}", eventType.toString());
+        return this.eventTypeRepository.save(eventType);
+    }
+
+    public boolean deleteEventType(EventType eventType) {
+        log.info("delete EventType() : {}", eventType.toString());
+        this.eventTypeRepository.delete(eventType);
+        return this.eventTypeRepository.findByName(eventType.getName()) == null;
     }
 
     public EventType findEventTypeById(int id) {

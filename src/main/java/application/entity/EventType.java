@@ -14,6 +14,7 @@ public class EventType {
     @Column(name="event_type_id")
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
 
     private String description;
