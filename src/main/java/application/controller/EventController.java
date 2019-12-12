@@ -44,9 +44,9 @@ public class EventController {
             event.setEventType(type);
             event.setName(type.getName());
             eventService.saveNewEvent(event);
-            return new ResponseEntity<>(event, HttpStatus.OK);
+            return new ResponseEntity<>(event, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @GetMapping("/event/all")
@@ -59,6 +59,63 @@ public class EventController {
     @ResponseBody
     public ResponseEntity<List<Event>> findAllActives() {
         return new ResponseEntity<>(eventService.findAllActiveEvents(), HttpStatus.OK);
+    }
+
+    // Event Type
+
+    @GetMapping("/event-type/all")
+    @ResponseBody
+    public ResponseEntity<List<EventType>> findAllEventType() {
+        return new ResponseEntity<>(eventTypeService.findAllEventTypes(), HttpStatus.OK);
+    }
+
+    @PostMapping("/event-type/add")
+    @ResponseBody
+    public ResponseEntity<String> addEventType(@RequestParam("name") String name,
+                                               @RequestParam("description") String description) {
+        if(this.eventTypeService.findEventTypeByName(name) != null) {
+            return new ResponseEntity<>("Ce nom est déjà utilisée par un autre type d'évènement.",
+                    HttpStatus.NOT_MODIFIED);
+        }
+        EventType eventType = new EventType();
+        eventType.setName(name);
+        eventType.setDescription(description);
+        if(this.eventTypeService.saveNewEventType(eventType) != null) {
+            return new ResponseEntity<>("Le type d'évènement a correctement été créé.", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("Une erreur est survenue lors de la création de votre type d'événement.",
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping("/event-type/edit")
+    @ResponseBody
+    public ResponseEntity<String> editEventType(@RequestParam("name") String name,
+                                                @RequestParam("description") String description) {
+        EventType eventType = null;
+        if((eventType = this.eventTypeService.findEventTypeByName(name)) == null) {
+            return new ResponseEntity<>("Ce type d'évènement n'existe pas.", HttpStatus.NOT_MODIFIED);
+        }
+        eventType.setDescription(description);
+        if(this.eventTypeService.editEventType(eventType) != null) {
+            return new ResponseEntity<>("Le type d'évènement a correctement été modifié.", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("Une erreur est survenue lors de la modification de votre type d'événement.",
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping("/event-type/delete")
+    @ResponseBody
+    public ResponseEntity<String> deleteEventType(@RequestParam("name") String name) {
+        EventType eventType = null;
+        if((eventType = this.eventTypeService.findEventTypeByName(name)) == null) {
+            return new ResponseEntity<>("Ce type d'évènement n'existe pas.", HttpStatus.NOT_MODIFIED);
+        }
+        if(this.eventTypeService.deleteEventType(eventType)) {
+            return new ResponseEntity<>("Le type d'évènement a correctement été supprimé.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Une erreur est survenue lors de la suppression du type d'évènement",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

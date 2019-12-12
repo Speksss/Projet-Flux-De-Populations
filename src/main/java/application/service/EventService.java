@@ -3,7 +3,6 @@ package application.service;
 import application.entity.Area;
 import application.entity.Event;
 import application.entity.EventType;
-import application.entity.UserLocation;
 import application.repository.EventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +18,11 @@ public class EventService {
     private static final Logger log = LoggerFactory.getLogger(EventService.class);
 
     @Autowired
-    EventRepository eventRepository;
+    private EventRepository eventRepository;
 
     /**
      * CRUD des Events
+     *
      * @param event
      */
     public void saveNewEvent(Event event) {
