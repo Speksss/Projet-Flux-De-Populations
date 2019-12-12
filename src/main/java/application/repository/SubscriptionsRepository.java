@@ -17,5 +17,7 @@ public interface SubscriptionsRepository extends CrudRepository<Subscriptions, L
 	Subscriptions findById(long id);
 	Subscriptions findByEventType(EventType eventType);
     List<Subscriptions> findAll();
+    
+    void delete(Subscriptions subscription);
 
 }

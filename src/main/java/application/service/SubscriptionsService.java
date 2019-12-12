@@ -12,7 +12,7 @@ import application.entity.Subscriptions;
 import application.repository.SubscriptionsRepository;
 
 /**
- * @author pakye
+ * @author backTeam
  * Subscription Service
  */
 @Service
@@ -53,5 +53,14 @@ public class SubscriptionsService {
      */
     public List<Subscriptions> findAllSubscriptions() {
         return this.subscribptionsRepository.findAll();
+    }
+    
+    /**
+     * @param subscription
+     * @return boolean 
+     */
+    public boolean deleteSubscription(Subscriptions subscription) {
+        this.subscribptionsRepository.delete(subscription);
+        return this.subscribptionsRepository.findByEventType(subscription.getEventType()) == null;
     }
 }
