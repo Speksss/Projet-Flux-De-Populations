@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Alerte</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+
+<header>
+   
+</header>
+
+<body>
+
+    <div class="container">
+        <div id="accordion">
+
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link active" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Alerte
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="nav">
+                           <h6>
+                               Liste des alertes en cours
+                           </h6>
+                        </div>
+                        <div>
+                           <a href="form_alert.html">
+                                <button class="btn btn-primary active">
+                                    Créer une alerte
+                                </button>
+                            </a>                      
+                        </div>
+                        <div style="height : 10px;"></div> 
+                        <div class="content">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Lieu</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Le RU est fermé</td>
+                                    <td>Valenciennes</td>
+                                    <td>Oh mince !</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Le RU est fermé</td>
+                                    <td>Valenciennes</td>
+                                    <td>Oh mince !</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Le RU est fermé</td>
+                                    <td>Valenciennes</td>
+                                    <td>Oh mince !</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed active" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Evénements
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="nav">
+                            <h6>
+                                Liste des événements en cours
+                            </h6>
+                        </div>
+                        <div>
+                            <a href="form_event.html">
+                                <button class="btn btn-primary active">
+                                    Créer un événement
+                                </button>
+                            </a>
+                        </div>
+                        <div style="height : 10px;"></div> 
+                        <div class="content">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Lieu</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Le RU est fermé</td>
+                                    <td>Valenciennes</td>
+                                    <td>Oh mince !</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Le RU est fermé</td>
+                                    <td>Valenciennes</td>
+                                    <td>Oh mince !</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Le RU est fermé</td>
+                                    <td>Valenciennes</td>
+                                    <td>Oh mince !</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+
+</html>
