@@ -2,10 +2,6 @@ package application.controller;
 
 import application.entity.User;
 import application.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Info;
-import io.swagger.annotations.SwaggerDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
