@@ -2,8 +2,8 @@ package application.controller;
 
 import application.entity.User;
 import application.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,6 +82,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Supprime un utilisateur par son adresse mail", response = String.class)
     @DeleteMapping("/user/delete")
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam("email") String email,
