@@ -23,11 +23,12 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "user_location_id")
     private UserLocation userLocation;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
