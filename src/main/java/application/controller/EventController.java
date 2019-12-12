@@ -4,6 +4,8 @@ import application.entity.Event;
 import application.entity.EventType;
 import application.service.EventService;
 import application.service.EventTypeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Api(value = "fluxDePopulation", description = "Controller pour gérer les levés d'évènements et la création de type " +
+        "d'évènement.", produces = "application/json")
 public class EventController {
 
     private static final Logger log = LoggerFactory.getLogger(EventController.class);
@@ -51,12 +55,14 @@ public class EventController {
 
     @GetMapping("/event/all")
     @ResponseBody
+    @ApiOperation(value = "Affiche l'intégralité des évènements en base")
     public ResponseEntity<List<Event>> findAll() {
         return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK);
     }
 
     @GetMapping("/event/all/actives")
     @ResponseBody
+    @ApiOperation(value = "Affiche l'intégralité des évènements actifs en base")
     public ResponseEntity<List<Event>> findAllActives() {
         return new ResponseEntity<>(eventService.findAllActiveEvents(), HttpStatus.OK);
     }
@@ -65,12 +71,14 @@ public class EventController {
 
     @GetMapping("/event-type/all")
     @ResponseBody
+    @ApiOperation(value = "Affiche l'intégralité des type d'évènements possibles en base")
     public ResponseEntity<List<EventType>> findAllEventType() {
         return new ResponseEntity<>(eventTypeService.findAllEventTypes(), HttpStatus.OK);
     }
 
     @PostMapping("/event-type/add")
     @ResponseBody
+    @ApiOperation(value = "Permet la création d'un type d'évènement possible")
     public ResponseEntity<String> addEventType(@RequestParam("name") String name,
                                                @RequestParam("description") String description) {
         if(this.eventTypeService.findEventTypeByName(name) != null) {
@@ -89,6 +97,7 @@ public class EventController {
 
     @PostMapping("/event-type/edit")
     @ResponseBody
+    @ApiOperation(value = "Permet l'édition d'un type d'évènement possible")
     public ResponseEntity<String> editEventType(@RequestParam("name") String name,
                                                 @RequestParam("description") String description) {
         EventType eventType = null;
@@ -103,8 +112,9 @@ public class EventController {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/event-type/delete")
+    @DeleteMapping("/event-type/delete")
     @ResponseBody
+    @ApiOperation(value = "Permet la suppression d'un type d'évènement possible")
     public ResponseEntity<String> deleteEventType(@RequestParam("name") String name) {
         EventType eventType = null;
         if((eventType = this.eventTypeService.findEventTypeByName(name)) == null) {

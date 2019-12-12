@@ -1,6 +1,7 @@
 package application.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "Role")
@@ -9,7 +10,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="role_id")
     private Long id;
+
     private String role;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
     public Role() {}
 
