@@ -91,3 +91,6 @@ fabric.properties
 *.ear
 *.sar
 *.class
+/.project
+/.classpath
+/bin/

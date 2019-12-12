@@ -1,22 +1,17 @@
 package application.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import application.entity.EventType;
 import application.entity.Subscriptions;
 import application.entity.User;
 import application.service.EventTypeService;
 import application.service.SubscriptionsService;
 import application.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author backTeam
@@ -36,13 +31,13 @@ public class SubscriptionsController {
 	/**
 	 * @return la liste de tous les abonnements
 	 */
-	@GetMapping("/Subscriptions/all")
+	@GetMapping("/subscriptions/all")
 	@ResponseBody
 	public ResponseEntity<List<Subscriptions>> getAllSubscriptions() {
 		return new ResponseEntity<>(this.subscriptionsService.findAllSubscriptions(), HttpStatus.OK);
 	}
-	
-	 @PostMapping("/Subscriptions/register")
+
+	@PostMapping("/subscriptions/register")
 	    @ResponseBody
 	    public ResponseEntity<String> register(@RequestParam("email") String email,
 	                                           @RequestParam("name") String name) {
