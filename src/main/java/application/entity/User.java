@@ -23,6 +23,7 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "user_location_id")
     private UserLocation userLocation;
