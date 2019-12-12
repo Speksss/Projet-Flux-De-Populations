@@ -22,7 +22,7 @@ public class UserController {
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     @ResponseBody
     public ResponseEntity<User> login(@RequestParam(value="email") String email, @RequestParam(value="password") String password) {
         User user = userService.findUserByEmail(email);
@@ -77,7 +77,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/delete")
+    @DeleteMapping("/user/delete")
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam("email") String email,
                                          @RequestParam(value = "password") String password) {
