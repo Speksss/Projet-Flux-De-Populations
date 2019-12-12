@@ -2,6 +2,8 @@ package application.controller;
 
 import application.entity.User;
 import application.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,16 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Api(value="fluxDePopulation", description = "Opérations relatives à la gestion basique des utilisateurs", produces = "application/json")
 public class UserController {
     @Autowired
     UserService userService;
 
+    @ApiOperation(value = "Retourne la liste de tous les utilisateurs", response = List.class)
     @GetMapping("/user/all")
     @ResponseBody
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Authentifie un utilisateur par son adresse mail", response = User.class)
     @GetMapping("/login")
     @ResponseBody
     public ResponseEntity<User> login(@RequestParam(value="email") String email, @RequestParam(value="password") String password) {
@@ -30,6 +35,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(value = "Créé un nouvel utilisateur", response = String.class)
     @PostMapping("/register")
     @ResponseBody
     public ResponseEntity<String> register(@RequestParam("email") String email,
@@ -48,6 +54,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Supprime un utilisateur par son adresse email", response = String.class)
     @PostMapping("/user/update")
     @ResponseBody
     public ResponseEntity<String> update(@RequestParam("email") String email,
@@ -75,6 +82,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Supprime un utilisateur par son adresse mail", response = String.class)
     @DeleteMapping("/user/delete")
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam("email") String email,
