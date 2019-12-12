@@ -1,10 +1,23 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "location")
-public class Location {
+@Table(name = "user_location")
+public class UserLocation {
+
+    @Id
+    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_location_id")
+    private Integer id;
+
+    private double latitude;
+
+    private double longitude;
+
     public Integer getId() {
         return id;
     }
@@ -28,24 +41,4 @@ public class Location {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
-    public String getEntityType() {
-        return entityType;
-    }
-
-    public void setEntityType(String entityType) {
-        this.entityType = entityType;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private double latitude;
-
-    private double longitude;
-
-    @Column(name = "entity_type")
-    private String entityType;
-
 }

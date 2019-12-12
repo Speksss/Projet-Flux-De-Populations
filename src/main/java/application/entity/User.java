@@ -23,6 +23,10 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @ManyToOne()
+    @JoinColumn(name = "user_location_id")
+    private UserLocation userLocation;
+
     @ManyToMany
     @JoinTable(
             name = "users_roles",
@@ -86,6 +90,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserLocation getUserLocation() {
+        return userLocation;
+    }
+
+    public void setUserLocation(UserLocation userLocation) {
+        this.userLocation = userLocation;
     }
 
     public Set<Role> getRoles() {

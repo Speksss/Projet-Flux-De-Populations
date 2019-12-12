@@ -1,8 +1,9 @@
 package application.service;
 
+import application.entity.Area;
 import application.entity.Event;
 import application.entity.EventType;
-import application.entity.Location;
+import application.entity.UserLocation;
 import application.repository.EventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +34,12 @@ public class EventService {
         return this.eventRepository.findById(id);
     }
 
-    public List<Event> findEventsByLocation(Location location) {
-        return this.eventRepository.findByLocation(location);
+    public List<Event> findEventsByArea(Area area) {
+        return this.eventRepository.findByArea(area);
     }
 
     public List<Event> findEventsByType(EventType eventType) {
-        return this.eventRepository.findByEventTypeId(eventType);
+        return this.eventRepository.findByEventType(eventType);
     }
 
     public List<Event> findEventsByDate(Date date) {
@@ -47,6 +48,10 @@ public class EventService {
 
     public List<Event> findAllEvents() {
         return this.eventRepository.findAll();
+    }
+
+    public List<Event> findAllActiveEvents() {
+        return this.eventRepository.findAllByActiveIsTrue();
     }
 
 }

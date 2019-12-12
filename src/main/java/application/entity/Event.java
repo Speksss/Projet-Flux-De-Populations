@@ -1,5 +1,7 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,23 +10,25 @@ import java.util.Date;
 public class Event {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="event_id")
     private Integer id;
 
-    @ManyToOne()
-    @JoinColumn(name = "event_type_id")
-    private EventType eventTypeId;
-
     private String name;
-
-    @ManyToOne()
-    @JoinColumn(name = "location_id")
-    private Location location;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    private String description;
+    @ManyToOne()
+    @JoinColumn(name = "event_type_id")
+    private EventType eventType;
+
+    @ManyToOne()
+    @JoinColumn(name = "area_id")
+    private Area area;
+
+    private boolean active;
 
     public Integer getId() {
         return id;
@@ -34,28 +38,12 @@ public class Event {
         this.id = id;
     }
 
-    public EventType getEventTypeId() {
-        return eventTypeId;
-    }
-
-    public void setEventTypeId(EventType eventTypeId) {
-        this.eventTypeId = eventTypeId;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public Date getDate() {
@@ -67,10 +55,30 @@ public class Event {
     }
 
     public String getDescription() {
-        return description;
+        return eventType == null ? "" : eventType.getDescription();
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area userLocation) {
+        this.area = userLocation;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

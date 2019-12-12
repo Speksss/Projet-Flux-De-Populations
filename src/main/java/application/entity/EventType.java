@@ -1,16 +1,22 @@
 package application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "event_type")
+@Table(name = "event_type", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class EventType {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="event_type_id")
     private Integer id;
 
     private String name;
+
+    private String description;
 
     public Integer getId() {
         return id;
@@ -28,4 +34,11 @@ public class EventType {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -16,24 +16,20 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
     @GetMapping("/user/all")
     @ResponseBody
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     @ResponseBody
     public ResponseEntity<User> login(@RequestParam(value="email") String email, @RequestParam(value="password") String password) {
         User user = userService.findUserByEmail(email);
-        //log.info("[*] LOGIN : " + user.getPassword() + "(password)");
         if (userService.comparePassword(password, user.getPassword())) {
-            //log.info("[*] LOGIN : " + true);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/register")
@@ -44,13 +40,13 @@ public class UserController {
                             @RequestParam("password") String password) {
         User user = userService.findUserByEmail(email);
         if (user != null) {
-            return new ResponseEntity<>("Cette adresse email est déjà utilisée.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Cette adresse email est déjà utilisée.", HttpStatus.NOT_MODIFIED);
         } else {
             User newUser = new User(email, lastName, firstName, password);
             if (this.userService.saveUser(newUser) != null) {
                 return new ResponseEntity<>("L'utilisateur a correctement été créé.", HttpStatus.CREATED);
             }
-            return new ResponseEntity<>("Une erreur est survenue lors de la création de votre compte.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Une erreur est survenue lors de la création de votre compte.", HttpStatus.NOT_MODIFIED);
         }
     }
 
@@ -75,13 +71,13 @@ public class UserController {
             if (this.userService.updateUser(user) != null) {
                 return new ResponseEntity<>("L'utilisateur a correctement été modifié.", HttpStatus.OK);
             }
-            return new ResponseEntity<>("Une erreur est survenue lors de la modification de votre compte.", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Une erreur est survenue lors de la modification de votre compte.", HttpStatus.NOT_MODIFIED);
         } else {
-            return new ResponseEntity<>("Le mot de passe saisi est incorrect.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Le mot de passe saisi est incorrect.", HttpStatus.FORBIDDEN);
         }
     }
 
-    @PostMapping("/user/delete")
+    @DeleteMapping("/user/delete")
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam("email") String email,
                                          @RequestParam(value = "password") String password) {
@@ -90,10 +86,10 @@ public class UserController {
             if (this.userService.deleteUser(user)) {
                 return new ResponseEntity<>("L'utilisateur a correctement été supprimé.", HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Une erreur est survenue lors de la suppression de votre compte.", HttpStatus.CONFLICT);
+                return new ResponseEntity<>("Une erreur est survenue lors de la suppression de votre compte.", HttpStatus.NOT_MODIFIED);
             }
         } else {
-            return new ResponseEntity<>("Le mot de passe saisi est incorrect.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Le mot de passe saisi est incorrect.", HttpStatus.FORBIDDEN);
         }
     }
 }
