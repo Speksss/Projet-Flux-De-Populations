@@ -1,6 +1,7 @@
 package application.service;
 
 import application.entity.User;
+import application.entity.UserLocation;
 import application.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,9 @@ public class UserService {
     UserRepository userRepository;
 
     @Autowired
+    UserLocationService userLocationService;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
@@ -27,6 +31,9 @@ public class UserService {
      * @param user
      */
     public User saveUser(User user) {
+        UserLocation userLocation = new UserLocation();
+        userLocationService.saveUserLocation(userLocation);
+        user.setUserLocation(userLocation);
         user.setPassword(encodePassword(user.getPassword()));
         log.info("saveNewUser() : {}", user.toString());
         return userRepository.save(user);
