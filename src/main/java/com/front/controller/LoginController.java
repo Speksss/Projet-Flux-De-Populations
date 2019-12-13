@@ -21,33 +21,49 @@ public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-    @GetMapping("/connexion")
+    @GetMapping("/login")
     public String login(Model model) {
 
         model.addAttribute("User", new User());
         return "login";
     }
 
-    @RequestMapping(value = "/connexion", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @Scope("session")
-    public String connexion(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpServletRequest request){
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpServletRequest request){
 
+        if(!email.equals("") && !password.equals("")){
 
-        final String uri = "http://localhost:8080/login?email="+ email + "&password=" + password;
+            final String uri = "http://localhost:8080/login?email="+ email + "&password=" + password;
 
-        RestTemplate restTemplate = new RestTemplate();
-        User result = restTemplate.getForObject(uri, User.class);
+            RestTemplate restTemplate = new RestTemplate();
+            User result = restTemplate.getForObject(uri, User.class);
 
-        if(result != null){
+            if(result != null){
+                request.getSession().setAttribute("user", email);
 
-            // TODO Session User
-            request.getSession().setAttribute("user", email);
-            Object connected = request.getSession().getAttribute("user");
-            return "index";
+//                Object connected = request.getSession().getAttribute("user");
+//                log.info(connected.toString());
+
+                model.addAttribute("header", "panel");
+                return "index";
+            }
         }
         else{
+            model.addAttribute("User", new User());
             model.addAttribute("error", true);
-            return "login";
         }
+
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    @Scope("session")
+    public String logout(Model model, HttpServletRequest request){
+
+        model.addAttribute("User", new User());
+        model.addAttribute("logout", true);
+        request.getSession().removeAttribute("user");
+        return "login";
     }
 }

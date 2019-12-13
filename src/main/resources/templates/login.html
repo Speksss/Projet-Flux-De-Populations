@@ -19,13 +19,16 @@
 <body>
 
 <div class="container py-5">
-    <div th:if="${error}" class="alert alert-success" role="alert">
+    <div th:if="${error}" class="alert alert-danger" role="alert">
         Une erreur s'est produite !
+    </div>
+    <div th:if="${logout}" class="alert alert-success" role="alert">
+        Vous êtes déconnecté !
     </div>
     <div class="row d-flex justify-content-center">
         <div class="col-6">
             <ul class="list-group">
-                <form action="#" th:action="@{/connexion}" th:object="${User}" method="post">
+                <form action="#" th:action="@{/}" th:object="${User}" method="post">
                     <div class="col-12">
                         <div class="py-5">
                             <h1>Connexion</h1>
