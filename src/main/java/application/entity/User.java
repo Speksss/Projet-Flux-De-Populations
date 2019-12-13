@@ -20,6 +20,10 @@ public class User {
 
     private String email;
 
+//    private boolean isActive;
+
+    private long creationTimestamp;
+
     @JsonIgnore
     private String password;
 
@@ -43,6 +47,8 @@ public class User {
         this.lastName = lastName;
         this.firstName = firstName;
         this.password = password;
+//        this.isActive = false;
+        this.creationTimestamp = System.currentTimeMillis()/1000;
     }
 
     public User(String email, String lastName, String firstName, String password, Set<Role> roles) {
@@ -51,6 +57,8 @@ public class User {
         this.firstName = firstName;
         this.password = password;
         this.roles = roles;
+//        this.isActive = false;
+        this.creationTimestamp = System.currentTimeMillis()/1000;
     }
 
     public long getId() {
@@ -99,6 +107,19 @@ public class User {
 
     public void setUserLocation(UserLocation userLocation) {
         this.userLocation = userLocation;
+    }
+
+
+//    public boolean isActive() {
+//        return isActive;
+//    }
+//
+//    public void setActive(boolean active) {
+//        isActive = active;
+//    }
+
+    public long getCreationTimestamp() {
+        return creationTimestamp;
     }
 
     public Set<Role> getRoles() {

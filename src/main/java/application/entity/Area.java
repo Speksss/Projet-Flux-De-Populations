@@ -16,11 +16,7 @@ public class Area {
 
     private String name;
 
-    private double latitude;
-
-    private double longitude;
-
-    private double radius;
+    private String coordinates; // Format json
 
     public Integer getId() {
         return id;
@@ -38,27 +34,8 @@ public class Area {
         this.name = name;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
+    public String getCoordinates() { return coordinates; }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
+    public void setCoordinates(String coordinates) { this.coordinates = coordinates; }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
 }
