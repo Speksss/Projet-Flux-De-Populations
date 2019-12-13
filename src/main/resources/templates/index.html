@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
+<body>
 <div class="container-fluid bg-dark sticky-top">
     <nav class="navbar navbar-dark bg-dark justify-content-between">
         <a class="navbar-brand" id="logo">Administration</a>
@@ -26,16 +27,36 @@
     <div class="row sidebar">
         <div class="col-2 bg-dark">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="link-menu nav-link " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Panel</a>
-                <a class="link-menu nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Manage</a>
-                <a class="link-menu nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Gestion Utilisateurs</a>
-                <a class="link-menu nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Evenements</a>
-                <a class="link-menu nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Alerte</a>
+                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
+                    <input type="hidden" name="select" th:value="panel"/>
+                    <input class="btn btn-dark head-btn" type="submit" value="Panel"/>
+                </form>
+                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
+                    <input type="hidden" name="select" th:value="manage"/>
+                    <input class="btn btn-dark head-btn" type="submit" value="Manage"/>
+                </form>
+                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
+                    <input type="hidden" name="select" th:value="gestion-utilisateurs"/>
+                    <input class="btn btn-dark head-btn" type="submit" value="Gestion Utilisateurs"/>
+                </form>
+                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
+                    <input type="hidden" name="select" th:value="evenements"/>
+                    <input class="btn btn-dark head-btn" type="submit" value="Evenements"/>
+                </form>
+                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
+                    <input type="hidden" name="select" th:value="alertes"/>
+                    <input class="btn btn-dark head-btn" type="submit" value="Alerte"/>
+                </form>
             </div>
         </div>
         <div class="col-8">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni quas architecto ratione. Provident voluptatibus sit atque perspiciatis id, numquam, soluta tempore, rem illo nisi quam quas labore ea? Ipsam, molestias?</p>
+            <div th:if="${header == 'panel'}"><div th:insert="test.html :: content"></div></div>
+            <div th:if="${header == 'manage'}"><div th:insert="test.html :: content"></div></div>
+            <div th:if="${header == 'gestion-utilisateurs'}"><div th:insert="test.html :: content"></div></div>
+            <div th:if="${header == 'evenements'}"><div th:insert="test.html :: content"></div></div>
+            <div th:if="${header == 'alertes'}"><div th:insert="test.html :: content"></div></div>
         </div>
     </div>
 </div>
+</body>
 </html>

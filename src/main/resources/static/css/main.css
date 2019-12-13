@@ -2,6 +2,10 @@
     color: #fff;
 }
 
+.head-btn{
+    margin-left: 15px;
+}
+
 .link-menu {
     margin-left: 10px;
     color: rgba(255, 255, 255, 0.808);
@@ -33,7 +37,10 @@ html, body {
     height: 100%;
 }
 
+.row {
+    margin-right: 0px !important;
+}
+
 .sidebar {
     height: 100%;
 }
-/*# sourceMappingURL=main.css.map */
