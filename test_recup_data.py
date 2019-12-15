@@ -5,12 +5,6 @@ import logging
 import sys, os
 import resource
 
-# recuperer le hostname du pi
-# os.uname()[1]
-# changer hostname
-# os.system('hostname <id>')
-
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('openzwave')
 
@@ -29,8 +23,8 @@ sniff=15.0
 
 #Define some manager options
 options = ZWaveOption(device, \
-  config_path="/home/pi/Desktop/python-openzwave-master/openzwave/config", \
-  user_path=".", cmd_line="")
+  config_path="/home/pi/open-zwave/config", \
+  user_path="/home/pi/p2p", cmd_line="")
 options.set_log_file("OZW_Log.log")
 options.set_append_log_file(False)
 options.set_console_output(True)
@@ -72,24 +66,28 @@ print("Controller node version : {}".format(network.controller.node.version))
 print("Nodes in network : {}".format(network.nodes_count))
 print("\n")
 
+# network.nodes[network.controller.node.node_id].set_field("name","Controller-1")
+# network.nodes[network.controller.node.node_id].set_field("location","Location_Controller-1")
+# network.nodes[2].set_field("location","Location_Capteur-1")
+# network.nodes[2].set_field("name","Capteur-1")
+
 for node in network.nodes:
-    if network.nodes[node].refresh_info():
-        print(type(network.nodes[node]))
-        print("Id : {}".format(network.nodes[node].node_id))
-        print("Node : {}".format(network.nodes[node]))
-        print("Product Id : {}".format(network.nodes[node].product_id))
-        print("Type device : {}".format(network.nodes[node].device_type))
-        print("Type product : {}".format(network.nodes[node].product_type))
-        print("Name : {}".format(network.nodes[node].name))
-        print("Location : {}".format(network.nodes[node].location))
-        print("Neighbors : {}".format(network.nodes[node].neighbors))
-        print("------------------------------------------------------")
-        print("Capabilities : {}".format(network.nodes[node].capabilities))
-        print("command class : {}".format(network.nodes[node].command_classes))
-        print("get values for cc : {}".format(network.nodes[node].get_values_for_command_class(49)))
-        for val in network.nodes[node].get_values_for_command_class(49):
-            if network.nodes[node].values[val].label == "Luminance" or network.nodes[node].values[val].label == "Temperature":
-                print("{} : {}".format(network.nodes[node].values[val].label, network.nodes[node].values[val].data_as_string))
-        print("\n")
+    print(type(network.nodes[node]))
+    print("Id : {}".format(network.nodes[node].node_id))
+    print("Node : {}".format(network.nodes[node]))
+    print("Product Id : {}".format(network.nodes[node].product_id))
+    print("Type device : {}".format(network.nodes[node].device_type))
+    print("Type product : {}".format(network.nodes[node].product_type))
+    print("Name : {}".format(network.nodes[node].name))
+    print("Location : {}".format(network.nodes[node].location))
+    print("Neighbors : {}".format(network.nodes[node].neighbors))
+    print("------------------------------------------------------")
+    print("Capabilities : {}".format(network.nodes[node].capabilities))
+    print("command class : {}".format(network.nodes[node].command_classes))
+    print("get values for cc : {}".format(network.nodes[node].get_values_for_command_class(49)))
+    for val in network.nodes[node].get_values_for_command_class(49):
+        if network.nodes[node].values[val].label == "Luminance" or network.nodes[node].values[val].label == "Temperature":
+            print("{} : {}".format(network.nodes[node].values[val].label, network.nodes[node].values[val].data_as_string))
+    print("\n")
 
 network.stop()
