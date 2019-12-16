@@ -25,7 +25,7 @@ public class CapteurService {
      * @return True / False
      */
     public boolean saveCapteur(Capteur c){
-        if((this.capteurRepository.findById(c.getId())==null)&&(c.getNom()!=null)){
+        if(this.capteurRepository.findById(c.getId())==null){
             System.out.println("[SAVE]Capteur "+c);
             return this.saveCapteur(c);
         }else{
@@ -34,15 +34,6 @@ public class CapteurService {
     }
 
     //GET
-
-    /**
-     * Recherche d'un capteur par son nom
-     * @param nom Nom du capteur
-     * @return Capteur ou NULL
-     */
-    public Capteur getCapteurByNom(String nom){
-        return capteurRepository.findByNom(nom);
-    }
 
     /**
      * Recherche d'un capteur par son id

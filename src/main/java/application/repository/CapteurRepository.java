@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface CapteurRepository extends CrudRepository<Capteur,Long> {
     Capteur findById(Integer id);
-    Capteur findByNom(String nom);
     List<Capteur> findAll();
 }

@@ -41,7 +41,6 @@ public class CapteurController {
 
     /**
      * Sauvegarde d'un capteur (CREATE and UPDATE)
-     * @param nom Nom du capteur
      * @param datas Données liées au capteur
      * @param id Id du capteur (Uniquement si il existe déjà)
      */
@@ -50,10 +49,9 @@ public class CapteurController {
     @ResponseBody
     public ResponseEntity<String> saveCapteur(
             @RequestParam(value="id") Integer id,
-            @RequestParam(value="nom") String nom,
             @RequestParam(value="datas")String datas
     ){
-        Capteur c = new Capteur(id,nom,datas);
+        Capteur c = new Capteur(id,datas);
         System.out.println("[SAVE] Capteur : "+c.toString());
         if(capteurService.saveCapteur(c))
             return new ResponseEntity<>("Le capteur à été enregistré",HttpStatus.ACCEPTED);
@@ -76,7 +74,6 @@ public class CapteurController {
     /**
      * Modification d'un capteur
      * @param id
-     * @param nom
      * @param datas
      * @return Le capteur modifié ou null si erreur
      */
@@ -85,12 +82,10 @@ public class CapteurController {
     @ResponseBody
     public Capteur update(
             @RequestParam(value="id")Integer id,
-            @RequestParam(value="nom", required = false)String nom,
             @RequestParam(value="datas",required = false)String datas
     ){
         Capteur c = this.capteurService.getCapteurById(id);
         if(c!=null){
-            if(nom != null)c.setNom(nom);
             if(datas != null)c.setDatas(datas);
             this.capteurService.update(c);
             return c;
