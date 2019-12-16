@@ -3,6 +3,10 @@ package application.utils;
 import java.lang.Math;
 
 
+/**
+ * Objet Point permet de faciliter le traitement
+ * des données relatives aux localisations
+ */
 public class Point {
 
     private final double x;
