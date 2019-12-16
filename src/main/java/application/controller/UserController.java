@@ -7,11 +7,14 @@ import application.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,6 +28,8 @@ public class UserController {
 
     @Autowired
     UserLocationService userLocationService;
+
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
 
     /**
@@ -171,5 +176,30 @@ public class UserController {
             return new ResponseEntity<>("L'utilisateur n'existe pas",HttpStatus.FORBIDDEN);
         }
     }
+
+    /**
+     * Supprime un utilisateur de la BD par un administrateur
+     * @param emailAdmin : email de l'administrateur
+     * @param emailUser : email de l'utilisateur à supprimer
+     * @return ResponseEntity avec un String en fonction du déroulement de l'opération
+     */
+    @ApiOperation(value = "Supprime un utilisateur par son adresse mail (Admin)", response = String.class)
+    @DeleteMapping("/admin/user/delete")
+    @ResponseBody
+    public ResponseEntity<String> deleteAdmin(@RequestParam("emailAdmin") String emailAdmin,
+                                              @RequestParam("emailUser") String emailUser) {
+        User userAdmin = userService.findUserByEmail(emailAdmin);
+        if (userAdmin.hasRole("ADMIN")) {
+            User user = userService.findUserByEmail(emailUser);
+            if (this.userService.deleteUser(user)) {
+                return new ResponseEntity<>("L'utilisateur a correctement été supprimé.", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Une erreur est survenue lors de la suppression de votre compte.", HttpStatus.NOT_MODIFIED);
+            }
+        } else {
+            return new ResponseEntity<>("Le mot de passe saisi est incorrect.", HttpStatus.FORBIDDEN);
+        }
+    }
+
 
 }

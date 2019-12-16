@@ -1,6 +1,9 @@
 package application.entity;
 
+import application.service.UserService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -135,5 +138,16 @@ public class User {
 
     public void addRole(Role role) {
         this.roles.add(role);
+    }
+
+    public boolean hasRole(String role) {
+        boolean flag = false;
+        for (Role r : this.roles) {
+            if (r.getRole().equals(role)) {
+                flag = true;
+                break;
+            }
+        }
+        return true;
     }
 }
