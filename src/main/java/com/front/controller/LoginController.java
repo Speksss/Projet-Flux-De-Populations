@@ -16,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.front.controller.ApplicationController.map;
+import static com.front.controller.ApplicationController.panelModel;
+
 @Controller
 public class LoginController {
 
@@ -37,14 +40,13 @@ public class LoginController {
             final String uri = "http://35.206.157.216:8080/login?email="+ email + "&password=" + password;
 
             RestTemplate restTemplate = new RestTemplate();
-            User result = restTemplate.getForObject(uri, User.class);
+            User response = restTemplate.getForObject(uri, User.class);
 
-            if(result != null){
+            if(response != null){
                 request.getSession().setAttribute("user", email);
 
-//                Object connected = request.getSession().getAttribute("user");
-//                log.info(connected.toString());
-
+                map(model);
+                panelModel(model);
                 model.addAttribute("header", "panel");
                 return "index";
             }

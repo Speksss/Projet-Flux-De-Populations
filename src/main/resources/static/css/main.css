@@ -2,8 +2,8 @@
     color: #fff;
 }
 
-.head-btn{
-    margin-left: 15px;
+.bg-blue{
+    background-color: #0081a1;
 }
 
 .link-menu {
@@ -32,9 +32,14 @@ html, body {
     width: 100%;
 }
 
+.lead{
+    font-weight: 400 !important;
+}
+
 .container-side {
     width: 100%;
     height: 100%;
+    background-color: #e9ecef;
 }
 
 .row {
@@ -46,8 +51,33 @@ html, body {
 }
 
 .title-section {
-    margin-left: -15px !important;
-    margin-right: -15px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding: 45px !important;
+    margin-bottom: 0px !important;
+    width: 100%;
+}
+
+.sidebar-content{
+    margin-top:50px;
+    padding-top: 20px;
+    position: fixed !important;
+    width:100% !important;
+    height: 100%;
+    z-index: 1;
+    top:0;
+    left:0;
+}
+
+.sidebar-element{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    left: 16.6%;
+}
+
+.title-content{
+    font-size: 45px;
+    font-weight: normal;
 }
 
 .modal {
@@ -68,4 +98,13 @@ html, body {
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
+}
+
+/* Set the size of the div element that contains the map */
+
+#map {
+    height: 100%;
+    /* The height is 400 pixels */
+    margin-left: 10px;
+    /* The width is the width of the web page */
 }
