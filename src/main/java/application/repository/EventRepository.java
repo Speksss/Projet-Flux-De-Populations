@@ -3,13 +3,12 @@ package application.repository;
 import application.entity.Area;
 import application.entity.Event;
 import application.entity.EventType;
-import application.entity.UserLocation;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;
 import java.util.List;
 
-public interface EventRepository  extends CrudRepository<Event, Long> {
+public interface EventRepository extends CrudRepository<Event, Long> {
 
     Event findById(long id);
 
@@ -22,4 +21,6 @@ public interface EventRepository  extends CrudRepository<Event, Long> {
     List<Event> findAll();
 
     List<Event> findAllByActiveIsTrue();
+
+    List<Event> findAllByEventType_Name(String name);
 }
