@@ -68,13 +68,26 @@ public class EventController {
     @ApiOperation(value = "Affiche l'intégralité des évènements en base en utilisant les filtres")
     public ResponseEntity<List<Event>> findAll(@RequestParam(value = "name", required = false) String name,
                                                @RequestParam(value = "typeName", required = false) String typeName,
-                                               @RequestParam(value = "active", required = false) String active,
+                                               @RequestParam(value = "active", required = false) Boolean active,
                                                @RequestParam(value = "areaName", required = false) String areaName,
-                                               @RequestParam(value = "dateFrom", required = false) String dateFrom,
-                                               @RequestParam(value = "dateTo", required = false) String dateTo) {
-        System.out.println(name);
-        System.out.println(dateFrom);
-        return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK);
+                                               @RequestParam(value = "dateFrom", required = false) Long dateFrom,
+                                               @RequestParam(value = "dateTo", required = false) Long dateTo) {
+        List<Event> events = eventService.findAllEvents();
+
+        if(name != null && !name.equals(""))
+            events.removeIf(event -> !event.getName().equals(name));
+        if(typeName != null && !typeName.equals(""))
+            events.removeIf(event -> event.getEventType() == null || !event.getEventType().getName().equals(typeName));
+        if(active != null)
+            events.removeIf(event -> event.isActive() != active);
+        if(areaName != null && !areaName.equals(""))
+            events.removeIf(event -> event.getArea() == null || !event.getArea().getName().equals(areaName));
+        if(dateFrom != null)
+            events.removeIf(event -> event.getDate() == null || event.getDate().getTime() < dateFrom);
+        if(dateTo != null)
+            events.removeIf(event -> event.getDate() == null || event.getDate().getTime() > dateTo);
+
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @GetMapping("/event/all/actives")
