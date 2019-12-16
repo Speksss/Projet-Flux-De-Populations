@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -92,22 +94,29 @@ public class AreaService {
 
        // Si la somme des aires des triangles reliant le point est egale a
        // l'aire du quadrilatere, alors le point est dans la zone
-       double total_area = Point.getAreaTriangle(a, b, c)
-               + Point.getAreaTriangle(a, d, c);
+       Double total_area = (Double)(Point.getAreaTriangle(a, b, c)
+               + Point.getAreaTriangle(a, d, c));
 
-       double sum_area = Point.getAreaTriangle(a, b, p) + Point.getAreaTriangle(b, c, p)
-               + Point.getAreaTriangle(c, d, p) + Point.getAreaTriangle(d, a, p);
+       Double sum_area = (Double)(Point.getAreaTriangle(a, b, p) + Point.getAreaTriangle(b, c, p)
+               + Point.getAreaTriangle(c, d, p) + Point.getAreaTriangle(d, a, p));
+
+
+       double scale = Math.pow(10, 16);
+       total_area = Math.round(total_area * scale) / scale;
+       sum_area = Math.round(sum_area * scale) / scale;
 
        // TODO: voir si y'a une maniere + clean d'arrondir les decimales
-       DecimalFormat df = new DecimalFormat("0.0000000000000000");
+//       DecimalFormat df = new DecimalFormat("0.0000000000000000");
+//
+//       try {
+//           total_area = (Double)df.parse(df.format(total_area));
+//           sum_area = (Double)df.parse(df.format(sum_area));
+//       } catch (ParseException e) {
+//           e.printStackTrace();
+//       }
 
-       try {
-           total_area = (Double)df.parse(df.format(total_area));
-           sum_area = (Double)df.parse(df.format(sum_area));
-       } catch (ParseException e) {
-           e.printStackTrace();
-       }
-       return (sum_area == total_area);
+       return (sum_area.equals(total_area));
    }
+
 
 }
