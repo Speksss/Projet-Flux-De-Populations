@@ -27,16 +27,6 @@ public class Point {
     }
 
     /**
-     * Calcule le produit scalaire entre 2 vecteurs composes des points donnees
-     * Exemple AB.AC (A p1, B p2, C p3)
-     */
-    public static double scalarProduct(Point p1, Point p2, Point p3){
-
-        return 0.5 * (p1.squarePoint(p2) + p1.squarePoint(p3) - p2.squarePoint(p3));
-
-    }
-
-    /**
      * Calcule l'aire du triangle forme par les 3 points
      */
     public static double getAreaTriangle(Point p1, Point p2, Point p3){
