@@ -1,6 +1,8 @@
 package application.controller;
 
 import application.entity.User;
+import application.entity.UserLocation;
+import application.service.UserLocationService;
 import application.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +19,10 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+
+    @Autowired
+    UserLocationService userLocationService;
 
     @ApiOperation(value = "Retourne la liste de tous les utilisateurs", response = List.class)
     @GetMapping("/user/all")
@@ -101,4 +107,26 @@ public class UserController {
             return new ResponseEntity<>("Le mot de passe saisi est incorrect.", HttpStatus.FORBIDDEN);
         }
     }
+
+    @ApiOperation(value = "Modification de la localisation de l'utilisateur", response = String.class)
+    @PostMapping("/location/update")
+    @ResponseBody
+    public ResponseEntity<String> updateLocation(
+            @RequestParam("userMail")String userEmail,
+            @RequestParam("latitude")double latitutde,
+            @RequestParam("longitude")double longitude
+    ) {
+        User user = userService.findUserByEmail(userEmail);
+        if(user != null) {
+            UserLocation userL = user.getUserLocation();
+            userL.setLatitude(latitutde);
+            userL.setLongitude(longitude);
+            userLocationService.saveUserLocation(userL);
+
+            return new ResponseEntity<>("La position de l'utilisateur à été actualisée.",HttpStatus.ACCEPTED);
+        }else{
+            return new ResponseEntity<>("L'utilisateur n'existe pas",HttpStatus.FORBIDDEN);
+        }
+    }
+
 }
