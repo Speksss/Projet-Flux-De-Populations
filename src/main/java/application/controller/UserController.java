@@ -4,6 +4,7 @@ import application.entity.User;
 import application.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api(value="fluxDePopulation", description = "Opérations relatives à la gestion basique des utilisateurs", produces = "application/json")
+@Api(value = "fluxDePopulation", description = "Opérations relatives à la gestion basique des utilisateurs", produces = "application/json")
 public class UserController {
     @Autowired
     UserService userService;
@@ -27,7 +28,7 @@ public class UserController {
     @ApiOperation(value = "Authentifie un utilisateur par son adresse mail", response = User.class)
     @GetMapping("/login")
     @ResponseBody
-    public ResponseEntity<User> login(@RequestParam(value="email") String email, @RequestParam(value="password") String password) {
+    public ResponseEntity<User> login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
         User user = userService.findUserByEmail(email);
         if (userService.comparePassword(password, user.getPassword())) {
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -39,12 +40,14 @@ public class UserController {
     @PostMapping("/register")
     @ResponseBody
     public ResponseEntity<String> register(@RequestParam("email") String email,
-                            @RequestParam("lastName") String lastName,
-                            @RequestParam("firstName") String firstName,
-                            @RequestParam("password") String password) {
+                                           @RequestParam("lastName") String lastName,
+                                           @RequestParam("firstName") String firstName,
+                                           @RequestParam("password") String password) {
         User user = userService.findUserByEmail(email);
         if (user != null) {
             return new ResponseEntity<>("Cette adresse email est déjà utilisée.", HttpStatus.NOT_MODIFIED);
+        } else if (!EmailValidator.getInstance().isValid(email)) {
+            return new ResponseEntity<>("Cette adresse email n'est pas valide.", HttpStatus.NOT_ACCEPTABLE);
         } else {
             User newUser = new User(email, lastName, firstName, password);
             if (this.userService.saveUser(newUser) != null) {
@@ -58,10 +61,10 @@ public class UserController {
     @PostMapping("/user/update")
     @ResponseBody
     public ResponseEntity<String> update(@RequestParam("email") String email,
-                                 @RequestParam(value = "password") String password,
-                                 @RequestParam(value = "lastName", required = false) String lastName,
-                                 @RequestParam(value = "firstName", required = false) String firstName,
-                                 @RequestParam(value = "newPassword", required = false) String newPassword) {
+                                         @RequestParam(value = "password") String password,
+                                         @RequestParam(value = "lastName", required = false) String lastName,
+                                         @RequestParam(value = "firstName", required = false) String firstName,
+                                         @RequestParam(value = "newPassword", required = false) String newPassword) {
         User user = this.userService.findUserByEmail(email);
         if (userService.comparePassword(password, user.getPassword())) {
             if (lastName != null) {
