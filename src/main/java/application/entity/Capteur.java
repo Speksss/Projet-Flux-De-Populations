@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name="Capteur")
 public class Capteur {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="capteur_id")
     private String id;
     private String datas;//Données au format JSON

@@ -53,7 +53,7 @@ public class CapteurController {
     ){
         Capteur c = new Capteur(id,datas);
         System.out.println("[SAVE] Capteur : "+c.toString());
-        if(capteurService.saveCapteur(c))
+        if(capteurService.saveCapteur(c) != null)
             return new ResponseEntity<>("Le capteur à été enregistré",HttpStatus.ACCEPTED);
         else
             return new ResponseEntity<>("Une erreur est survenue lors de la sauvegarde du  capteur.", HttpStatus.NOT_MODIFIED);
@@ -69,28 +69,6 @@ public class CapteurController {
     public List<Capteur> getAllCapteurs(){
         System.out.println("[GET] All Capteurs");
         return capteurService.getAll();
-    }
-
-    /**
-     * Modification d'un capteur
-     * @param id
-     * @param datas
-     * @return Le capteur modifié ou null si erreur
-     */
-    @ApiOperation(value = "Modifie un capteur", response = Capteur.class)
-    @PostMapping("/capteur/update")
-    @ResponseBody
-    public Capteur update(
-            @RequestParam(value="id")String id,
-            @RequestParam(value="datas",required = false)String datas
-    ){
-        Capteur c = this.capteurService.getCapteurById(id);
-        if(c!=null){
-            if(datas != null)c.setDatas(datas);
-            this.capteurService.update(c);
-            return c;
-        }
-        return null;
     }
 
     /**
