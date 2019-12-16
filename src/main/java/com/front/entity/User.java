@@ -7,16 +7,22 @@ import org.springframework.context.annotation.Scope;
 @Scope("session")
 public class User {
 
+    private int id = 1;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
 
-    public User(String username, String password, String firstName, String lastName) {
+    public User(String email, String password, String firstname, String lastname){
+        this.email = email;
+        this.password = password;
+        this.firstName = firstname;
+        this.id = id++;
+    }
+
+    public User(String username, String password) {
         this.email = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public User() { }
@@ -41,16 +47,24 @@ public class User {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String firstname) {
+        this.firstName = firstname;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -58,6 +72,8 @@ public class User {
         return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", lastname='" + lastName + '\'' +
+                ", firstname='" + firstName + '\'' +
                 '}';
     }
 }

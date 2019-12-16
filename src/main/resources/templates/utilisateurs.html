@@ -1,9 +1,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="content">
+<div th:fragment="content(Users)">
     <div class="jumbotron jumbotron-fluid title-section">
         <div class="container">
-            <h1 class="display-4">Gestion des utilisateurs</h1>
-            <p class="lead"></p>
+            <h3 class="display-4">Gestion des utilisateurs</h3>
+
+            <div class="content">
+                <form>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Modifier</th>
+                            <th scope="col">Supprimer</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${Users}">
+                            <td th:text="${user.getId()}"> </td>
+                            <td th:text="${user.getLastName()}"> X </td>
+                            <td th:text="${user.getFirstName()}"> X </td>
+                            <td th:text="${user.getEmail()}"> X </td>
+                            <td>
+                                <div id="modal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close"><i class="fas fa-times" style="color : white;"></i></span>
+                                        <p>Entrez votre mot de passe : </p>
+                                        <input placeholder="Mot de passe"></input>
+                                    </div>
+                                </div>
+                                <button id="btn" type="button" class="btn btn-primary"><i class="fas fa-pen" style="color : white;"></i></button>
+                                <script>
+                                    var btn = document.getElementById("btn")
+                                    var span = document.getElementsByClassName("close")[0];
+                                    var modal = document.getElementById("modal");
+
+                                    btn.onclick = function() {
+                                        modal.style.display = "block"
+                                    }
+                                    span.onclick = function() {
+                                        modal.style.display = "none";
+                                    }
+                                    window.onclick = function(event) {
+                                        if (event.target == modal) {
+                                            modal.style.display = "none";
+                                        }
+                                    }
+                                </script>
+                            </td>
+                            <td>
+                                <form th:action="@{delete}" method="post">
+                                    <input type="hidden" name="email" th:value="${user.getEmail()}" />
+                                    <button class="btn btn-danger"><i class="fas fa-times" style="color : white;"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
         </div>
     </div>
 </div>
