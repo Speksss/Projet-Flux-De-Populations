@@ -17,7 +17,7 @@ public class Area {
     @Column(name="area_id")
     private Integer id;
 
-    private Integer size;
+    private Integer capacity;
 
     private String name;
 
@@ -43,7 +43,7 @@ public class Area {
 
     public void setCoordinates(String coordinates) { this.coordinates = coordinates; }
 
-    public Integer getSize() {return size; }
+    public Integer getCapacity() { return capacity; }
 
-    public void setSize(Integer size) { this.size = size; }
+    public void setCapacity(Integer capacity) { this.capacity = capacity; }
 }

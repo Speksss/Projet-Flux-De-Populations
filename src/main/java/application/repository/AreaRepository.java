@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AreaRepository extends CrudRepository<Area, Long> {
 
-    Area findById(long id);
+    Area findById(Integer id);
     Area findByName(String name);
 //    List<Area> findByCoordinates(String coordinates);
 

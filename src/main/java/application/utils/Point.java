@@ -21,10 +21,6 @@ public class Point {
         return y;
     }
 
-    private double squarePoint(Point p){
-
-        return (Math.pow((p.getX() - this.x),2) + (Math.pow(p.getY() - this.y,2)));
-    }
 
     /**
      * Calcule l'aire du triangle forme par les 3 points
