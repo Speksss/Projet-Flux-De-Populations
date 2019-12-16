@@ -66,7 +66,7 @@ public class EventController {
     @GetMapping("/event/all/filters")
     @ResponseBody
     @ApiOperation(value = "Affiche l'intégralité des évènements en base en utilisant les filtres")
-    public ResponseEntity<List<Event>> findAll(@RequestParam(value = "name", required = false) String name,
+    public ResponseEntity<List<Event>> findAllFiltered(@RequestParam(value = "name", required = false) String name,
                                                @RequestParam(value = "typeName", required = false) String typeName,
                                                @RequestParam(value = "active", required = false) Boolean active,
                                                @RequestParam(value = "areaName", required = false) String areaName,
