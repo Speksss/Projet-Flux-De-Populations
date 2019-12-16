@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Services liés aux evenements
+ */
 @Service
 public class EventService {
 

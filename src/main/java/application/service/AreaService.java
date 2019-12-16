@@ -4,9 +4,18 @@ import application.entity.Area;
 import application.utils.Point;
 import org.json.JSONObject;
 
+/**
+ * Services liés aux zones
+ */
 public class AreaService {
 
 
+    /**
+     * Fonction qui verifie si un point est dans une zone specifiee
+     * @param area = zone
+     * @param p = point
+     * @return true si le point est dans la zone, false sinon
+     */
    public boolean isPointInArea(Area area, Point p){
 
        JSONObject obj = new JSONObject(area.getCoordinates());

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Services liés aux capteurs
+ */
 @Service
 public class CapteurService {
 

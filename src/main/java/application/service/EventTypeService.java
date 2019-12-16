@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Services liés aux types d'evenements
+ */
 @Service
 public class EventTypeService {
 

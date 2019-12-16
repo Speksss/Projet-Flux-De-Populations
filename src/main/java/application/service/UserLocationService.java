@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Services liés aux positions des utilisateurs
+ */
 @Service
 public class UserLocationService {
     private static final Logger log = LoggerFactory.getLogger(UserLocationService.class);

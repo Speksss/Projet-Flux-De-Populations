@@ -12,8 +12,7 @@ import application.entity.Subscriptions;
 import application.repository.SubscriptionsRepository;
 
 /**
- * @author backTeam
- * Subscription Service
+ * Services liés aux zones
  */
 @Service
 public class SubscriptionsService {
@@ -25,7 +24,7 @@ public class SubscriptionsService {
 	
 	/**
      * CRUD des Abonnements
-     * @param Subscriptions
+     * @param subscribe
      */
     public void saveSubcribe(Subscriptions subscribe) {
     	subscribptionsRepository.save(subscribe);

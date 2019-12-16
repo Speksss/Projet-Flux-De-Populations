@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Services liés aux utilisateurs
+ */
 @Service
 public class UserService {
 
