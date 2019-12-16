@@ -66,28 +66,24 @@ print("Controller node version : {}".format(network.controller.node.version))
 print("Nodes in network : {}".format(network.nodes_count))
 print("\n")
 
-# network.nodes[network.controller.node.node_id].set_field("name","Controller-1")
-# network.nodes[network.controller.node.node_id].set_field("location","Location_Controller-1")
-# network.nodes[2].set_field("location","Location_Capteur-1")
-# network.nodes[2].set_field("name","Capteur-1")
-
 for node in network.nodes:
     print(type(network.nodes[node]))
-    print("Id : {}".format(network.nodes[node].node_id))
-    print("Node : {}".format(network.nodes[node]))
-    print("Product Id : {}".format(network.nodes[node].product_id))
-    print("Type device : {}".format(network.nodes[node].device_type))
-    print("Type product : {}".format(network.nodes[node].product_type))
+    # print("Id : {}".format(network.nodes[node].node_id))
+    # print("Node : {}".format(network.nodes[node]))
+    # print("Product Id : {}".format(network.nodes[node].product_id))
+    # print("Type device : {}".format(network.nodes[node].device_type))
+    # print("Type product : {}".format(network.nodes[node].product_type))
     print("Name : {}".format(network.nodes[node].name))
     print("Location : {}".format(network.nodes[node].location))
     print("Neighbors : {}".format(network.nodes[node].neighbors))
     print("------------------------------------------------------")
-    print("Capabilities : {}".format(network.nodes[node].capabilities))
-    print("command class : {}".format(network.nodes[node].command_classes))
-    print("get values for cc : {}".format(network.nodes[node].get_values_for_command_class(49)))
+    # print("Capabilities : {}".format(network.nodes[node].capabilities))
+    # print("command class : {}".format(network.nodes[node].command_classes))
+    # print("get values for cc : {}".format(network.nodes[node].get_values_for_command_class(49)))
     for val in network.nodes[node].get_values_for_command_class(49):
-        if network.nodes[node].values[val].label == "Luminance" or network.nodes[node].values[val].label == "Temperature":
-            print("{} : {}".format(network.nodes[node].values[val].label, network.nodes[node].values[val].data_as_string))
+        #if network.nodes[node].values[val].label == "Luminance" or network.nodes[node].values[val].label == "Temperature":
+        print("{} : {}".format(network.nodes[node].values[val].label, network.nodes[node].values[val].data_as_string))
     print("\n")
 
 network.stop()
+
