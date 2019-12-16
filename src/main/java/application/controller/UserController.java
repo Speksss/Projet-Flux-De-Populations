@@ -178,6 +178,18 @@ public class UserController {
     }
 
     /**
+     * Retoure l'ensemble des utlisateurs d'une zone
+     * @return List de user
+     */
+    @ApiOperation(value = "Retourne la liste des utlisateurs dans une zone", response = List.class)
+    @GetMapping("/user/area/{id}")
+    @ResponseBody
+    public List<User> getAllUserByArea( @PathVariable(value="id")Integer id){
+        System.out.println("[GET] All UserByArea");
+        return userService.findAllUsersByArea(id);
+    }
+
+    /**
      * Supprime un utilisateur de la BD par un administrateur
      * @param emailAdmin : email de l'administrateur
      * @param emailUser : email de l'utilisateur à supprimer
