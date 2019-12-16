@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlleur dédié a la gestion des utilisateurs
+ */
 @RestController
 @Api(value = "fluxDePopulation", description = "Opérations relatives à la gestion basique des utilisateurs", produces = "application/json")
 public class UserController {

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlleur dédié a la manipulation des evenements
+ */
 @RestController
 @Api(value = "fluxDePopulation", description = "Controller pour gérer les levés d'évènements et la création de type " +
         "d'évènement.", produces = "application/json")

@@ -22,8 +22,7 @@ import application.service.SubscriptionsService;
 import application.service.UserService;
 
 /**
- * @author backTeam
- * Subscription Ccntroller
+ * Controlleur dédié a la gestion des abonnements
  */
 @RestController
 public class SubscriptionsController {
