@@ -33,7 +33,7 @@ public class CapteurController {
     @GetMapping("/capteur")
     @ResponseBody
     public Capteur getCapteur(
-             @RequestParam(value="id")Integer id
+             @RequestParam(value="id")String id
     ){
         System.out.println("[GET] Capteur by id : "+id);
         return capteurService.getCapteurById(id);
@@ -48,7 +48,7 @@ public class CapteurController {
     @PostMapping("/capteur")
     @ResponseBody
     public ResponseEntity<String> saveCapteur(
-            @RequestParam(value="id") Integer id,
+            @RequestParam(value="id") String id,
             @RequestParam(value="datas")String datas
     ){
         Capteur c = new Capteur(id,datas);
@@ -81,7 +81,7 @@ public class CapteurController {
     @PostMapping("/capteur/update")
     @ResponseBody
     public Capteur update(
-            @RequestParam(value="id")Integer id,
+            @RequestParam(value="id")String id,
             @RequestParam(value="datas",required = false)String datas
     ){
         Capteur c = this.capteurService.getCapteurById(id);
@@ -101,7 +101,7 @@ public class CapteurController {
     @DeleteMapping("capteur/delete")
     @ResponseBody
     public ResponseEntity<String> delete(
-            @RequestParam(value="id")Integer id
+            @RequestParam(value="id")String id
     ){
         Capteur c = this.capteurService.getCapteurById(id);
         if(c != null){

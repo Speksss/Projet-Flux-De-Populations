@@ -14,21 +14,21 @@ public class Capteur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="capteur_id")
-    private Integer id;
+    private String id;
     private String datas;//Données au format JSON
 
     public Capteur() {}
 
-    public Capteur(Integer _id, String _datas){
+    public Capteur(String _id, String _datas){
         this.id = _id;
         this.datas = _datas;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

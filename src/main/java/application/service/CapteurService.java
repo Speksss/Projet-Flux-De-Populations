@@ -43,7 +43,7 @@ public class CapteurService {
      * @param id Id du capteur
      * @return Capteur ou NULL
      */
-    public Capteur getCapteurById(Integer id){
+    public Capteur getCapteurById(String id){
         return capteurRepository.findById(id);
     }
 
