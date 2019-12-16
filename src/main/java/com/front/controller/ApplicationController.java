@@ -26,6 +26,7 @@ public class ApplicationController {
     public String home(Model model, HttpServletRequest request) {
 
         if(checkSessionTokenValidity(request)){ // Verify Connection
+            map(model);
             panelModel(model);
             model.addAttribute("header", "panel");
             return "index";
@@ -41,7 +42,7 @@ public class ApplicationController {
     public String header(@RequestParam("select") String selectHeader, Model model, HttpServletRequest request){
 
         if(checkSessionTokenValidity(request)){
-            if(selectHeader.equals("panel")){ panelModel(model); model.addAttribute("header", "panel");}
+            if(selectHeader.equals("panel")){ panelModel(model); map(model); model.addAttribute("header", "panel");}
             if(selectHeader.equals("capteurs")){ model.addAttribute("header", "capteurs");}
             if(selectHeader.equals("utilisateurs")){ model.addAttribute("header", "utilisateurs");}
             if(selectHeader.equals("evenements")){ model.addAttribute("header", "evenements");}
@@ -54,7 +55,24 @@ public class ApplicationController {
         }
     }
 
-    public void panelModel(Model model){
+    public static void map(Model model){
+
+        // final String uri = "http://35.206.157.216:8080/";
+
+        //TODO Mapping des coordonnées
+
+        model.addAttribute("X1", 50.326770);
+        model.addAttribute("Y1", 3.509654);
+        model.addAttribute("X2", 50.326654);
+        model.addAttribute("Y2", 3.511006);
+        model.addAttribute("X3", 50.325743);
+        model.addAttribute("Y3", 3.510619);
+        model.addAttribute("X4", 50.325770);
+        model.addAttribute("Y4", 3.509375);
+
+    }
+
+    public static void panelModel(Model model){
 
         final String uri = "http://35.206.157.216:8080/user/all";
 

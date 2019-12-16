@@ -1,0 +1,212 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<span th:fragment="content(X1, Y1, X2, Y2, X3, Y3, X4, Y4)">
+    <div id="map"></div>
+    <script th:inline="javascript">
+    function initMap() {
+
+        /*<![CDATA[*/
+
+        var X1 = [[${X1}]];
+        var X2 = [[${X2}]];
+        var X3 = [[${X3}]];
+        var X4 = [[${X4}]];
+        var Y1 = [[${Y1}]];
+        var Y2 = [[${Y2}]];
+        var Y3 = [[${Y3}]];
+        var Y4 = [[${Y4}]];
+
+        /*]]>*/
+
+        // Styles a map in night mode.
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 50.324367, lng: 3.512873},
+            zoom: 15,
+            // styles: [
+            //     {
+            //         "elementType": "geometry",
+            //         "stylers": [
+            //             {
+            //                 "color": "#242f3e"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#746855"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "elementType": "labels.text.stroke",
+            //         "stylers": [
+            //             {
+            //                 "color": "#242f3e"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "administrative.locality",
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#d59563"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "poi",
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#d59563"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "poi.park",
+            //         "elementType": "geometry",
+            //         "stylers": [
+            //             {
+            //                 "color": "#263c3f"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "poi.park",
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#6b9a76"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "road",
+            //         "elementType": "geometry",
+            //         "stylers": [
+            //             {
+            //                 "color": "#38414e"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "road",
+            //         "elementType": "geometry.stroke",
+            //         "stylers": [
+            //             {
+            //                 "color": "#212a37"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "road",
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#9ca5b3"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "road.highway",
+            //         "elementType": "geometry",
+            //         "stylers": [
+            //             {
+            //                 "color": "#746855"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "road.highway",
+            //         "elementType": "geometry.stroke",
+            //         "stylers": [
+            //             {
+            //                 "color": "#1f2835"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "road.highway",
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#f3d19c"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "transit",
+            //         "elementType": "geometry",
+            //         "stylers": [
+            //             {
+            //                 "color": "#2f3948"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "transit.station",
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#d59563"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "water",
+            //         "elementType": "geometry",
+            //         "stylers": [
+            //             {
+            //                 "color": "#17263c"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "water",
+            //         "elementType": "labels.text.fill",
+            //         "stylers": [
+            //             {
+            //                 "color": "#515c6d"
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         "featureType": "water",
+            //         "elementType": "labels.text.stroke",
+            //         "stylers": [
+            //             {
+            //                 "color": "#17263c"
+            //             }
+            //         ]
+            //     }
+            // ]
+        });
+
+        // Define the LatLng coordinates for the polygon's path.
+        var carreCoords = [
+            {lat: X1, lng: Y1},
+            {lat: X2, lng: Y2},
+            {lat: X3, lng: Y3},
+            {lat: X4, lng: Y4},
+            {lat: X1, lng: Y1}
+        ];
+
+        // Construct the polygon.
+        var carreBuilder = new google.maps.Polygon({
+            paths: carreCoords,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            content: "TEST"
+        });
+        carreBuilder.setMap(map);
+    }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcKwxj6ZNHR5rdHZ3bvdRyE7MHp0oJJzU&callback=initMap">
+    </script>
+</span>

@@ -25,28 +25,29 @@
 </div>
 <div class="container-side">
     <div class="row sidebar">
-        <div class="col-2 bg-dark sticky-top sidebar-content">
+        <div class="col-2 bg-dark sidebar-content">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <form action="#" th:action="@{/application}" th:object="${String}" method="post">
                     <input type="hidden" name="select" th:value="panel"/>
-                    <input class="btn btn-dark head-btn" type="submit" value="Panneau de contrôle"/>
+                    <input class="btn btn-dark" type="submit" value="Panneau de contrôle"/>
                 </form>
                 <form action="#" th:action="@{/application}" th:object="${String}" method="post">
                     <input type="hidden" name="select" th:value="capteurs"/>
-                    <input class="btn btn-dark head-btn" type="submit" value="Capteurs"/>
+                    <input class="btn btn-dark" type="submit" value="Capteurs"/>
                 </form>
                 <form action="#" th:action="@{/application}" th:object="${String}" method="post">
                     <input type="hidden" name="select" th:value="utilisateurs"/>
-                    <input class="btn btn-dark head-btn" type="submit" value="Gestion Utilisateurs"/>
+                    <input class="btn btn-dark" type="submit" value="Gestion Utilisateurs"/>
                 </form>
                 <form action="#" th:action="@{/application}" th:object="${String}" method="post">
                     <input type="hidden" name="select" th:value="evenements"/>
-                    <input class="btn btn-dark head-btn" type="submit" value="Evenements"/>
+                    <input class="btn btn-dark" type="submit" value="Evenements"/>
                 </form>
             </div>
         </div>
-        <div class="col-10">
+        <div class="col-10 sidebar-element">
             <div th:if="${header == 'panel'}"><div th:insert="panel.html :: content(NbUsers=${NbUsers})"></div></div>
+            <span th:if="${header == 'panel'}" th:insert="map.html :: content(X1=${X1}, Y1=${Y1}, X2=${X2}, Y2=${Y2}, X3=${X3}, Y3=${Y3}, X4=${X4}, Y4=${Y4})"></span>
             <div th:if="${header == 'capteurs'}"><div th:insert="capteurs.html :: content"></div></div>
             <div th:if="${header == 'utilisateurs'}"><div th:insert="utilisateurs.html :: content"></div></div>
             <div th:if="${header == 'evenements'}"><div th:insert="evenements.html :: content"></div></div>
