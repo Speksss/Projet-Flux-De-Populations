@@ -34,12 +34,12 @@ public class LoginController {
 
         if(!email.equals("") && !password.equals("")){
 
-            final String uri = "http://localhost:8080/login?email="+ email + "&password=" + password;
+            final String uri = "http://35.206.157.216:8080/login?email="+ email + "&password=" + password;
 
             RestTemplate restTemplate = new RestTemplate();
-            User result = restTemplate.getForObject(uri, User.class);
+            User response = restTemplate.getForObject(uri, User.class);
 
-            if(result != null){
+            if(response != null){
                 request.getSession().setAttribute("user", email);
 
 //                Object connected = request.getSession().getAttribute("user");
