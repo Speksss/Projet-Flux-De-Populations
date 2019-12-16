@@ -1,5 +1,8 @@
 package application.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 /**
@@ -17,7 +20,8 @@ public class Capteur {
 
     public Capteur() {}
 
-    public Capteur(String _nom, String _datas){
+    public Capteur(Integer _id,String _nom, String _datas){
+        this.id = _id;
         this.nom = _nom;
         this.datas = _datas;
     }

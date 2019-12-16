@@ -19,12 +19,18 @@ public class CapteurService {
 
     //CREATE UPDATE
 
+    /**
+     * Sauvegarde d'un capteur
+     * @param c Capteur à sauvegarder
+     * @return True / False
+     */
     public boolean saveCapteur(Capteur c){
-        if(this.getCapteurByNom(c.getNom()) == null) {
-            capteurRepository.save(c);
-            log.info("[CAPTEUR][SAVE]", c.toString());
-            return true;
-        }else return false;
+        if((this.capteurRepository.findById(c.getId())==null)&&(c.getNom()!=null)){
+            System.out.println("[SAVE]Capteur "+c);
+            return this.saveCapteur(c);
+        }else{
+            return false;
+        }
     }
 
     //GET
@@ -53,5 +59,22 @@ public class CapteurService {
      */
     public List<Capteur> getAll(){
         return capteurRepository.findAll();
+    }
+
+    /**
+     * Modifie un capteur
+     * @param c Capteur à modifier
+     * @return True / False
+     */
+    public Capteur update(Capteur c){
+        return this.capteurRepository.save(c);
+    }
+
+    /**
+     * Supprime un capteur
+     * @param c Capteur a supprimer
+     */
+    public void delete(Capteur c){
+        this.capteurRepository.delete(c);
     }
 }
