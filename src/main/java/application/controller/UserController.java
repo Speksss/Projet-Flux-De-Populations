@@ -23,10 +23,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
     @Autowired
     UserLocationService userLocationService;
 
+
+    /**
+     * Renvoie la liste de tous les utilisateurs dans la BD
+     * @return ReponseEntity (avec une liste)
+     */
     @ApiOperation(value = "Retourne la liste de tous les utilisateurs", response = List.class)
     @GetMapping("/user/all")
     @ResponseBody
@@ -34,6 +38,12 @@ public class UserController {
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
     }
 
+    /**
+     * Vérifie si le mot de passe fourni en paramètre correspond avec le mot de passe stocké dans la BD (pour l'email en paramètre)
+     * @param email : addresse email permettant d'identifier l'utilsateur
+     * @param password : mot de passe à vérifier
+     * @return ResponseEntity avec un objet User si le mot de passe correspond et null sinon
+     */
     @ApiOperation(value = "Authentifie un utilisateur par son adresse mail", response = User.class)
     @GetMapping("/login")
     @ResponseBody
@@ -45,6 +55,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Ajoute un nouvel utilisateur dans la BD
+     * @param email : email de l'utilisateur à créer
+     * @param lastName : nom de l'utilisateur à créer
+     * @param firstName : prénom de l'utilisateur à créer
+     * @param password : mot de passe de l'utilisateur à créer
+     * @return ResponseEntity avec un String en fonction du déroulement de l'opération
+     */
     @ApiOperation(value = "Créé un nouvel utilisateur", response = String.class)
     @PostMapping("/register")
     @ResponseBody
@@ -66,7 +84,16 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "Supprime un utilisateur par son adresse email", response = String.class)
+    /**
+     * Modifier un ou plusieurs attributs d'un utilisateur si le mot de passe fourni correspond (email non modifiable)
+     * @param email : email de l'utilsateur (pour l'identifier)
+     * @param password : mot de passe de l'utilisateur
+     * @param lastName : nom à modifier (OPTIONNEL)
+     * @param firstName : prénom à modifier (OPTIONNEL)
+     * @param newPassword : mot de passe à modifier (OPTIONNEL)
+     * @return ResponseEntity avec un String en fonction du déroulement de l'opération
+     */
+    @ApiOperation(value = "Modifie un utilisateur grâce à son adresse email", response = String.class)
     @PostMapping("/user/update")
     @ResponseBody
     public ResponseEntity<String> update(@RequestParam("email") String email,
@@ -94,6 +121,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Supprime un utilisateur de la BD (si le mot de passe correspond)
+     * @param email : email de l'utilisateur à supprimer
+     * @param password : mot de passe de l'utilisateur
+     * @return ResponseEntity avec un String en fonction du déroulement de l'opération
+     */
     @ApiOperation(value = "Supprime un utilisateur par son adresse mail", response = String.class)
     @DeleteMapping("/user/delete")
     @ResponseBody
@@ -111,6 +144,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Modifie les coordonnées de localisation d'un utilisateur
+     * @param userEmail : email de l'utilisateur à modifier
+     * @param latitutde : latitude de la nouvelle position
+     * @param longitude : longitude de la nouvelle position
+     * @return ResponseEntity avec un String en fonction du déroulement de l'opération
+     */
     @ApiOperation(value = "Modification de la localisation de l'utilisateur", response = String.class)
     @PostMapping("/location/update")
     @ResponseBody
