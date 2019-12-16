@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Entité Utilisateur
+ */
 @Entity
 @Table(name = "User")
 public class User {
