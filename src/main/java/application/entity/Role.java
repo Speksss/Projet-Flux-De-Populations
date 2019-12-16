@@ -3,6 +3,9 @@ package application.entity;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Entité Role (Etudiant, professeur, admin)
+ */
 @Entity
 @Table(name = "Role")
 public class Role {

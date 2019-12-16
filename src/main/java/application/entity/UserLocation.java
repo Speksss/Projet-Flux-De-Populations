@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ * Entité localisation
+ */
 @Entity
 @Table(name = "user_location")
 public class UserLocation {

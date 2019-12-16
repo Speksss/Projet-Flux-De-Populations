@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ * Entité Type d'Evenement
+ */
 @Entity
 @Table(name = "event_type", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class EventType {

@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Entité Evenement
+ */
 @Entity
 @Table(name = "event")
 public class Event {

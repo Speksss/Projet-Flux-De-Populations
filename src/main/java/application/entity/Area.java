@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ * Entité Zone
+ */
 @Entity
 @Table(name = "area")
 public class Area {

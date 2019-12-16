@@ -20,6 +20,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Subscription entity
  */
 
+/**
+ * Entité Abonnement
+ */
 @Entity
 @Table(name = "subscribe")
 public class Subscriptions {
