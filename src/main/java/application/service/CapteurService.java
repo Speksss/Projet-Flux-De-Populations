@@ -30,7 +30,9 @@ public class CapteurService {
     public boolean saveCapteur(Capteur c){
         if(this.capteurRepository.findById(c.getId())==null){
             System.out.println("[SAVE]Capteur "+c);
-            return this.saveCapteur(c);
+            Capteur res = capteurRepository.save(c);
+            if(res == null)return false;
+            return true;
         }else{
             return false;
         }
