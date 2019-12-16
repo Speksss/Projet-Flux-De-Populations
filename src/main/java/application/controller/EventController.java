@@ -50,7 +50,7 @@ public class EventController {
             event.setArea(null);
             event.setEventType(type);
             event.setName(type.getName());
-            eventService.saveNewEvent(event);
+            eventService.saveEvent(event);
             return new ResponseEntity<>(event, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -63,11 +63,32 @@ public class EventController {
         return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK);
     }
 
+    @GetMapping("/event/all/filters")
+    @ResponseBody
+    @ApiOperation(value = "Affiche l'intégralité des évènements en base en utilisant les filtres")
+    public ResponseEntity<List<Event>> findAll(@RequestParam(value = "name", required = false) String name,
+                                               @RequestParam(value = "typeName", required = false) String typeName,
+                                               @RequestParam(value = "active", required = false) String active,
+                                               @RequestParam(value = "areaName", required = false) String areaName,
+                                               @RequestParam(value = "dateFrom", required = false) String dateFrom,
+                                               @RequestParam(value = "dateTo", required = false) String dateTo) {
+        System.out.println(name);
+        System.out.println(dateFrom);
+        return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK);
+    }
+
     @GetMapping("/event/all/actives")
     @ResponseBody
     @ApiOperation(value = "Affiche l'intégralité des évènements actifs en base")
     public ResponseEntity<List<Event>> findAllActives() {
         return new ResponseEntity<>(eventService.findAllActiveEvents(), HttpStatus.OK);
+    }
+
+    @GetMapping("/event/all/type-name")
+    @ResponseBody
+    @ApiOperation(value = "Affiche l'intégralité des évènements selon leur type")
+    public ResponseEntity<List<Event>> findAllByEventType(@RequestParam("name") String name) {
+        return new ResponseEntity<>(eventService.findAllEventByTypeName(name), HttpStatus.OK);
     }
 
     // Event Type
