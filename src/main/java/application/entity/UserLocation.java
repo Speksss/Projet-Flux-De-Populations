@@ -17,9 +17,9 @@ public class UserLocation {
     @Column(name="user_location_id")
     private Integer id;
 
-    private double latitude;
+    private double latitude;//X
 
-    private double longitude;
+    private double longitude;//Y
 
     public Integer getId() {
         return id;

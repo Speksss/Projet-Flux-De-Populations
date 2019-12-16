@@ -27,15 +27,8 @@ public class CapteurService {
      * @param c Capteur à sauvegarder
      * @return True / False
      */
-    public boolean saveCapteur(Capteur c){
-        if(this.capteurRepository.findById(c.getId())==null){
-            System.out.println("[SAVE]Capteur "+c);
-            Capteur res = capteurRepository.save(c);
-            if(res == null)return false;
-            return true;
-        }else{
-            return false;
-        }
+    public Capteur saveCapteur(Capteur c){
+        return capteurRepository.save(c);
     }
 
     //GET

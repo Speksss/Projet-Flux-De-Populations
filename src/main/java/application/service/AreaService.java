@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,13 +24,17 @@ public class AreaService {
     @Autowired
     private AreaRepository areaRepository;
 
-    public void saveNewArea(Area area){
-
-        areaRepository.save(area);
+    public boolean saveNewArea(Area area){
+        Area res = areaRepository.save(area);
         log.info("saveNewArea() : {}", area.toString());
+        if (res == null)
+            return false;
+        return true;
+
+
     }
 
-    public Area findAreaById(long id){
+    public Area findAreaById(Integer id){
         return this.areaRepository.findById(id);
     }
 
@@ -42,17 +48,17 @@ public class AreaService {
     public List<Area> findAreasByCoordinates(double x, double y){
         List<Area> allAreas = this.areaRepository.findAll();
 
-        System.out.println(allAreas);
+//        System.out.println(allAreas);
         Point p = new Point(x,y);
         List<Area> goodAreas = new ArrayList<>();
 
         for(Area a : allAreas){
             if(isPointInArea(a,p))
                 goodAreas.add(a);
-            else
-                System.out.println(a.getCoordinates() + "\n" + p.getX() + "," + p.getY());
+//            else
+//                System.out.println(a.getCoordinates() + "\n" + p.getX() + "," + p.getY());
         }
-        System.out.println(goodAreas);
+//        System.out.println(goodAreas);
         return goodAreas;
     }
 
@@ -60,6 +66,14 @@ public class AreaService {
         return this.areaRepository.findAll();
     }
 
+
+    /**
+     * Supprime une zone
+     * @param a Zone a supprimer
+     */
+    public void delete(Area a){
+        this.areaRepository.delete(a);
+    }
 
     /**
      * Fonction qui verifie si un point est dans une zone specifiee
@@ -80,22 +94,29 @@ public class AreaService {
 
        // Si la somme des aires des triangles reliant le point est egale a
        // l'aire du quadrilatere, alors le point est dans la zone
-       double total_area = Point.getAreaTriangle(a, b, c)
-               + Point.getAreaTriangle(a, d, c);
+       Double total_area = (Double)(Point.getAreaTriangle(a, b, c)
+               + Point.getAreaTriangle(a, d, c));
 
-       double sum_area = Point.getAreaTriangle(a, b, p) + Point.getAreaTriangle(b, c, p)
-               + Point.getAreaTriangle(c, d, p) + Point.getAreaTriangle(d, a, p);
+       Double sum_area = (Double)(Point.getAreaTriangle(a, b, p) + Point.getAreaTriangle(b, c, p)
+               + Point.getAreaTriangle(c, d, p) + Point.getAreaTriangle(d, a, p));
+
+
+       double scale = Math.pow(10, 16);
+       total_area = Math.round(total_area * scale) / scale;
+       sum_area = Math.round(sum_area * scale) / scale;
 
        // TODO: voir si y'a une maniere + clean d'arrondir les decimales
-       DecimalFormat df = new DecimalFormat("0.0000000000000000");
+//       DecimalFormat df = new DecimalFormat("0.0000000000000000");
+//
+//       try {
+//           total_area = (Double)df.parse(df.format(total_area));
+//           sum_area = (Double)df.parse(df.format(sum_area));
+//       } catch (ParseException e) {
+//           e.printStackTrace();
+//       }
 
-       try {
-           total_area = (Double)df.parse(df.format(total_area));
-           sum_area = (Double)df.parse(df.format(sum_area));
-       } catch (ParseException e) {
-           e.printStackTrace();
-       }
-       return (sum_area == total_area);
+       return (sum_area.equals(total_area));
    }
+
 
 }
