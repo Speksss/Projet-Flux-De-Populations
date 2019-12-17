@@ -21,6 +21,8 @@ public class UserLocation {
 
     private double longitude;//Y
 
+    private boolean inZone;
+
     public Integer getId() {
         return id;
     }
@@ -43,5 +45,19 @@ public class UserLocation {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public boolean isInZone() {return inZone;}
+
+    public void setInZone(boolean inZone) {this.inZone = inZone;}
+
+    @Override
+    public String toString() {
+        return "UserLocation{" +
+                "id=" + id +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", inZone=" + inZone +
+                '}';
     }
 }
