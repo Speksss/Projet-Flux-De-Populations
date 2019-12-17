@@ -3,7 +3,6 @@ package application.controller;
 import application.entity.Role;
 import application.entity.User;
 import application.entity.UserLocation;
-import application.service.RoleService;
 import application.service.UserLocationService;
 import application.service.UserService;
 import application.utils.RoleType;
