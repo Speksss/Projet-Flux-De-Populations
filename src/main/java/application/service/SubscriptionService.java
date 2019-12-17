@@ -25,7 +25,7 @@ public class SubscriptionService {
     /**
      * CRUD des Abonnements
      *
-     * @param subscribe
+     * @param subscribe : l'abonement à sauvegarder
      */
     public void saveSubscription(Subscription subscribe) {
         subscriptionRepository.save(subscribe);
@@ -33,9 +33,10 @@ public class SubscriptionService {
     }
 
     /**
-     * @param subscription
+     * Supprime un abonnement
+     * @param subscription : abonnement à supprimer
      *
-     * @return boolean
+     * @return True si correctement supprimer, false sinon
      */
     public boolean deleteSubscription(Subscription subscription) {
         this.subscriptionRepository.delete(subscription);
@@ -43,24 +44,27 @@ public class SubscriptionService {
     }
 
     /**
-     * @param id
+     * Recherche abonnement par id
+     * @param id : id de l'abonnement à trouver
      *
-     * @return L'abonnement
+     * @return L'abonnement recherché, ou null
      */
     public Subscription findSubscriptionById(long id) {
         return this.subscriptionRepository.findById(id);
     }
 
     /**
-     * @param eventType
+     * Recherche abonnement par type d'evenement
+     * @param eventType : type d'evenement de l'abonnement à trouver
      *
-     * @return L'abonnement
+     * @return L'abonnement recherché, ou null
      */
     public Subscription findSubscriptionByType(EventType eventType) {
         return this.subscriptionRepository.findByEventType(eventType);
     }
 
     /**
+     * Recherche tous les abonnements
      * @return Tous les abonnements
      */
     public List<Subscription> findAllSubscriptions() {
@@ -68,6 +72,7 @@ public class SubscriptionService {
     }
 
     /**
+     * recherche tous les abonnements d'un utilisateur
      * @param user : l'utilisateur dont on cherche les abonnements
      *
      * @return Tous les abonnements d'un utilisateur donné

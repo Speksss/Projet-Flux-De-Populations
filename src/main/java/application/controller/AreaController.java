@@ -124,7 +124,7 @@ public class AreaController {
     }
 
     /**
-     * Retoure l'ensemble des zones
+     * Retourne l'ensemble des zones
      * @return List de Areas
      */
     @ApiOperation(value = "Retourne la liste des zones", response = List.class)
@@ -138,7 +138,7 @@ public class AreaController {
 
 
     /**
-     * Supression d'un capteur
+     * Suppression d'un capteur
      * @param id Id du capteur à supprimer
      */
     @ApiOperation(value = "Supprime un capteur", response = String.class)

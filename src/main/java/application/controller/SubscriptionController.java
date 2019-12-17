@@ -32,6 +32,7 @@ public class SubscriptionController {
     private EventTypeService eventTypeService;
 
     /**
+     * Retourne la liste des abonnements
      * @return (the list of all subscriptions)
      */
     @GetMapping("/subscription/all")
@@ -41,8 +42,10 @@ public class SubscriptionController {
     }
 
     /**
+     * Ajoute un utilisateur à un abonnement indiqué selon un type d'evenement
      * @param email (to find the user)
      * @param name (to find the event type)
+     * @return http status / indication de comment s'est déroulé l'abonnement
      */
 
     @PostMapping("/subscription/subscribe")
@@ -72,9 +75,10 @@ public class SubscriptionController {
     }
 
     /**
-     * @param email (The list of events types to which a user has subscribed)
+     * Recupère la liste des types d'evenements des abonnements d'un utilisateur
+     * @param email (pour trouver un utilisateur et récupérer ses abonnements)
      *
-     * @return
+     * @return la liste des types d'evenements des abonnements de l'utilisateur donné et/ou un http status
      */
     @GetMapping("/subscription/my-subscriptions")
     @ResponseBody
@@ -91,9 +95,10 @@ public class SubscriptionController {
     }
 
     /**
-     * @param name (delete a subscription by event type)
+     * Supprime un abonnement existant (Les utilisateurs ne pourront plus utiliser cet abonnement)
+     * @param name (nom de l'abonnement à supprimer)
      *
-     * @return
+     * @return http status / indication de comment s'est déroulé la suppression de l'abonnement
      */
     @PostMapping("/subscription/delete")
     @ResponseBody
@@ -109,10 +114,11 @@ public class SubscriptionController {
     }
 
     /**
-     * @param email (to find the user)
-     * @param name (delete the user from the list of subscribers to this event type)
+     * Retire un utilisateur d'un abonnement donné en entrer
+     * @param email (nom de l'utilisateur pour récupérer ses abonnements)
+     * @param name (nom de l'abonnement auquel l'utilisateur va se désabonner)
      *
-     * @return
+     * @return http status / indication de comment s'est déroulé le désabonnement
      */
     @PostMapping("/subscription/unsubscribe")
     @ResponseBody
