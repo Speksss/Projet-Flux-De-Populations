@@ -11,11 +11,11 @@ var sensorsDatas = function(){
 	for(i=0;i<detailsSensorBlocks.length;i++){
 		// température
 		var temp = detailsSensorBlocks[i].getElementsByClassName("td-temperature")[0].textContent;
-		//humidité
-		var moisture = detailsSensorBlocks[i].getElementsByClassName("td-moisture")[0].textContent;
 		//luminosité
 		var brightness = detailsSensorBlocks[i].getElementsByClassName("td-brightness")[0].textContent;
-		console.log(brightness);
+		//niveau batterie
+		var battery = detailsSensorBlocks[i].getElementsByClassName("td-battery")[0].textContent;
+		console.log(battery);
 		
 		/* température idéal entre 15 et 25 °c*/
 		var temperature1 = new JustGage({
@@ -25,19 +25,9 @@ var sensorsDatas = function(){
 		    max: 100,
 		    label : "°C",
 		    levelColors: ["#5aa3ca"],
+		    gaugeColor: "#f7f7f7",
 		    title: "Température (en °C)"
 		    
-		});
-		
-		/* Humidité idéal entre 45 et 50% */
-		var moisture1 = new JustGage({
-		    id: "moisture"+i,
-		    value: moisture,
-		    min: 0,
-		    max: 100,
-		    label : "%",
-		    levelColors: ["#5aa3ca"],
-		    title: "Humidité (en %)"
 		});
 		
 		var brightness1 = new JustGage({
@@ -47,7 +37,19 @@ var sensorsDatas = function(){
 		    max: 5000,
 		    label : "lux",
 		    levelColors: ["#5aa3ca"],
+		    gaugeColor: "#f7f7f7",
 		    title: "Luminance (en lux)"
+		});
+		
+		var battery1 = new JustGage({
+			id: "battery"+i,
+			value: battery,
+			min: 0,
+			max: 100,
+			label : "%",
+			levelColors: ["#ba1e1e","#f7b72b","#1eba2f"],
+			gaugeColor: "#f7f7f7",
+			title: "Niveau de Batterie (en %)"
 		});
 	}
 }

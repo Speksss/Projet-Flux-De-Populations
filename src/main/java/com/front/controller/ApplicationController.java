@@ -1,6 +1,7 @@
 package com.front.controller;
 
 import com.front.Main;
+import com.front.entity.Capteur;
 import com.front.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,16 +45,14 @@ public class ApplicationController {
 
     @RequestMapping(value = "/application", method = RequestMethod.POST)
     @Scope("session")
-    public String header(@RequestParam("select") String selectHeader, Model model, HttpServletRequest request){
+    public String header(@RequestParam("select") String selectHeader, @RequestParam(name = "sensorId", required = false) String sensorId, Model model, HttpServletRequest request){
 
         if(checkSessionTokenValidity(request)){
             if(selectHeader.equals("panel")){ panelModel(model); map(model); model.addAttribute("header", "panel");}
-            if(selectHeader.equals("capteurs")){  model.addAttribute("header", "capteurs");}
+            if(selectHeader.equals("capteurs")){showAllSensors(model); model.addAttribute("header", "capteurs");}
             if(selectHeader.equals("utilisateurs")){ AllUser(model); model.addAttribute("header", "utilisateurs");}
             if(selectHeader.equals("evenements")){ model.addAttribute("header", "evenements");}
-
-            //TODO À adapter pour faire passer l'id du capteur
-            if(selectHeader.equals("capteur")){  model.addAttribute("header", "capteur");}
+            if(selectHeader.equals("capteur")){showOneSensor(model,sensorId); model.addAttribute("header", "capteur");}
             return "index";
         }
         else{
@@ -62,7 +61,7 @@ public class ApplicationController {
         }
     }
 
-    public static void map(Model model){
+	public static void map(Model model){
 
         // final String uri = "http://35.206.157.216:8080/";
 
@@ -138,4 +137,35 @@ public class ApplicationController {
     public boolean checkSessionTokenValidity(HttpServletRequest request) {
         return (request.getSession().getAttribute("user") != null);
     }
+    
+    public void showOneSensor(Model model, String sensorId) {
+		//TODO En attente de l'API, récupération des données d'un capteur, 
+    	
+    	
+    	/*final String uri ="http://35.206.157.216:8080/capteur?id=" + sensorId;
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+        ResponseEntity<Capteur> response = restTemplate.getForEntity(uri, Capteur.class);
+        Capteur capteur = response.getBody();
+    	
+    	model.addAttribute("capteur", capteur);*/
+    	
+    	
+    	model.addAttribute("capteur", sensorId);	// uniquement avec les données brutes, à supprimer lorsqu'on récuperera les données
+    	
+	}
+    
+    public void showAllSensors(Model model) {
+    	//TODO En attente de l'API, récupération de tous les capteurs  
+    	/*
+    	final String uri = "http://35.206.157.216:8080/capteurs";
+    	RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Capteur[]> response = restTemplate.getForEntity(uri, Capteur[].class);
+        Capteur[] capteurs = response.getBody();
+        
+        model.addAttribute("capteurs", capteurs);
+        */
+      
+	}
 }

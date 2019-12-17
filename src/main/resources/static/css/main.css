@@ -134,10 +134,14 @@ html, body {
     content:"°C";
 }
 
-.td-moisture:after{
-    content:"%";
-}
-
 .td-brightness:after{
     content:" lux";
+}
+
+.td-battery:after{
+	content:"%";
+}
+
+.detailSensorBlock .table-sensor{
+	background-color:white
 }
