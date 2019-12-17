@@ -1,5 +1,7 @@
 package application.entity;
 
+import application.utils.RoleType;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,14 +16,12 @@ public class Role {
     @Column(name="role_id")
     private Long id;
 
-    private String role;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 
     public Role() {}
 
-    public Role(String role) {
+    public Role(RoleType role) {
         this.role = role;
     }
 
@@ -33,11 +33,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getRole() {
+    public RoleType getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(RoleType role) {
         this.role = role;
     }
 }

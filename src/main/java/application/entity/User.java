@@ -1,11 +1,13 @@
 package application.entity;
 
 import application.service.UserService;
+import application.utils.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -54,6 +56,7 @@ public class User {
         this.lastName = lastName;
         this.firstName = firstName;
         this.password = password;
+        this.roles = new HashSet<>();
 //        this.isActive = false;
         this.creationTimestamp = System.currentTimeMillis()/1000;
     }
@@ -141,7 +144,7 @@ public class User {
         this.roles.add(role);
     }
 
-    public boolean hasRole(String role) {
+    public boolean hasRole(RoleType role) {
         boolean flag = false;
         for (Role r : this.roles) {
             if (r.getRole().equals(role)) {

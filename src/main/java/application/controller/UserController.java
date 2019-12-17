@@ -1,9 +1,12 @@
 package application.controller;
 
+import application.entity.Role;
 import application.entity.User;
 import application.entity.UserLocation;
+import application.service.RoleService;
 import application.service.UserLocationService;
 import application.service.UserService;
+import application.utils.RoleType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -82,6 +85,7 @@ public class UserController {
             return new ResponseEntity<>("Cette adresse email n'est pas valide.", HttpStatus.NOT_ACCEPTABLE);
         } else {
             User newUser = new User(email, lastName, firstName, password);
+            newUser.addRole(new Role(RoleType.STUDENT));
             if (this.userService.saveUser(newUser) != null) {
                 return new ResponseEntity<>("L'utilisateur a correctement été créé.", HttpStatus.CREATED);
             }
@@ -201,15 +205,56 @@ public class UserController {
     public ResponseEntity<String> deleteAdmin(@RequestParam("emailAdmin") String emailAdmin,
                                               @RequestParam("emailUser") String emailUser) {
         User userAdmin = userService.findUserByEmail(emailAdmin);
-        if (userAdmin.hasRole("ADMIN")) {
+        if (userAdmin.hasRole(RoleType.ADMIN)) {
             User user = userService.findUserByEmail(emailUser);
-            if (this.userService.deleteUser(user)) {
-                return new ResponseEntity<>("L'utilisateur a correctement été supprimé.", HttpStatus.OK);
+            if (user != null) {
+                if (this.userService.deleteUser(user)) {
+                    return new ResponseEntity<>("L'utilisateur a correctement été supprimé.", HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>("Une erreur est survenue lors de la suppression de votre compte.", HttpStatus.NOT_MODIFIED);
+                }
             } else {
-                return new ResponseEntity<>("Une erreur est survenue lors de la suppression de votre compte.", HttpStatus.NOT_MODIFIED);
+                return new ResponseEntity<>("Cet utilisateur n'existe pas.", HttpStatus.NOT_MODIFIED);
             }
         } else {
-            return new ResponseEntity<>("Le mot de passe saisi est incorrect.", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Vous n'avez pas l'autorisation pour effectuer cette opération.", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    /**
+     * Modifier un ou plusieurs attributs d'un utilisateur (par un Admin)
+     * @param email : email de l'utilsateur (pour l'identifier)
+     * @param password : mot de passe de l'utilisateur à modifier (OPTIONNEL)
+     * @param lastName : nom à modifier (OPTIONNEL)
+     * @param firstName : prénom à modifier (OPTIONNEL)
+     * @return ResponseEntity avec un String en fonction du déroulement de l'opération
+     */
+    @ApiOperation(value = "Modifie un utilisateur grâce à son adresse email (par un admin)", response = String.class)
+    @PostMapping("/admin/user/update")
+    @ResponseBody
+    public ResponseEntity<String> updateAdmin(@RequestParam("emailAdmin") String emailAdmin,
+                                              @RequestParam("email") String email,
+                                              @RequestParam(value = "password", required = false) String password,
+                                              @RequestParam(value = "lastName", required = false) String lastName,
+                                              @RequestParam(value = "firstName", required = false) String firstName) {
+        User userAdmin = userService.findUserByEmail(emailAdmin);
+        if (userAdmin.hasRole(RoleType.ADMIN)) {
+            User user = this.userService.findUserByEmail(email);
+            if (password != null) {
+                user.setPassword(userService.encodePassword(password));
+            }
+            if (lastName != null) {
+                user.setLastName(lastName);
+            }
+            if (firstName != null) {
+                user.setFirstName(firstName);
+            }
+            if (this.userService.updateUser(user) != null) {
+                return new ResponseEntity<>("L'utilisateur a correctement été modifié.", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Une erreur est survenue lors de la modification de votre compte.", HttpStatus.NOT_MODIFIED);
+        } else {
+            return new ResponseEntity<>("Vous n'avez pas l'autorisation pour effectuer cette opération.", HttpStatus.FORBIDDEN);
         }
     }
 
