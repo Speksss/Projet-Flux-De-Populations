@@ -11,6 +11,6 @@ public interface UserLocationRepository extends CrudRepository<UserLocation,Inte
     UserLocation findById(long id);
     List<UserLocation> findAll();
 
-    @Query("SELECT u FROM UserLocation u WHERE u.longitude <> 0 AND u.latitude <> 0")
-    List<UserLocation> findAllNotNull();
+    @Query("SELECT u FROM UserLocation u WHERE u.inZone = true")
+    List<UserLocation> findAllInZone();
 }

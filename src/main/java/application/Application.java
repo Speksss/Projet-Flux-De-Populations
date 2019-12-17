@@ -59,20 +59,41 @@ public class Application {
      */
     @Scheduled(fixedRate = 30000)
     public void analyse() {
-        log.info("Détection des événements : analyse en cours");
-        List<UserLocation> userLocations = userLocationService.getAllNotNull();
+       log.info("Détection des événements : analyse en cours");
+       detectUsersOutOfZone();
+       detectEventInfluence();
+       log.info("Détection des événements : analyse terminée");
+    }
+
+    private void detectUsersOutOfZone() {
+        List<UserLocation> userLocations = userLocationService.getAll();
+        for(UserLocation ul : userLocations){
+            Area uphf = new Area();
+            uphf.setCoordinates("{\"x1\":\"50.320309\",\"y1\":\"3.513892\",\"x2\":\"50.329210\",\"y2\":\"3.518154\",\"x3\":\"50.328642\",\"y3\":\"3.509260\",\"x4\":\"50.321190\",\"y4\":\"3.508305\"}");
+            if(((ul.getLongitude()==0)&&(ul.getLatitude()==0))||(!areaService.isPointInArea(uphf,new Point(ul.getLatitude(),ul.getLongitude())))){
+                ul.setInZone(false);
+                userLocationService.saveUserLocation(ul);
+            }else if(!ul.isInZone()){
+                ul.setInZone(true);
+                userLocationService.saveUserLocation(ul);
+            }
+        }
+    }
+
+    public void detectEventInfluence(){
+        List<UserLocation> userLocations = userLocationService.getAllInZone();
         List<Area> areaList = areaService.findAllAreas();
         //Compte le nombre d'utilisateurs par zones
         for (Area a : areaList) {
             int count = 0;
             for (UserLocation uL : userLocations) {
                 Point p = new Point(uL.getLatitude(),uL.getLongitude());
-                if (this.areaService.isPointInArea(a, p)) count ++;
+                if (this.areaService.isPointInArea(a, p)) {
+                    count ++;
+                }
             }
-
             EventType type = eventTypeService.findEventTypeByName("Influence");
             List<Event> eventList = eventService.findAllByAreaAndEventTypeAndActive(a,type,true);
-
             //Vérification du dépassement de capacité (= event Influence)
             if(count > a.getCapacity()){
                 //Si il n'y a pas déjà un event en cours
@@ -107,7 +128,6 @@ public class Application {
                 }
             }
         }
-        log.info("Détection des événements : analyse terminée");
     }
 }
 

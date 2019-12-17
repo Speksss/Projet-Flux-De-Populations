@@ -51,6 +51,8 @@ public class UserLocation {
 
     public void setInZone(boolean inZone) {this.inZone = inZone;}
 
+
+
     @Override
     public String toString() {
         return "UserLocation{" +
