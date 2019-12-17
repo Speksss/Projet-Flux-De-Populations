@@ -23,16 +23,16 @@ public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    AreaService areaService;
+    private AreaService areaService;
 
     @Autowired
-    UserLocationService userLocationService;
+    private UserLocationService userLocationService;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * Sauvegarde d'un utilisateur dans la BD
@@ -109,6 +109,10 @@ public class UserService {
      */
     public List<User> findAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    public List<User> findAllInactiveUsers() {
+        return this.userRepository.findAllByActiveIsFalse();
     }
 
     public List <User> findAllUsersByArea(Integer id){

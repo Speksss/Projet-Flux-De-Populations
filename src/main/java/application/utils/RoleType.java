@@ -1,6 +1,6 @@
 package application.utils;
 
 public enum RoleType {
-    ADMIN,
-    STUDENT
+    ROLE_ADMIN,
+    ROLE_STUDENT;
 }

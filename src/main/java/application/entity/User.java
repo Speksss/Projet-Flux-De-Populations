@@ -1,15 +1,13 @@
 package application.entity;
 
-import application.service.UserService;
 import application.utils.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Entité Utilisateur
@@ -17,10 +15,11 @@ import java.util.Set;
 @Entity
 @Table(name = "User", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private long id;
 
     private String lastName;
@@ -29,7 +28,7 @@ public class User {
 
     private String email;
 
-    private boolean isActive;
+    private boolean active;
 
     private long creationTimestamp;
 
@@ -41,12 +40,12 @@ public class User {
     @JoinColumn(name = "user_location_id")
     private UserLocation userLocation;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @NotEmpty
+    @ElementCollection(targetClass = RoleType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Collection<RoleType> roles;
 
     public User() {
     }
@@ -57,18 +56,18 @@ public class User {
         this.firstName = firstName;
         this.password = password;
         this.roles = new HashSet<>();
-        this.isActive = true;
-        this.creationTimestamp = System.currentTimeMillis()/1000;
+        this.active = true;
+        this.creationTimestamp = System.currentTimeMillis() / 1000;
     }
 
-    public User(String email, String lastName, String firstName, String password, Set<Role> roles) {
+    public User(String email, String lastName, String firstName, String password, Collection<RoleType> roles) {
         this.email = email;
         this.lastName = lastName;
         this.firstName = firstName;
         this.password = password;
         this.roles = roles;
-        this.isActive = true;
-        this.creationTimestamp = System.currentTimeMillis()/1000;
+        this.active = true;
+        this.creationTimestamp = System.currentTimeMillis() / 1000;
     }
 
     public long getId() {
@@ -120,38 +119,40 @@ public class User {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
     public long getCreationTimestamp() {
         return creationTimestamp;
     }
 
-    public Set<Role> getRoles() {
+    public Collection<RoleType> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Collection<RoleType> roles) {
         this.roles = roles;
     }
 
-    public void addRole(Role role) {
+    public void addRole(RoleType role) {
         this.roles.add(role);
     }
 
-    public boolean hasRole(RoleType role) {
-        boolean flag = false;
-        for (Role r : this.roles) {
-            if (r.getRole().equals(role)) {
-                flag = true;
-                break;
+    public boolean hasRole(String role) {
+        for(RoleType r : this.roles) {
+            if(r.name().equals(role)) {
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    public boolean hasRole(RoleType role) {
+        return this.hasRole(role.name());
     }
 
     @Override
@@ -174,7 +175,7 @@ public class User {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", email='").append(email).append('\'');
-        sb.append(", isActive='").append(isActive).append('\'');
+        sb.append(", isActive='").append(active).append('\'');
         sb.append('}');
         return sb.toString();
     }
