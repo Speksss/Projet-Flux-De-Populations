@@ -108,3 +108,32 @@ html, body {
     margin-left: 10px;
     /* The width is the width of the web page */
 }
+
+
+/*/////////////////////////////*/
+/*////////// Capteurs /////////*/
+/*/////////////////////////////*/
+
+
+.gauge{
+	display: inline-block;
+	width:200px;
+}
+
+.subtitle{
+	color:#646464;
+	font-size: small;
+
+}
+
+.td-temperature:after{
+	content:"°C";
+}
+
+.td-moisture:after{
+	content:"%";
+}
+
+.td-brightness:after{
+	content:" lux";
+}

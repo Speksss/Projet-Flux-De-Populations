@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="content">
+    <div class="jumbotron jumbotron-fluid title-section">
+        <div class="container">
+            <h1 class="title-content">Capteur #1</h1>
+            
+			<div id="detailSensor1" class="detailSensorBlock">
+				<div class="row" >
+					<div class="col-12 text-center mt-4">
+						<table class="table table-bordered" style="background-color:white">
+						  <thead class="thead-dark">
+						    <tr>
+						      <th scope="col">Id</th>
+						      <th scope="col">Nom</th>
+						      <th scope="col" colspan="2">Coordonnées (LAT, LONG)</th>
+						      <th scope="col">Température</th>
+						      <th scope="col">Humidité</th>
+						      <th scope="col">Luminance</th>
+						      <th scope="col">Mouvement</th>
+						      <th scope="col">Statut</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr class="rowSensor">
+						      <th scope="row">1</th>
+						      <td class="td-place">RU2</td>
+						      <td class="td-lat">50.3222</td>
+						      <td class="td-long">3.5123</td>
+						      <td class="td-temperature">22</td>
+						      <td class="td-moisture">40</td>
+						      <td class="td-brightness">800</td>
+						      <td class="td-move">?</td>
+						      <td class="td-statut">Fonctionnel</td>
+						    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row mt-4" >
+					<div class="sensorsContainer text-center col-12 col-md-12 col-sm-12">
+						<div id="temperature0" class="gauge mx-4" ></div>
+						<div id="moisture0" class="gauge mx-4"></div>
+						<div id="brightness0" class="gauge mx-4"></div>
+					</div>
+					
+					<!-- SI DÉMARRAGE/ARRÊT DES CAPTEURS POSSIBLE -->
+					<!-- <div class="sensorsContainer col-4 col-md-4 col-sm-12 mt-4 px-5">
+						<h5 class="states">Statut : En Fonctionnement</h5>
+						<form action="" method="post">
+							<div class="custom-control custom-switch mt-4">
+							  <input type="checkbox" class="custom-control-input" id="startstop1">
+							  <label class="custom-control-label" for="startstop1">Marche/Arrêt</label>
+							</div>
+							<input class="btn btn-primary mt-4" type="submit" value="Confirmer">
+						</form>
+					</div>
+					 -->
+				</div>
+				<p class="container subtitle mt-5 font-italic">
+					Dernière maj : 12/12/19 10:10:29
+				</p>
+			</div>
+			</div>
+		</div>
+	</div>
+</html>
