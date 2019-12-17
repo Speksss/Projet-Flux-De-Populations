@@ -13,7 +13,7 @@ import java.util.Date;
 public class Event {
 
     @Id
-    @JsonIgnore
+//    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="event_id")
     private Integer id;
