@@ -35,4 +35,6 @@ public class UserLocationService {
         return this.userLocationRepository.findAll();
     }
 
+    public List<UserLocation> getAllNotNull(){return this.userLocationRepository.findAllNotNull();}
+
 }

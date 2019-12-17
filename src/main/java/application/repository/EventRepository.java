@@ -23,4 +23,6 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     List<Event> findAllByActiveIsTrue();
 
     List<Event> findAllByEventType_Name(String name);
+
+    List<Event> findAllByAreaAndEventTypeAndActive(Area a,EventType et,Boolean active);
 }

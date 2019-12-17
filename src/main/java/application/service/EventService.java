@@ -89,4 +89,7 @@ public class EventService {
         return this.eventRepository.findAllByEventType_Name(name);
     }
 
+    public List<Event> findAllByAreaAndEventTypeAndActive(Area a,EventType et,boolean b){
+        return this.eventRepository.findAllByAreaAndEventTypeAndActive(a,et,b);
+    }
 }
