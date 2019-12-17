@@ -75,15 +75,6 @@ public class Application {
 
             //Vérification du dépassement de capacité (= event Influence)
             if(count > a.getCapacity()){
-                JSONObject obj = new JSONObject(a.getCoordinates());
-                Point p1 = new Point(obj.getDouble("x1"), obj.getDouble("y1"));
-                Point p2 = new Point(obj.getDouble("x2"), obj.getDouble("y2"));
-                Point p3 = new Point(obj.getDouble("x3"), obj.getDouble("y3"));
-                Point p4 = new Point(obj.getDouble("x4"), obj.getDouble("y4"));
-
-                double latitude = (p1.getX() + p2.getX() + p3.getX() + p4.getX()) / 4;
-                double longitude = (p1.getY() + p2.getY() + p3.getY() + p4.getY()) / 4;
-
                 //Si il n'y a pas déjà un event en cours
                 if(eventList.size()==0){
                     log.info("[INFLUENCE]"+a.getName()+" : "+count+"/"+a.getCapacity());
