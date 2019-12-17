@@ -29,7 +29,7 @@ public class User {
 
     private String email;
 
-//    private boolean isActive;
+    private boolean isActive;
 
     private long creationTimestamp;
 
@@ -57,7 +57,7 @@ public class User {
         this.firstName = firstName;
         this.password = password;
         this.roles = new HashSet<>();
-//        this.isActive = false;
+        this.isActive = true;
         this.creationTimestamp = System.currentTimeMillis()/1000;
     }
 
@@ -67,7 +67,7 @@ public class User {
         this.firstName = firstName;
         this.password = password;
         this.roles = roles;
-//        this.isActive = false;
+        this.isActive = true;
         this.creationTimestamp = System.currentTimeMillis()/1000;
     }
 
@@ -119,14 +119,13 @@ public class User {
         this.userLocation = userLocation;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
 
-//    public boolean isActive() {
-//        return isActive;
-//    }
-//
-//    public void setActive(boolean active) {
-//        isActive = active;
-//    }
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     public long getCreationTimestamp() {
         return creationTimestamp;
@@ -175,6 +174,7 @@ public class User {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", email='").append(email).append('\'');
+        sb.append(", isActive='").append(isActive).append('\'');
         sb.append('}');
         return sb.toString();
     }

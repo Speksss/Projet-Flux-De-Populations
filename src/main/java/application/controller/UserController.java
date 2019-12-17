@@ -57,7 +57,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<User> login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
         User user = userService.findUserByEmail(email);
-        if (userService.comparePassword(password, user.getPassword())) {
+        if (userService.comparePassword(password, user.getPassword()) && user.isActive()) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -236,7 +236,8 @@ public class UserController {
                                               @RequestParam("email") String email,
                                               @RequestParam(value = "password", required = false) String password,
                                               @RequestParam(value = "lastName", required = false) String lastName,
-                                              @RequestParam(value = "firstName", required = false) String firstName) {
+                                              @RequestParam(value = "firstName", required = false) String firstName,
+                                              @RequestParam(value = "isActive", required = false) Boolean isActive) {
         User userAdmin = userService.findUserByEmail(emailAdmin);
         if (userAdmin.hasRole(RoleType.ADMIN)) {
             User user = this.userService.findUserByEmail(email);
@@ -248,6 +249,9 @@ public class UserController {
             }
             if (firstName != null) {
                 user.setFirstName(firstName);
+            }
+            if (isActive != null) {
+                user.setActive(isActive);
             }
             if (this.userService.updateUser(user) != null) {
                 return new ResponseEntity<>("L'utilisateur a correctement été modifié.", HttpStatus.OK);
