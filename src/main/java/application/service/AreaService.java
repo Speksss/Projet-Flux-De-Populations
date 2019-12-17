@@ -24,26 +24,39 @@ public class AreaService {
     @Autowired
     private AreaRepository areaRepository;
 
-    public boolean saveNewArea(Area area){
-        Area res = areaRepository.save(area);
+    /**
+     * Sauvegarde d'une zone
+     * @param area : zone à sauvegarder
+     * @return True si la zone a bien été sauvegardée, false sinon
+     */
+    public Area saveNewArea(Area area){
         log.info("saveNewArea() : {}", area.toString());
-        if (res == null)
-            return false;
-        return true;
-
-
+        return this.areaRepository.save(area);
     }
 
+    /**
+     * Recherche d'une zone par son id
+     * @param id : id de la zone
+     * @return La zone recherchée, ou null
+     */
     public Area findAreaById(Integer id){
         return this.areaRepository.findById(id);
     }
 
+    /**
+     * Recherche d'une zone par son nom
+     * @param name : nom de la zone
+     * @return La zone recherchée, ou null
+     */
     public Area findAreaByName(String name){
         return this.areaRepository.findByName(name);
     }
 
     /**
-     * Renvoie la liste des zones dans lesquels le point se situe
+     * Renvoie la liste des zones dans lesquels le point (donné en entré) se situe
+     * @param x : latitude du point
+     * @param y : longitude du point
+     * @return Liste de zones (peut être vide)
      */
     public List<Area> findAreasByCoordinates(double x, double y){
         List<Area> allAreas = this.areaRepository.findAll();
@@ -62,6 +75,10 @@ public class AreaService {
         return goodAreas;
     }
 
+    /**
+     * Recherche la liste de toutes les zones
+     * @return Liste des zones
+     */
     public List<Area> findAllAreas(){
         return this.areaRepository.findAll();
     }
@@ -88,34 +105,33 @@ public class AreaService {
        Point b = new Point(obj.getDouble("x2") ,obj.getDouble("y2"));
        Point c = new Point(obj.getDouble("x3") ,obj.getDouble("y3"));
        Point d = new Point(obj.getDouble("x4") ,obj.getDouble("y4"));
-       // a    d
+       // a     d
        //    p
-       // b    c
+       // b     c
 
        // Si la somme des aires des triangles reliant le point est egale a
        // l'aire du quadrilatere, alors le point est dans la zone
-       Double total_area = (Double)(Point.getAreaTriangle(a, b, c)
+       Double totalArea = (Double)(Point.getAreaTriangle(a, b, c)
                + Point.getAreaTriangle(a, d, c));
 
-       Double sum_area = (Double)(Point.getAreaTriangle(a, b, p) + Point.getAreaTriangle(b, c, p)
+       Double sumArea = (Double)(Point.getAreaTriangle(a, b, p) + Point.getAreaTriangle(b, c, p)
                + Point.getAreaTriangle(c, d, p) + Point.getAreaTriangle(d, a, p));
 
 
        double scale = Math.pow(10, 16);
-       total_area = Math.round(total_area * scale) / scale;
-       sum_area = Math.round(sum_area * scale) / scale;
+       totalArea = Math.round(totalArea * scale) / scale;
+       sumArea = Math.round(sumArea * scale) / scale;
 
-       // TODO: voir si y'a une maniere + clean d'arrondir les decimales
 //       DecimalFormat df = new DecimalFormat("0.0000000000000000");
 //
 //       try {
-//           total_area = (Double)df.parse(df.format(total_area));
-//           sum_area = (Double)df.parse(df.format(sum_area));
+//           totalArea = (Double)df.parse(df.format(totalArea));
+//           sumArea = (Double)df.parse(df.format(sumArea));
 //       } catch (ParseException e) {
 //           e.printStackTrace();
 //       }
 
-       return (sum_area.equals(total_area));
+       return (sumArea.equals(totalArea));
    }
 
 

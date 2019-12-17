@@ -116,7 +116,7 @@ public class AreaController {
         a.setName(name);
         a.setCapacity(capacity);
         System.out.println("[SAVE] Area : "+a.toString());
-        if(areaService.saveNewArea(a))
+        if(areaService.saveNewArea(a) != null)
             return new ResponseEntity<>("La zone à été enregistrée.", HttpStatus.ACCEPTED);
         else
             return new ResponseEntity<>("Une erreur est survenue lors de la sauvegarde de la zone.", HttpStatus.NOT_MODIFIED);
