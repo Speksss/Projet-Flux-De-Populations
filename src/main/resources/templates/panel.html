@@ -2,7 +2,10 @@
 <div th:fragment="content(NbUsers)">
     <div class="jumbotron jumbotron-fluid title-section">
         <div class="container">
-            <h1 class="title-content">Panneau de contrôle</h1>
+            <div class="d-flex">
+                <h1 class="title-content">Panneau de contrôle</h1>
+                <a href="#"><button class="btn btn-primary plus-btn"><i class="fas fa-plus"></i> Créer un évenements</button></a>
+            </div>
             <div class="d-flex">
                 <p class="lead">Nombre d'utilisateurs : </p>
                 <p class="lead pl-2" th:text="${NbUsers}"></p>

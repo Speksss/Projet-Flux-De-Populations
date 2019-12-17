@@ -48,13 +48,12 @@ public class ApplicationController {
 
         if(checkSessionTokenValidity(request)){
             if(selectHeader.equals("panel")){ panelModel(model); map(model); model.addAttribute("header", "panel");}
-            if(selectHeader.equals("capteurs")){ model.addAttribute("header", "capteurs");}
+            if(selectHeader.equals("capteurs")){  model.addAttribute("header", "capteurs");}
             if(selectHeader.equals("utilisateurs")){ AllUser(model); model.addAttribute("header", "utilisateurs");}
             if(selectHeader.equals("evenements")){ model.addAttribute("header", "evenements");}
-            
-            // À adapter pour faire passer l'id du capteur
-            if(selectHeader.equals("capteur")){ model.addAttribute("header", "capteur");}
 
+            //TODO À adapter pour faire passer l'id du capteur
+            if(selectHeader.equals("capteur")){  model.addAttribute("header", "capteur");}
             return "index";
         }
         else{

@@ -80,6 +80,11 @@ html, body {
     font-weight: normal;
 }
 
+.plus-btn{
+    margin-top:15px;
+    margin-left: 450px;
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -109,31 +114,30 @@ html, body {
     /* The width is the width of the web page */
 }
 
-
 /*/////////////////////////////*/
 /*////////// Capteurs /////////*/
 /*/////////////////////////////*/
 
 
 .gauge{
-	display: inline-block;
-	width:200px;
+    display: inline-block;
+    width:200px;
 }
 
 .subtitle{
-	color:#646464;
-	font-size: small;
+    color:#646464;
+    font-size: small;
 
 }
 
 .td-temperature:after{
-	content:"°C";
+    content:"°C";
 }
 
 .td-moisture:after{
-	content:"%";
+    content:"%";
 }
 
 .td-brightness:after{
-	content:" lux";
+    content:" lux";
 }
