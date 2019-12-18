@@ -111,10 +111,19 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    /**
+     * Trouve tous les utilisateurs inactifs
+     * @return La liste des utilisateurs inactifs
+     */
     public List<User> findAllInactiveUsers() {
         return this.userRepository.findAllByActiveIsFalse();
     }
 
+    /**
+     * Trouve les utilisateurs selon une zone
+     * @param id : id de la zone dans laquelle trouver les utilisateurs
+     * @return La liste des utilisateurs se trouvant dans la zone
+     */
     public List <User> findAllUsersByArea(Integer id){
         List<UserLocation> userLocations = userLocationService.getAll();
         Area a = areaService.findAreaById(id);
@@ -148,7 +157,6 @@ public class UserService {
      * @param password : string à encoder
      * @return String encodée
      */
-
     public String encodePassword(String password) {
         return bCryptPasswordEncoder.encode(password);
     }
