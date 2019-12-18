@@ -31,7 +31,7 @@
     "cordova-browser": "6.0.0",
     "cordova-plugin-android-permissions": "^1.0.2",
     "cordova-plugin-geolocation": "^4.0.2",
-    "cordova-plugin-nativestorage": "^2.3.2",
+    "cordova-plugin-nativestorage": "git+https://github.com/TheCocoaProject/cordova-plugin-nativestorage.git",
     "cordova-plugin-request-location-accuracy": "^2.3.0",
     "core-js": "^2.5.4",
     "ng2-search-filter": "^0.5.1",
