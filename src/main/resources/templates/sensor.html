@@ -1,54 +1,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
-	<div th:fragment="content">
-	    <div class="jumbotron jumbotron-fluid title-section">
-	        <div class="container">
-	        	<!-- En attente de l'API, données en brutes pour l'instant -->
-	<!--             <h1 class="title-content" th:text="'Capteur #' + ${capteur.id}"></h1> -->
-	            <h1 class="title-content" th:text="'Capteur #' + ${capteur}"></h1>
-	            
-	            <form action="#" th:action="@{/application}" th:object="${String}" method="post">
-                    <input type="hidden" name="select" th:value="capteurs"/>
-                    <button class="btn btn-secondary mb-3 mt-5" type="submit"><i class="fas fa-arrow-left"></i> Retour à la liste</button>
-                </form>
-				
-				<div id="detailSensor1" class="detailSensorBlock">
-					<div class="row" >
-						<div class="col-12 text-center mt-4">
-							<table class="table table-bordered table-sensor">
-							  <thead class="thead-dark">
-							    <tr>
-							      <th scope="col">Id</th>
-							      <th scope="col">Nom</th>
-							      <th scope="col">Emplacement</th>
-							      <th scope="col">Température</th>
-							      <th scope="col">Luminance</th>
-							      <th scope="col">Niveau de Batterie</th>
-							      <th scope="col">Statut</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr class="rowSensor">
-							      <td class="td-id">1</td>
-							      <td class="td-name">Nom Capteur</td>
-							      <td class="td-location">Emplacement 1</td>
-							      <td class="td-temperature">22</td>
-							      <td class="td-brightness">800</td>
-							      <td class="td-battery">70</td>
-							      <td class="td-statut">Fonctionnel</td>
-							    </tr>
-							  </tbody>
-							</table>
-						</div>
+<div th:fragment="content">
+	<div class="jumbotron jumbotron-fluid title-section">
+		<div class="container">
+			<!-- En attente de l'API, données en brutes pour l'instant -->
+			<!--             <h1 class="title-content" th:text="'Capteur #' + ${capteur.id}"></h1> -->
+			<h1 class="title-content" th:text="'Capteur #' + ${capteur}"></h1>
+
+			<form action="#" th:action="@{/application}" th:object="${String}" method="post">
+				<input type="hidden" name="select" th:value="capteurs"/>
+				<button class="btn btn-secondary mb-3 mt-5" type="submit"><i class="fas fa-arrow-left"></i> Retour à la liste</button>
+			</form>
+
+			<div id="detailSensor1" class="detailSensorBlock">
+				<div class="row" >
+					<div class="col-12 text-center mt-4">
+						<table class="table table-bordered table-sensor">
+							<thead class="thead-dark">
+							<tr>
+								<th scope="col">Id</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Emplacement</th>
+								<th scope="col">Température</th>
+								<th scope="col">Luminance</th>
+								<th scope="col">Niveau de Batterie</th>
+								<th scope="col">Statut</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr class="rowSensor">
+								<td class="td-id">1</td>
+								<td class="td-name">Nom Capteur</td>
+								<td class="td-location">Emplacement 1</td>
+								<td class="td-temperature">22</td>
+								<td class="td-brightness">800</td>
+								<td class="td-battery">70</td>
+								<td class="td-statut">Fonctionnel</td>
+							</tr>
+							</tbody>
+						</table>
 					</div>
-					<div class="row mt-4" >
-						<div class="sensorsContainer text-center col-12 col-md-12 col-sm-12">
-							<div id="temperature0" class="gauge mx-4" ></div>
-							<div id="brightness0" class="gauge mx-4"></div>
-							<div id="battery0" class="gauge mx-4"></div>
-						</div>
+				</div>
+				<div class="row mt-4" >
+					<div class="sensorsContainer text-center col-12 col-md-12 col-sm-12">
+						<div id="temperature0" class="gauge mx-4" ></div>
+						<div id="brightness0" class="gauge mx-4"></div>
+						<div id="battery0" class="gauge mx-4"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </html>

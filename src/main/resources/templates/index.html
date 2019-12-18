@@ -20,7 +20,7 @@
     <script type="text/javascript" th:src="@{js/scriptSensor.js}"></script>
 </head>
 <body>
-<div class="container-fluid bg-dark sticky-top">
+<div class="container-fluid bg-dark fixed-top">
     <nav class="navbar navbar-dark bg-dark justify-content-between">
         <a class="navbar-brand" id="logo">Administration</a>
         <a href="logout"><button class="btn btn-danger my-2 my-sm-0"><i class="fas fa-times"></i> Déconnexion</button></a>
@@ -50,11 +50,11 @@
         </div>
         <div class="col-10 sidebar-element">
             <div th:if="${header == 'panel'}"><div th:insert="panel.html :: content(NbUsers=${NbUsers})"></div></div>
-            <span th:if="${header == 'panel'}" th:insert="map.html :: content(X1=${X1}, Y1=${Y1}, X2=${X2}, Y2=${Y2}, X3=${X3}, Y3=${Y3}, X4=${X4}, Y4=${Y4})"></span>
+            <span th:if="${header == 'panel'}" th:insert="map.html :: content(listArea=${listArea})"></span>
             <div th:if="${header == 'capteurs'}"><div th:insert="capteurs.html :: content"></div></div>
             <div th:if="${header == 'capteur'}"><div th:insert="sensor.html :: content"></div></div>
             <div th:if="${header == 'utilisateurs'}"><div th:insert="utilisateurs.html :: content(Users=${Users})"></div></div>
-            <div th:if="${header == 'evenements'}"><div th:insert="evenements.html :: content"></div></div>
+            <div th:if="${header == 'evenements'}"><div th:insert="evenements.html :: content(listEvent=${listEvent})"></div></div>
         </div>
     </div>
 </div>

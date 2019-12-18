@@ -5,7 +5,6 @@ import com.front.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
-
 import javax.servlet.http.HttpServletRequest;
-
-import static com.front.controller.ApplicationController.map;
-import static com.front.controller.ApplicationController.panelModel;
+import static com.front.controller.ApplicationController.*;
+import static com.front.config.adresse;
 
 @Controller
 public class LoginController {
@@ -37,7 +34,7 @@ public class LoginController {
 
         if(!email.equals("") && !password.equals("")){
 
-            final String uri = "http://35.206.157.216:8080/login?email="+ email + "&password=" + password;
+            final String uri = adresse + "login?email="+ email + "&password=" + password;
 
             RestTemplate restTemplate = new RestTemplate();
             User response = restTemplate.getForObject(uri, User.class);
@@ -45,7 +42,7 @@ public class LoginController {
             if(response != null){
                 request.getSession().setAttribute("user", email);
 
-                map(model);
+                mapBuilder(model);
                 panelModel(model);
                 model.addAttribute("header", "panel");
                 return "index";
@@ -57,6 +54,12 @@ public class LoginController {
         }
 
         return "login";
+
+        /* TEST */
+//        mapBuilder(model);
+//        panelModel(model);
+//        model.addAttribute("header", "panel");
+//        return "index";
     }
 
     @GetMapping("/logout")
