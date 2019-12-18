@@ -1,0 +1,25 @@
+
+
+    <div class="input-group mb-4">
+            <input [(ngModel)]="listFilter" type="search" placeholder="Rechercher..." aria-describedby="button-addon5" class="form-control">
+    </div>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Abonnements uniquement ?</label>
+    </div>
+
+          
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+          <h2>Les évènements</h2>
+            <ul>
+            <app-event *ngFor="let ev of arrayEvents | filter:listFilter" 
+            [eventType]="ev.eventType"
+            [area]="ev.area"></app-event>
+            </ul>
+          <ul class="list-group">
+          </ul>
+      </div>
+    </div>
+</div>
