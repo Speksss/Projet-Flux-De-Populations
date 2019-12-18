@@ -42,6 +42,9 @@ public class Application {
     @Autowired
     EventTypeService eventTypeService;
 
+    @Autowired
+    NotificationsQueueService notificationsQueueService;
+
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 
@@ -111,7 +114,7 @@ public class Application {
                     //Mise a jour de la date
                     Event event = eventList.get(0);
                     event.setDate(new Date());
-                    eventService.saveEvent(event);
+                    eventService.updateEvent(event);
                 }
             }else {
                 //Desactivation des event après 15 minutes
@@ -121,7 +124,7 @@ public class Application {
                         Interval interval = new Interval(eventDate, new DateTime());
                         if(interval.toDuration().getStandardMinutes() >= 15){
                             e.setActive(false);
-                            eventService.saveEvent(e);
+                            eventService.updateEvent(e);
                             log.info("[DESACTIVATION EVENT] "+e.getName()+" : "+e.getArea().getName());
                         }
                     }
@@ -129,7 +132,6 @@ public class Application {
             }
         }
     }
-
 }
 
 

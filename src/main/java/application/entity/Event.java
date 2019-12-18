@@ -1,6 +1,7 @@
 package application.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.Objects;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -83,5 +84,35 @@ public class Event {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return active == event.active &&
+                Objects.equal(id, event.id) &&
+                Objects.equal(name, event.name) &&
+                Objects.equal(date, event.date) &&
+                Objects.equal(eventType, event.eventType) &&
+                Objects.equal(area, event.area);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", eventType=" + eventType +
+                ", area=" + area +
+                ", active=" + active +
+                '}';
     }
 }

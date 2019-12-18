@@ -1,7 +1,9 @@
 package application.controller;
 
+import application.entity.Event;
 import application.entity.User;
 import application.entity.UserLocation;
+import application.service.NotificationsQueueService;
 import application.service.UserLocationService;
 import application.service.UserService;
 import application.utils.RoleType;
@@ -30,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserLocationService userLocationService;
+
+    @Autowired
+    private NotificationsQueueService notificationsQueueService;
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
@@ -184,20 +189,19 @@ public class UserController {
     }
 
     /**
-     * Modifie les coordonnées de localisation d'un utilisateur
-     *
+     * Modifie les coordonnées de localisation d'un utilisateur et lui renvoie ses notifications
      * @param userEmail : email de l'utilisateur à modifier
      * @param latitutde : latitude de la nouvelle position
      * @param longitude : longitude de la nouvelle position
      *
-     * @return ResponseEntity avec un String en fonction du déroulement de l'opération
+     * @return ResponseEntity avec une liste de notifications (sous forme d'Event)
      */
-    @ApiOperation(value = "Modification de la localisation de l'utilisateur", response = String.class)
+    @ApiOperation(value = "Modification de la localisation de l'utilisateur", response = List.class)
     @PostMapping("/location/update")
     @ResponseBody
-    public ResponseEntity<String> updateLocation(@RequestParam("userMail") String userEmail,
-                                                 @RequestParam("latitude") double latitutde,
-                                                 @RequestParam("longitude") double longitude) {
+    public ResponseEntity<List<Event>> updateLocation(@RequestParam("userMail") String userEmail,
+                                                      @RequestParam("latitude") double latitutde,
+                                                      @RequestParam("longitude") double longitude) {
         User user = userService.findUserByEmail(userEmail);
         if(user != null) {
             UserLocation userL = user.getUserLocation();
@@ -205,9 +209,14 @@ public class UserController {
             userL.setLongitude(longitude);
             userLocationService.saveUserLocation(userL);
 
-            return new ResponseEntity<>("La position de l'utilisateur à été actualisée.", HttpStatus.ACCEPTED);
+            // Récupération des notifications de l'utilisateur
+//            log.info("[*] User (updateLocation) : " + user.getEmail());
+            List<Event> notifications = notificationsQueueService.getNotificationsEventByUser(user);
+//            log.info("[*] notifications.size : " + notifications.size());
+
+            return new ResponseEntity<>(notifications, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("L'utilisateur n'existe pas", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

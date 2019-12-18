@@ -1,8 +1,6 @@
 package application.service;
 
-import application.entity.Area;
-import application.entity.Event;
-import application.entity.EventType;
+import application.entity.*;
 import application.repository.EventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +21,43 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    SubscriptionService subscriptionService;
+    
+    @Autowired
+    NotificationsQueueService notificationsQueueService;
+
     /**
-     * Sauvegarde d'un évènement en base de données
+     * Sauvegarde d'un évènement en base de données et génère les notifications associées
      * @param event : l'évènement à sauvegarder
      * @return L'évènement crée, null sinon
      */
     public Event saveEvent(Event event) {
-        log.info("saveNewEvent() : {}", event.toString());
+//        log.info("[*] saveEvent() : {}", event.toString());
+
+        Event savedEvent = eventRepository.save(event);
+
+        if (savedEvent != null) {
+            // Création des notifications associées
+            Subscription subscription = subscriptionService.findSubscriptionByType(savedEvent.getEventType());
+            if (subscription != null) {
+                for (User user : subscription.getUsers()) {
+//                    log.info("\t[-] DANS LE FOR (saveEvent)");
+                    notificationsQueueService.addNotificationEvent(savedEvent, user);
+                }
+            }
+        }
+
+        return savedEvent;
+    }
+
+    /**
+     * Modification d'un évènement en base de données
+     * @param event : l'évènement à modifier
+     * @return L'évènement modifié, null sinon
+     */
+    public Event updateEvent(Event event) {
+//        log.info("updateEvent() : {}", event.toString());
         return eventRepository.save(event);
     }
 
