@@ -61,7 +61,7 @@ public class Application {
     public void analyse() {
        log.info("Détection des événements : analyse en cours");
        detectUsersOutOfZone();
-       detectEventInfluence();
+       detectEventAffluence();
        log.info("Détection des événements : analyse terminée");
     }
 
@@ -80,7 +80,7 @@ public class Application {
         }
     }
 
-    public void detectEventInfluence(){
+    public void detectEventAffluence(){
         List<UserLocation> userLocations = userLocationService.getAllInZone();
         List<Area> areaList = areaService.findAllAreas();
         //Compte le nombre d'utilisateurs par zones
@@ -92,9 +92,9 @@ public class Application {
                     count ++;
                 }
             }
-            EventType type = eventTypeService.findEventTypeByName("Influence");
+            EventType type = eventTypeService.findEventTypeByName("Affluence");
             List<Event> eventList = eventService.findAllByAreaAndEventTypeAndActive(a,type,true);
-            //Vérification du dépassement de capacité (= event Influence)
+            //Vérification du dépassement de capacité (= event Affluence)
             if(count > a.getCapacity()){
                 //Si il n'y a pas déjà un event en cours
                 if(eventList.size()==0){
@@ -129,6 +129,7 @@ public class Application {
             }
         }
     }
+
 }
 
 
