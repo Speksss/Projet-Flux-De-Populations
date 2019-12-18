@@ -236,9 +236,10 @@ public class UserController {
     @DeleteMapping("/admin/user/delete")
     @ResponseBody
     public ResponseEntity<String> deleteAdmin(@RequestParam("emailAdmin") String emailAdmin,
+                                              @RequestParam("passwordAdmin")String passwordAdmin,
                                               @RequestParam("emailUser") String emailUser) {
         User userAdmin = userService.findUserByEmail(emailAdmin);
-        if(userAdmin.hasRole(RoleType.ROLE_ADMIN)) {
+        if((userAdmin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,userAdmin.getPassword()))){
             User user = userService.findUserByEmail(emailUser);
             if(user != null) {
                 if(this.userService.deleteUser(user)) {
@@ -270,13 +271,14 @@ public class UserController {
     @PostMapping("/admin/user/update")
     @ResponseBody
     public ResponseEntity<String> updateAdmin(@RequestParam("emailAdmin") String emailAdmin,
+                                              @RequestParam("passwordAdmin")String passwordAdmin,
                                               @RequestParam("email") String email,
                                               @RequestParam(value = "password", required = false) String password,
                                               @RequestParam(value = "lastName", required = false) String lastName,
                                               @RequestParam(value = "firstName", required = false) String firstName,
                                               @RequestParam(value = "isActive", required = false) Boolean isActive) {
         User userAdmin = userService.findUserByEmail(emailAdmin);
-        if(userAdmin.hasRole(RoleType.ROLE_ADMIN)) {
+        if((userAdmin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,userAdmin.getPassword()))){
             User user = this.userService.findUserByEmail(email);
             if(user == null) {
                 return new ResponseEntity<>("L'utilisateur n'a pas été trouvé.", HttpStatus.NOT_MODIFIED);
