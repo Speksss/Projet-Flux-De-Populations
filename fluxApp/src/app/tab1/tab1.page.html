@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Tab One
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="token != undefined">
+    Welcome {{ token["__zone_symbol__value"]["firstName"] }} {{ token["__zone_symbol__value"]["lastName"] }}
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "fluxApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
