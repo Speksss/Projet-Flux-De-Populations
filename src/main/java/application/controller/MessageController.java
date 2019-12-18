@@ -39,11 +39,12 @@ public class MessageController {
     @GetMapping("/message/all")
     @ResponseBody
     public ResponseEntity<List<Message>> getAllMessage(
-            @RequestParam(value="emailAdmin")String emailAdmin,
-            @RequestParam(value="passwordAdmin")String passwordAdmin
+            @RequestParam(value="emailAdmin")String emailAdmin
+            //@RequestParam(value="passwordAdmin")String passwordAdmin
     ){
         User admin = userService.findUserByEmail(emailAdmin);
-        if((admin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,admin.getPassword()))){
+        //if((admin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,admin.getPassword()))){
+        if(admin.hasRole(RoleType.ROLE_ADMIN)){
             return new ResponseEntity<>(messageService.findAll(),HttpStatus.OK);
         }
         return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
@@ -60,11 +61,12 @@ public class MessageController {
     @ResponseBody
     public ResponseEntity<Message> getMessage(
             @RequestParam(value="emailAdmin")String emailAdmin,
-            @RequestParam(value="passwordAdmin")String passwordAdmin,
+//            @RequestParam(value="passwordAdmin")String passwordAdmin,
             @RequestParam(value="messageId")Integer messageId
     ){
         User admin = userService.findUserByEmail(emailAdmin);
-        if((admin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,admin.getPassword()))){
+//        if((admin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,admin.getPassword()))){
+        if(admin.hasRole(RoleType.ROLE_ADMIN)){
             Message message = messageService.findById(messageId);
             if (message != null)
                 return new ResponseEntity<>(message, HttpStatus.OK);
@@ -85,11 +87,12 @@ public class MessageController {
     @ResponseBody
     public ResponseEntity<String> deleteMessage(
             @RequestParam(value="emailAdmin")String emailAdmin,
-            @RequestParam(value="passwordAdmin")String passwordAdmin,
+//            @RequestParam(value="passwordAdmin")String passwordAdmin,
             @RequestParam(value="messageId")Integer messageId
     ){
         User admin = userService.findUserByEmail(emailAdmin);
-        if((admin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,admin.getPassword()))){
+//        if((admin.hasRole(RoleType.ROLE_ADMIN)) && (userService.comparePassword(passwordAdmin,admin.getPassword()))){
+        if(admin.hasRole(RoleType.ROLE_ADMIN)){
             Message message = messageService.findById(messageId);
             if(message != null){
                 messageService.delete(message);
