@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Controlleur lié aux messages
+ */
 @RestController
 @Api(value="fluxDePopulation",description="Opérations relatives à la gestion des messgaes.",produces="application/json")
 public class MessageController {
@@ -27,6 +30,11 @@ public class MessageController {
 
     private static final Logger log = LoggerFactory.getLogger(MessageController.class);
 
+    /**
+     * Retourne la liste de tout les messages
+     * @param emailAdmin Email administrateur pour l'authentification / sécurité
+     * @returnLa La liste des messages
+     */
     @ApiOperation(value="Retourne la liste des messages",response = List.class)
     @GetMapping("/message/all")
     @ResponseBody
@@ -41,6 +49,12 @@ public class MessageController {
         return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * Retroune un message
+     * @param emailAdmin Email administrateur pour l'authentification / sécurité
+     * @param messageId Id du message
+     * @return Un message
+     */
     @ApiOperation(value="Retourne un message",response = Message.class)
     @GetMapping("/message")
     @ResponseBody
@@ -60,6 +74,12 @@ public class MessageController {
         return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * Supprime un message
+     * @param emailAdmin Email administrateur pour l'authentification / sécurité
+     * @param messageId Message a supprimer
+     * @return Un message de confirmation
+     */
     @ApiOperation(value="Supprime un message",response = String.class)
     @DeleteMapping("/message/delete")
     @ResponseBody
@@ -80,6 +100,12 @@ public class MessageController {
         return new ResponseEntity<>("Accès refusé",HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * Méthode de création d'un message
+     * @param emailTransmitter Email de l'utilisateur emetteur
+     * @param messageBody Contenu du message
+     * @return Message de confirmation  / erreur
+     */
     @ApiOperation(value="Création d'un message",response = String.class)
     @PostMapping("/message/new")
     @ResponseBody

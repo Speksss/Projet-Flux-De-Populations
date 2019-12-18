@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+/**
+ * Entité message
+ */
 @Entity
 @Table(name="message")
 public class Message {
