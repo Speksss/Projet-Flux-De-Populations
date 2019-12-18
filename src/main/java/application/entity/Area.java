@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class Area {
 
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="area_id")
     private Integer id;
