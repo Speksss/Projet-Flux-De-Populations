@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Controlleur lié aux messages
+ * Controlleur lié aux envoies de messages de la partie mobile vers la partie admin
  */
 @RestController
 @Api(value="fluxDePopulation",description="Opérations relatives à la gestion des messgaes.",produces="application/json")
@@ -33,7 +33,7 @@ public class MessageController {
     /**
      * Retourne la liste de tout les messages
      * @param emailAdmin Email administrateur pour l'authentification / sécurité
-     * @returnLa La liste des messages
+     * @return La La liste des messages
      */
     @ApiOperation(value="Retourne la liste des messages",response = List.class)
     @GetMapping("/message/all")
@@ -51,7 +51,7 @@ public class MessageController {
     }
 
     /**
-     * Retroune un message
+     * Retourne un message
      * @param emailAdmin Email administrateur pour l'authentification / sécurité
      * @param messageId Id du message
      * @return Un message
@@ -95,7 +95,7 @@ public class MessageController {
         if(admin.hasRole(RoleType.ROLE_ADMIN)){
             Message message = messageService.findById(messageId);
             if(message != null){
-                messageService.delete(message);
+                messageService.deleteMessage(message);
                 return new ResponseEntity<>("Message supprimé",HttpStatus.ACCEPTED);
             }
             return new ResponseEntity<>("Message introuvable",HttpStatus.NOT_FOUND);
@@ -122,7 +122,7 @@ public class MessageController {
             message.setTransmitter(transmitter);
             message.setMessageBody(messageBody);
             message.setCreationTimestamp(new Date().getTime());
-            if(messageService.save(message))
+            if(messageService.saveMessage(message) != null)
                 return new ResponseEntity<>("Message envoyé",HttpStatus.CREATED);
             else
                 return new ResponseEntity<>("Erreur lors de la création du message",HttpStatus.NOT_MODIFIED);

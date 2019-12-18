@@ -34,17 +34,16 @@ public class MessageService {
 
     /**
      * Méthode permettant de supprimer un message
-     * @param message Message à supprimé
+     * @param message Message à supprimer
      */
-    public void delete(Message message){messageRepository.delete(message);}
+    public void deleteMessage (Message message){messageRepository.delete(message);}
 
     /**
      * Méthode permettant de sauvegarder un message
      * @param message Message a sauvegarder
      * @return True / False
      */
-    public boolean save(Message message){
-        Message m = messageRepository.save(message);
-        return (m != null);
+    public Message saveMessage (Message message){
+        return messageRepository.save(message);
     }
 }
