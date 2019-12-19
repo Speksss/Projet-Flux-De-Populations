@@ -28,7 +28,7 @@ public class Main {
 //    @Bean
 //    public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 //        return args -> {
-//            User user = restTemplate.getForObject("http://35.206.157.216:8080//login?email=admin@gmail.com&password=admin", User.class);
+//            User user = restTemplate.getForObject("http://54.242.110.84:8080/login?email=admin@gmail.com&password=admin", User.class);
 //            log.info(user.toString());
 //        };
 //    }
