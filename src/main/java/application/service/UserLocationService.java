@@ -35,6 +35,10 @@ public class UserLocationService {
         return this.userLocationRepository.findAll();
     }
 
+    /**
+     * Recupere tous les utilisateurs qui se trouvent dans la zone principale (UPHF)
+     * @return La liste des utilisateurs qui se trouvent dans la zone principale (UPHF)
+     */
     public List<UserLocation> getAllInZone(){return this.userLocationRepository.findAllInZone();}
 
 }

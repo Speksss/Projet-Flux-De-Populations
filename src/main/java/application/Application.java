@@ -68,6 +68,9 @@ public class Application {
        log.info("Détection des événements : analyse terminée");
     }
 
+    /**
+     * Traite les données réceptionnées depuis les capteurs
+     */
     private void analyseCapteurs() {
 
         /*************************/
@@ -168,7 +171,9 @@ public class Application {
     }
 
 
-
+    /**
+     * Détecte les utilisateurs en dehors de la zone principale (UPHF)
+     */
     private void detectUsersOutOfZone() {
         log.info("[START] recherche des utilisateurs sur zone");
         List<UserLocation> userLocations = userLocationService.getAll();
@@ -188,6 +193,9 @@ public class Application {
         log.info("[END] recherche des utilisateurs sur zone");
     }
 
+    /**
+     * Crée un événement selon l'affluence
+     */
     public void detectEventAffluence(){
         log.info("[START] Analyse des positions utilisateurs");
         List<UserLocation> userLocations = userLocationService.getAllInZone();

@@ -145,6 +145,7 @@ public class AreaController {
     /**
      * Suppression d'une zone et des evenements associes
      * @param id Id de la zone à supprimer
+     * @return http status / indication de comment s'est déroulé la suppression de la zone
      */
     @ApiOperation(value = "Supprime une zone et evenements associes", response = String.class)
     @DeleteMapping("area/delete")

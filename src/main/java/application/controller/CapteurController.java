@@ -43,6 +43,7 @@ public class CapteurController {
      * Sauvegarde d'un capteur (CREATE and UPDATE)
      * @param datas Données liées au capteur
      * @param id Id du capteur (Uniquement si il existe déjà)
+     * @return http status / indication de comment s'est déroulé la sauvegarde du capteur
      */
     @ApiOperation(value = "Sauvegarde un capteur", response = String.class)
     @PostMapping("/capteur")
@@ -74,6 +75,7 @@ public class CapteurController {
     /**
      * Supression d'un capteur
      * @param id Id du capteur à supprimer
+     * @return http status / indication de comment s'est déroulé la suppression du capteur
      */
     @ApiOperation(value = "Supprime un capteur", response = String.class)
     @DeleteMapping("capteur/delete")
