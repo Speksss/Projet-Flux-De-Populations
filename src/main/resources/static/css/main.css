@@ -159,3 +159,42 @@ html, body {
 .detailSensorBlock .table-sensor{
     background-color:white
 }
+
+/*/////////////////////////////*/
+/*////////// Event ////////////*/
+/*/////////////////////////////*/
+
+
+.quote:after, .quote:before{
+	content:'"';
+}
+
+.filtered-att {
+	border: solid #898989;
+	color: white;
+	background-color: #898989;
+	padding: 4px 10px;
+	border-radius: 3px;
+	margin: 0 3px;
+	font-size: smaller;
+}
+
+.deleteFilterButton{
+	all:unset;
+	cursor:pointer;
+}
+
+.deleteFilterButton .fa-times-circle{
+	color:#898989;
+}
+
+.form-group.dateContainer {
+	position: relative;
+}
+
+.col-2.col-form-label.labelDate {
+	position: absolute;
+	top: -30px;
+	left: 6px;
+	font-size: smaller;
+}

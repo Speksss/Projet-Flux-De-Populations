@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import static com.front.config.adresse;
 
@@ -46,17 +49,23 @@ public class ApplicationController {
 
     @RequestMapping(value = "/application", method = RequestMethod.POST)
     @Scope("session")
-    public String header(@RequestParam("select") String selectHeader, @RequestParam(name = "sensorId", required = false) String sensorId, Model model, HttpServletRequest request){
-
+    public String header(@RequestParam("select") String selectHeader, 
+			@RequestParam(name = "sensorId", required = false) String sensorId, 
+			@RequestParam(name = "eventName", required = false) String eventName, 
+			@RequestParam(name = "selectEventActive", required = false) String selectEventActive, 
+			@RequestParam(name = "selectEventType", required = false) String selectEventType, 
+			@RequestParam(name = "fromDate", required = false) String fromDate, 
+			@RequestParam(name = "toDate", required = false) String toDate, 
+			Model model, HttpServletRequest request) throws ParseException{
+    	
         if(checkSessionTokenValidity(request)){
             if(selectHeader.equals("panel")){ panelModel(model); mapBuilder(model); model.addAttribute("header", "panel");}
-            if(selectHeader.equals("capteurs")){ showAllSensors(model); model.addAttribute("header", "capteurs");}
+            if(selectHeader.equals("capteurs")){ sensorsModel(model); model.addAttribute("header", "capteurs");}
+            if(selectHeader.equals("capteur")){ sensorModel(model,sensorId); model.addAttribute("header", "capteur");}
             if(selectHeader.equals("utilisateurs")){ userModel(model); model.addAttribute("header", "utilisateurs");}
-            if(selectHeader.equals("evenements")){ eventModel(model); model.addAttribute("header", "evenements");}
+            if(selectHeader.equals("evenements")){ eventModel(model, eventName, selectEventActive, selectEventType, fromDate, toDate); model.addAttribute("header", "evenements");}
             if(selectHeader.equals("messages")){ AllMesssage(model, request); model.addAttribute("header", "messages"); }
-
-            //TODO À adapter pour faire passer l'id du capteur
-            if(selectHeader.equals("capteur")){ showOneSensor(model,sensorId); model.addAttribute("header", "capteur");}
+            
             return "index";
         }
         else{
@@ -168,10 +177,46 @@ public class ApplicationController {
 
     }
 
-    public void eventModel(Model model){
-
-        final String uri = adresse + "event/all";
-
+    public void eventModel(Model model, String eventName, String selectEventActive, String selectEventType, String fromDate, String toDate) throws ParseException{
+    	String uriEvent;
+    	long dateFromFilter  = 0;
+    	long dateToFilter  = 0;
+    	SimpleDateFormat formatterToShowFilter = new SimpleDateFormat("dd-MM-yyyy");
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");	// Format que l'on récupère du formulaire
+    	String fromDateFormatted = "";
+    	String toDateFormatted = "";
+    	
+    	if(eventName==null && selectEventActive==null && selectEventType==null && fromDate==null && toDate==null) {
+    		uriEvent = adresse + "event/all";
+    	}
+    	else {
+    		if(selectEventActive==null){selectEventActive="";}
+    		if(selectEventType==null){selectEventType="";}
+    		if(fromDate!=""){
+    			Date fromDateParse = formatter.parse(fromDate);						// On convertit en Date
+    			dateFromFilter = fromDateParse.getTime();
+    			fromDateFormatted = formatterToShowFilter.format(fromDateParse);	// Le format à afficher sur la page
+    		}
+    		
+    		if(toDate!=""){
+    			Date toDateParse = formatter.parse(toDate);							// On convertit en Date
+    			dateToFilter = toDateParse.getTime();							
+    			toDateFormatted = formatterToShowFilter.format(toDateParse);		// Le format à afficher sur la page
+    		}
+    		
+    		// si pas de date max -> on ne le passe pas dans la requête
+    		if(dateToFilter==0) {
+        		uriEvent = adresse + "event/all/filters?areaName=" + eventName + "&active=" + selectEventActive + "&typeName=" + selectEventType + "&dateFrom=" + dateFromFilter ;
+    		}
+    		else {
+    			uriEvent = adresse + "event/all/filters?areaName=" + eventName + "&active=" + selectEventActive + "&typeName=" + selectEventType + "&dateFrom=" + dateFromFilter + "&dateTo=" + dateToFilter ;
+    		}
+    	}
+    	
+    	//log.info(uriEvent);
+    
+		final String uri = uriEvent;
+    	
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<Event[]> response = restTemplate.getForEntity(uri, Event[].class);
@@ -179,15 +224,37 @@ public class ApplicationController {
 
         listEvent = Arrays.asList(events);
 
-        int cpt = 0;
+        /*int cpt = 0;
         for(Event e : listEvent){
             cpt++;
             e.setId(cpt);
+        }*/
+        
+        for(Event e : listEvent){
+            e.setId(e.getId()-14);
         }
 
         model.addAttribute("listEvent", listEvent);
-
+        model.addAttribute("eventName", eventName);
+        model.addAttribute("selectEventActive", selectEventActive);
+        model.addAttribute("selectEventType", selectEventType);
+        model.addAttribute("fromDateFormatted", fromDateFormatted);
+        model.addAttribute("toDateFormatted", toDateFormatted);
+        
+        eventTypeModel(model); 		//Pour afficher la liste des types dans le select du filtre
     }
+    
+    public void eventTypeModel(Model model) {
+    	final String uri = adresse + "/event-type/all";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<EventType[]> response = restTemplate.getForEntity(uri, EventType[].class);
+        EventType[] eventTypeList = response.getBody();
+        
+        model.addAttribute("eventTypeList", eventTypeList);
+    }
+    
 
     public void userModel(Model model){
 
@@ -252,7 +319,7 @@ public class ApplicationController {
         return (request.getSession().getAttribute("user") != null);
     }
 
-    public void showOneSensor(Model model, String sensorId) {
+    public void sensorModel(Model model, String sensorId) {
         //TODO En attente de l'API, récupération des données d'un capteur,
 
 
@@ -269,7 +336,7 @@ public class ApplicationController {
 
     }
 
-    public void showAllSensors(Model model) {
+    public void sensorsModel(Model model) {
         //TODO En attente de l'API, récupération de tous les capteurs
     	/*
     	final String uri = "http://35.206.157.216:8080/capteurs";
