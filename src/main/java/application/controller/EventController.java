@@ -1,7 +1,9 @@
 package application.controller;
 
+import application.entity.Area;
 import application.entity.Event;
 import application.entity.EventType;
+import application.service.AreaService;
 import application.service.EventService;
 import application.service.EventTypeService;
 import io.swagger.annotations.Api;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,11 +34,14 @@ public class EventController {
     @Autowired
     private EventTypeService eventTypeService;
 
+    @Autowired
+    private AreaService areaService;
+
     @PostMapping("/event/raise")
     @ResponseBody
     public ResponseEntity<Event> raise(@RequestParam("name") String name, @RequestParam("date") String date,
-                                       @RequestParam("latitude") String latitude,
-                                       @RequestParam("longitude") String longitude) {
+                                       @RequestParam("latitude") Double latitude,
+                                       @RequestParam("longitude") Double longitude) {
         log.debug("raise {}", date);
         log.debug("raise {}", latitude);
         log.debug("raise {}", longitude);
@@ -43,11 +49,16 @@ public class EventController {
         EventType type  = eventTypeService.findEventTypeByName(name);
         if(type != null) {
             event.setActive(true);
-            event.setDate(null);
-            //            Location location = new Location();
-            //            location.setLatitude(Double.parseDouble(latitude));
-            //            location.setLongitude(Double.parseDouble(longitude));
-            event.setArea(null);
+            event.setDate(new Date(Long.parseLong(date)));
+            List<Area> areaList = areaService.findAreasByCoordinates(latitude, longitude);
+            Area tmp = areaList.get(0);
+            // On prend la zone la plus précise i.e. la zone avec l'aire la plus faible
+            for (int i = 1; i < areaList.size(); i++) {
+                if (areaList.get(i).getAreaArea() < tmp.getAreaArea()) {
+                    tmp = areaList.get(i);
+                }
+            }
+            event.setArea(tmp);
             event.setEventType(type);
             event.setName(type.getName());
             eventService.saveEvent(event);
