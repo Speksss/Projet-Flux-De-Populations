@@ -6,6 +6,7 @@ import application.entity.User;
 import application.service.EventTypeService;
 import application.service.SubscriptionService;
 import application.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ public class SubscriptionController {
      * Retourne la liste des abonnements
      * @return (the list of all subscriptions)
      */
+    @ApiOperation(value = "Retourne la liste de tous les abonnements")
     @GetMapping("/subscription/all")
     @ResponseBody
     public ResponseEntity<List<Subscription>> getAllSubscriptions() {
@@ -48,6 +50,7 @@ public class SubscriptionController {
      * @return http status / indication de comment s'est déroulé l'abonnement
      */
 
+    @ApiOperation(value = "Ajoute un utilisateur à un abonnement")
     @PostMapping("/subscription/subscribe")
     @ResponseBody
     public ResponseEntity<String> subscribe(@RequestParam("email") String email, @RequestParam("name") String name) {
@@ -80,6 +83,7 @@ public class SubscriptionController {
      *
      * @return la liste des types d'evenements des abonnements de l'utilisateur donné et/ou un http status
      */
+    @ApiOperation(value = "Retourne les abonnements d'un utilisateur")
     @GetMapping("/subscription/my-subscriptions")
     @ResponseBody
     public ResponseEntity<List<EventType>> userSubscriptions(@RequestParam("email") String email) {
@@ -100,6 +104,7 @@ public class SubscriptionController {
      *
      * @return http status / indication de comment s'est déroulé la suppression de l'abonnement
      */
+    @ApiOperation(value = "Supprime un abonnement")
     @PostMapping("/subscription/delete")
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam("name") String name) {
@@ -120,6 +125,7 @@ public class SubscriptionController {
      *
      * @return http status / indication de comment s'est déroulé le désabonnement
      */
+    @ApiOperation(value = "Retire un utilisateur d'un abonnement donné en entrer")
     @PostMapping("/subscription/unsubscribe")
     @ResponseBody
     public ResponseEntity<String> unsubscribe(@RequestParam("email") String email, @RequestParam("name") String name) {

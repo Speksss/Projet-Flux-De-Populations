@@ -37,6 +37,15 @@ public class EventController {
     @Autowired
     private AreaService areaService;
 
+    /**
+     * Crée ou modifie un événement
+     * @param name Nom de l'événement
+     * @param date Date (Timestamp) de l'événement
+     * @param latitude Latitude de l'événement
+     * @param longitude Longitude de l'événement
+     * @return http status et/ou l'événement créé (ou modifié)
+     */
+    @ApiOperation(value = "Crée ou modifie un événement")
     @PostMapping("/event/raise")
     @ResponseBody
     public ResponseEntity<Event> raise(@RequestParam("name") String name, @RequestParam("date") String date,

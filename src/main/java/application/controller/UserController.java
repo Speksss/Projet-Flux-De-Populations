@@ -50,6 +50,12 @@ public class UserController {
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
     }
 
+    /**
+     * Recupere les utilisateurs en fonction de filtres s'appliquant sur des paramètres donnés
+     * @param active Si l'utilisateur est actif ou non
+     * @param role Le role de l'utilisateur
+     * @return La liste fitrée des utilisateurs
+     */
     @GetMapping("/user/all/filters")
     @ResponseBody
     @ApiOperation(value = "Affiche les utilisateurs en fonction des filtres")
@@ -70,7 +76,7 @@ public class UserController {
 
     /**
      * Vérifie si le mot de passe fourni en paramètre correspond avec le mot de passe stocké dans la BD (pour l'email en
-     * paramètre)
+     * paramètre) et verifie si le compte utilisateur est actif (ex: bannissement temporaire)
      *
      * @param email : addresse email permettant d'identifier l'utilsateur
      * @param password : mot de passe à vérifier
@@ -222,7 +228,7 @@ public class UserController {
 
     /**
      * Retoure l'ensemble des utlisateurs d'une zone
-     *
+     * @param id id de la zone dans laquelle chercher
      * @return List de user
      */
     @ApiOperation(value = "Retourne la liste des utlisateurs dans une zone", response = List.class)

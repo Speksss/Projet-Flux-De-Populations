@@ -1,7 +1,9 @@
 package application.controller;
 
 import application.entity.Area;
+import application.entity.Event;
 import application.service.AreaService;
+import application.service.EventService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,9 @@ public class AreaController {
 
     @Autowired
     private AreaService areaService;
+
+    @Autowired
+    private EventService eventService;
 
     private static final Logger log = LoggerFactory.getLogger(AreaController.class);
 
@@ -138,10 +143,11 @@ public class AreaController {
 
 
     /**
-     * Suppression d'un capteur
-     * @param id Id du capteur à supprimer
+     * Suppression d'une zone et des evenements associes
+     * @param id Id de la zone à supprimer
+     * @return http status / indication de comment s'est déroulé la suppression de la zone
      */
-    @ApiOperation(value = "Supprime un capteur", response = String.class)
+    @ApiOperation(value = "Supprime une zone et evenements associes", response = String.class)
     @DeleteMapping("area/delete")
     @ResponseBody
     public ResponseEntity<String> delete(
@@ -149,7 +155,11 @@ public class AreaController {
     ){
         Area a = this.areaService.findAreaById(id);
         if(a != null){
+            List<Event> eventList = this.eventService.findEventsByArea(a);
+            for (Event e : eventList) // Supprime tous les evenements associes a la zone a supprimer
+                this.eventService.delete(e);
             this.areaService.delete(a);
+
             return new ResponseEntity<>("Zone supprimée",HttpStatus.OK);
         }else{
             return new ResponseEntity<>("Zone introuvable",HttpStatus.NOT_MODIFIED);
