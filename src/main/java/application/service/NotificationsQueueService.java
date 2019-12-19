@@ -16,10 +16,19 @@ public class NotificationsQueueService {
     @Autowired
     UserService userService;
 
+    /**
+     * Multimap pour stocker les notifications et leurs destinataires
+     */
     public HashMultimap<Event, Long> queueEvent = HashMultimap.create();
 
     private static final Logger log = LoggerFactory.getLogger(NotificationsQueueService.class);
 
+    /**
+     * Ajoute un utilisateur comme destinataire de l'évènement passé en paramètre
+     * Créé l'entrée dans la map si l'event n'y est pas déjà
+     * @param event : Evenement objet de la notification
+     * @param user : Utilisateur à notifier
+     */
     public synchronized void addNotificationEvent(Event event, User user) {
         if (userService != null) {
             User retrievedUser = this.userService.findUserByEmail(user.getEmail());
@@ -32,6 +41,11 @@ public class NotificationsQueueService {
 //        log.info("\t\t[#] Values Post Ajout : " + this.queueEvent.get(event));
     }
 
+    /**
+     * Récupère les notification concernant l'utilsateur passé en paramètre
+     * @param user : utilisateur à notifier
+     * @return List d'évènements (= notification)
+     */
     public List<Event> getNotificationsEventByUser(User user) {
         ArrayList<Event> res = new ArrayList<>();
         User retrievedUser = this.userService.findUserByEmail(user.getEmail());
