@@ -56,6 +56,10 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
+    /**
+     * Retourne la liste de tous les événements
+     * @return La liste de tous les événements / http status ok
+     */
     @GetMapping("/event/all")
     @ResponseBody
     @ApiOperation(value = "Affiche l'intégralité des évènements en base")
@@ -63,6 +67,16 @@ public class EventController {
         return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK);
     }
 
+    /**
+     * Trouve une liste d'événements en fonction de filtres s'appliquant sur des paramètres donnés
+     * @param name Nom de l'événement
+     * @param typeName Nom du type d'événement
+     * @param active Si l'événement est actif ou non
+     * @param areaName Nom de la zone
+     * @param dateFrom Date à partir de laquelle filtrer les événements
+     * @param dateTo Date jusqu'à laquelle filtrer les événements
+     * @return Une liste filtrée des événements
+     */
     @GetMapping("/event/all/filters")
     @ResponseBody
     @ApiOperation(value = "Affiche l'intégralité des évènements en base en utilisant les filtres")
@@ -90,6 +104,10 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
+    /**
+     * Trouve les événements actifs
+     * @return La liste des événements actifs
+     */
     @GetMapping("/event/all/actives")
     @ResponseBody
     @ApiOperation(value = "Affiche l'intégralité des évènements actifs en base")
@@ -97,6 +115,11 @@ public class EventController {
         return new ResponseEntity<>(eventService.findAllActiveEvents(), HttpStatus.OK);
     }
 
+    /**
+     * Trouve les événements selon un type d'événement donné
+     * @param name Nom du type d'événement recherché
+     * @return La liste filtrée des événements selon le type d'événement
+     */
     @GetMapping("/event/all/type-name")
     @ResponseBody
     @ApiOperation(value = "Affiche l'intégralité des évènements selon leur type")
@@ -106,6 +129,10 @@ public class EventController {
 
     // Event Type
 
+    /**
+     * Renvoie tous les types d'événements existants
+     * @return La liste des types d'événements existants
+     */
     @GetMapping("/event-type/all")
     @ResponseBody
     @ApiOperation(value = "Affiche l'intégralité des type d'évènements possibles en base")
@@ -113,6 +140,12 @@ public class EventController {
         return new ResponseEntity<>(eventTypeService.findAllEventTypes(), HttpStatus.OK);
     }
 
+    /**
+     * Ajoute un type d'événement en bdd
+     * @param name Nom du type d'événement
+     * @param description Description du type d'événement
+     * @return Une réponse donnant des indications sur le déroulement de l'ajout / http status
+     */
     @PostMapping("/event-type/add")
     @ResponseBody
     @ApiOperation(value = "Permet la création d'un type d'évènement possible")
@@ -132,6 +165,12 @@ public class EventController {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Edite un type d'événement se trouvant en base
+     * @param name Nom du type d'événement
+     * @param description Description du type d'événement
+     * @return Une réponse donnant des indications sur le déroulement de la modification / http status
+     */
     @PostMapping("/event-type/edit")
     @ResponseBody
     @ApiOperation(value = "Permet l'édition d'un type d'évènement possible")
@@ -149,6 +188,11 @@ public class EventController {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Supprime un type d'événement
+     * @param name Nom du type d'événement à supprimer
+     * @return Une réponse donnant des indications sur le déroulement de la suppression / http status
+     */
     @DeleteMapping("/event-type/delete")
     @ResponseBody
     @ApiOperation(value = "Permet la suppression d'un type d'évènement possible")

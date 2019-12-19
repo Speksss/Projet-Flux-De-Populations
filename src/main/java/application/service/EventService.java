@@ -117,6 +117,13 @@ public class EventService {
         return this.eventRepository.findAllByEventType_Name(name);
     }
 
+    /**
+     * Trouve les événements en fonction d'une zone, de son type d'événement, et s'il est actif ou non
+     * @param a Zone de l'événement à trouver
+     * @param et Type d'événement de l'événement à trouver
+     * @param b Si l'événement à trouver est actif ou non
+     * @return Une liste d'événements
+     */
     public List<Event> findAllByAreaAndEventTypeAndActive(Area a,EventType et,boolean b){
         return this.eventRepository.findAllByAreaAndEventTypeAndActive(a,et,b);
     }
