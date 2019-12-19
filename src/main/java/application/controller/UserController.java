@@ -99,6 +99,10 @@ public class UserController {
      *
      * @return ResponseEntity avec un String en fonction du déroulement de l'opération
      */
+    /**
+     * Protection des valeurs des RequestParam nécissite une cértificat de sécurité pour protéger les données
+     * (possibilité d'y mettre une cértificat auto-signé)
+     **/
     @ApiOperation(value = "Créé un nouvel utilisateur", response = String.class)
     @PostMapping("/register")
     @ResponseBody
