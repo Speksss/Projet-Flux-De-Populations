@@ -111,8 +111,7 @@ public class AreaService {
 
        // Si la somme des aires des triangles reliant le point est egale a
        // l'aire du quadrilatere, alors le point est dans la zone
-       Double totalArea = (Double)(Point.getAreaTriangle(a, b, c)
-               + Point.getAreaTriangle(a, d, c));
+       Double totalArea = Area.getAreaArea(a,b,c,d);
 
        Double sumArea = (Double)(Point.getAreaTriangle(a, b, p) + Point.getAreaTriangle(b, c, p)
                + Point.getAreaTriangle(c, d, p) + Point.getAreaTriangle(d, a, p));

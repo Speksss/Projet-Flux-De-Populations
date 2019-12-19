@@ -1,6 +1,8 @@
 package application.entity;
 
+import application.utils.Point;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 
@@ -45,4 +47,41 @@ public class Area {
     public Integer getCapacity() { return capacity; }
 
     public void setCapacity(Integer capacity) { this.capacity = capacity; }
+
+
+    /**
+     * Retourne l'aire de la zone
+     * @return l'aire de la zone
+     */
+    public Double getAreaArea(){
+        JSONObject obj = new JSONObject(this.getCoordinates());
+        Point a = new Point(obj.getDouble("x1") ,obj.getDouble("y1"));
+        Point b = new Point(obj.getDouble("x2") ,obj.getDouble("y2"));
+        Point c = new Point(obj.getDouble("x3") ,obj.getDouble("y3"));
+        Point d = new Point(obj.getDouble("x4") ,obj.getDouble("y4"));
+
+        return Area.getAreaArea(a,b,c,d);
+
+
+
+    }
+
+    /**
+     * Retourne l'aire de la zone definie par les 4 points
+     * a  d
+     * b  c
+     * @param a Point a
+     * @param b Point b
+     * @param c Point c
+     * @param d Point d
+     * @return l'aire de la zone
+     */
+    public static Double getAreaArea(Point a, Point b, Point c, Point d){
+
+        return (Double)(Point.getAreaTriangle(a, b, c)
+                + Point.getAreaTriangle(a, d, c));
+    }
+
+
+
 }
