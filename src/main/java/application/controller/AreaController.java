@@ -82,9 +82,6 @@ public class AreaController {
 
     /**
      * Sauvegarde d'une zone (CREATE and UPDATE)
-     *      * @param name Nom de la zone
-     *      * @param datas Données liées au capteur
-     *      * @param id Id du capteur (Uniquement si il existe déjà)
      *
      * @param name Nom de la zone
      * @param capacity Nombre de personne max dans la zone
