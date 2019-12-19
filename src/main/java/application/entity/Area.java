@@ -83,6 +83,10 @@ public class Area {
                 + Point.getAreaTriangle(a, d, c));
     }
 
+    /*
+    * Vérifier l'égalité des id et name d'après l'objet
+    * @param o Objet o
+    */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
