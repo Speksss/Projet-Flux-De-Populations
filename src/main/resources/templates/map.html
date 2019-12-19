@@ -14,25 +14,14 @@
 
             /*<![CDATA[*/
 
-            var X1 = [[${listArea.get(area.getId()).getCoordinatesXY().getX1()}]];
-            var X2 = [[${listArea.get(area.id).getCoordinatesXY().getX2()}]];
-            var X3 = [[${listArea.get(area.id).getCoordinatesXY().getX3()}]];
-            var X4 = [[${listArea.get(area.id).getCoordinatesXY().getX4()}]];
-            var Y1 = [[${listArea.get(area.id).getCoordinatesXY().getY1()}]];
-            var Y2 = [[${listArea.get(area.id).getCoordinatesXY().getY2()}]];
-            var Y3 = [[${listArea.get(area.id).getCoordinatesXY().getY3()}]];
-            var Y4 = [[${listArea.get(area.id).getCoordinatesXY().getY4()}]];
-
-            /*]]>*/
-
-            console.log(X1);
-            console.log(X2);
-            console.log(X3);
-            console.log(X4);
-            console.log(Y1);
-            console.log(Y2);
-            console.log(Y3);
-            console.log(Y4);
+            var X1 = [[${area.getCoordinatesXY().getX1()}]];
+            var X2 = [[${area.getCoordinatesXY().getX2()}]];
+            var X3 = [[${area.getCoordinatesXY().getX3()}]];
+            var X4 = [[${area.getCoordinatesXY().getX4()}]];
+            var Y1 = [[${area.getCoordinatesXY().getY1()}]];
+            var Y2 = [[${area.getCoordinatesXY().getY2()}]];
+            var Y3 = [[${area.getCoordinatesXY().getY3()}]];
+            var Y4 = [[${area.getCoordinatesXY().getY4()}]];
 
             // Define the LatLng coordinates for the polygon's path.
             var carreCoords = [
@@ -50,13 +39,100 @@
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
                 fillColor: '#FF0000',
-                fillOpacity: 0.35,
-                content: "TEST"
+                fillOpacity: 0.35
+            });
+
+            google.maps.event.addListener(carreBuilder, 'mouseover', function(e){
+                injectTooltip(e,[[${area.getName()}]], [[${area.getCapacity()}]]);
+            });
+
+            google.maps.event.addListener(carreBuilder, 'mousemove', function(e){
+                moveTooltip(e);
+            });
+
+            google.maps.event.addListener(carreBuilder, 'mouseout', function(e){
+                deleteTooltip(e);
             });
 
             carreBuilder.setMap(map);
 
+            /*]]>*/
             /*[/]*/
+        }
+
+        //create a global variable that will point to the tooltip in the DOM
+        var tipObj = null;
+
+        //offset along x and y in px
+        var offset = {x: 0, y: 0};
+
+        /********************************************************************
+         * injectTooltip(e,data)
+         * inject the custom tooltip into the DOM
+         ********************************************************************/
+        var coordPropName = null;
+
+        function injectTooltip(event,data, capacity){
+            if(!tipObj && event){
+                //create the tooltip object
+                tipObj = document.createElement("div");
+                tipObj.style.width = '250px';
+                tipObj.style.height = 'auto';
+                tipObj.style.color = "white";
+                tipObj.style.background = "rgba(0,0,0,0.9)";
+                tipObj.style.borderRadius = "5px";
+                tipObj.style.padding = "20px";
+                tipObj.style.textAlign = "center";
+                tipObj.style.position = "absolute";
+                tipObj.innerHTML = data + "<br>" + "(" + capacity + ")";
+
+                //fix for the version issue
+                eventPropNames = Object.keys(event);
+                if(!coordPropName){
+                    //discover the name of the prop with MouseEvent
+                    for(var i in eventPropNames){
+                        var name = eventPropNames[i];
+                        if(event[name] instanceof MouseEvent){
+                            coordPropName = name;
+                            break;
+                        }
+                    }
+                }
+
+                if(coordPropName){
+                    //position it
+                    tipObj.style.position = "fixed";
+                    tipObj.style.top = event[coordPropName].clientY + window.scrollY + offset.y + "px";
+                    tipObj.style.left = event[coordPropName].clientX + window.scrollX + offset.x + "px";
+
+                    //add it to the body
+                    document.body.appendChild(tipObj);
+                }
+            }
+        }
+
+        /********************************************************************
+         * moveTooltip(e)
+         * update the position of the tooltip based on the event data
+         ********************************************************************/
+        function moveTooltip(event){
+            if(tipObj && event && coordPropName){
+                //position it
+                tipObj.style.top = event[coordPropName].clientY + window.scrollY + offset.y + "px";
+                tipObj.style.left = event[coordPropName].clientX + window.scrollX + offset.x + "px";
+            }
+        }
+
+        /********************************************************************
+         * deleteTooltip(e)
+         * delete the tooltip if it exists in the DOM
+         ********************************************************************/
+        function deleteTooltip(event) {
+            if (tipObj) {
+                //delete the tooltip if it exists in the DOM
+                document.body.removeChild(tipObj);
+                tipObj = null;
+            }
         }
     </script>
 

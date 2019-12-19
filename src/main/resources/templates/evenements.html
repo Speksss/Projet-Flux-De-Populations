@@ -1,9 +1,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="content">
+<div th:fragment="content(listEvent)">
     <div class="jumbotron jumbotron-fluid title-section">
         <div class="container">
-            <h1 class="display-4">Evenements</h1>
-            <p class="lead"></p>
+            <h1 class="title-content">Evenements</h1>
+            <div class="content">
+                <form>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Lieu</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Actif</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="event : ${listEvent}">
+                            <td th:text="${event.getId()}"> </td>
+                            <td th:text="${event.getName()}"> X </td>
+                            <td th:text="${event.getDate()}"> X </td>
+                            <td th:text="${event.getArea().getName()}"> X </td>
+                            <td th:text="${event.getDescription()}"> X </td>
+                            <span th:if="${event.isActive()}">
+                                <td style="color : green"> En cours </td>
+                            </span>
+                            <span th:unless="${event.isActive()}">
+                                <td style="color : red"> Fini </td>
+                            </span>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{js/main.js}"></script>
 </head>
 <body>
 
@@ -28,20 +29,22 @@
     <div class="row d-flex justify-content-center">
         <div class="col-6">
             <ul class="list-group">
-                <form action="#" th:action="@{/}" th:object="${User}" method="post">
+                <form action="#" th:action="@{/}" th:object="${User}" method="post" class="needs-validation" role="form" id="loginForm" novalidate>
                     <div class="col-12">
                         <div class="py-5">
                             <h1>Connexion</h1>
                         </div>
                         <div class="form-group">
                             <label for="email"><b>Adresse mail</b></label>
-                            <input type="text" th:field="*{email}" class="form-control" id="email"/>
+                            <input type="text" th:field="*{email}" size="30" class="form-control" id="email" required/>
+                            <div class="form-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="password"><b>Mot de passe</b></label>
-                            <input type="password" th:field="*{password}" class="form-control" id="password"/>
+                            <input type="password" th:field="*{password}" size="20" class="form-control" id="password" required/>
+                            <div class="form-error"></div>
                         </div>
-                        <input class="btn btn-primary" type="submit" value="Connexion"/>
+                        <input class="btn btn-primary" id="form-submit" type="submit" value="Connexion"/>
                     </div>
                 </form>
             </ul>

@@ -9,7 +9,7 @@ import java.util.List;
 @Scope("session")
 public class User {
 
-    private int id = 1;
+    private int id;
     private String email;
     private String password;
     private String firstName;
@@ -17,28 +17,18 @@ public class User {
     private boolean active;
     private List<String> roles;
 
-    public User(String email, String password, String firstname, String lastname, boolean active, List<String> roles){
+    public User(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
-        this.firstName = firstname;
-        this.lastName = lastname;
-        this.active = active;
-        this.id = id++;
-        this.roles = roles;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public User(String email, String password, String firstname, String lastname, boolean active){
+    public User(String email, String firstName, String lastName, boolean active) {
         this.email = email;
-        this.password = password;
-        this.firstName = firstname;
-        this.lastName = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.active = active;
-        this.id = id++;
-    }
-
-    public User(String username, String password) {
-        this.email = username;
-        this.password = password;
     }
 
     public User() { }
@@ -63,16 +53,16 @@ public class User {
         return firstName;
     }
 
-    public void setFirstName(String firstname) {
-        this.firstName = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastname) {
-        this.lastName = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public int getId() {

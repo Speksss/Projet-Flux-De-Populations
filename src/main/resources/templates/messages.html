@@ -1,24 +1,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="content(listMessage)">
     <div class="jumbotron jumbotron-fluid title-section">
-        <div class="container ">
-            <h3 class="display-4">Messages</h3>
-
+        <div class="container">
+            <h1 class="title-content title-marge">Panneau de contrôle</h1>
             <div class="content">
                 <table>
-                <tr th:each="message : ${listMessage}">
-                <div class="card">
-                    <div class="card-header">
-                        <p th:text="${'ID du message : ' + message.getId()}"></p>
-                    </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                            <p th:text="${message.getMessageBody()}"> Contenu du message : </p>
-                            <footer class="blockquote-footer"> De <cite title="Source Title" th:text="${message.getTransmitter().getLastName() + ' ' + message.getTransmitter().getFirstName()+ ' ( ' + message.getTransmitter().getEmail() + ' )'}"> cette personne </cite></footer>
-                        </blockquote>
-                    </div>
-                </div>
-                </tr>
+                    <tr th:each="message : ${listMessage}">
+                        <div class="card mb-3 mb-2">
+                            <div class="card-header">
+                                <p th:text="${'ID du message : ' + message.getId()}"></p>
+                            </div>
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <p th:text="${message.getMessageBody()}"> Contenu du message : </p>
+                                    <footer class="blockquote-footer"> De <cite title="Source Title" th:text="${message.getTransmitter().getLastName() + ' ' + message.getTransmitter().getFirstName()+ ' ( ' + message.getTransmitter().getEmail() + ' )'}"> cette personne </cite></footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </tr>
                     <div style="height : 10px"></div>
                 </table>
             </div>

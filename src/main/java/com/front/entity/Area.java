@@ -5,13 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Area {
 
+    private int id;
     private int capacity;
+    private int countUser;
     private String coordinates;
     private Coordinates coordinatesXY;
-    private int id;
+    private String listX;
+    private String listY;
     private String name;
 
-    public Area(String coordinates, String name) {
+    public Area(int capacity, String coordinates, String name) {
+        this.capacity = capacity;
         this.coordinates = coordinates;
         this.name = name;
     }
@@ -64,6 +68,30 @@ public class Area {
         this.name = name;
     }
 
+    public String getListX() {
+        return listX;
+    }
+
+    public void setListX(String listX) {
+        this.listX = listX;
+    }
+
+    public String getListY() {
+        return listY;
+    }
+
+    public void setListY(String listY) {
+        this.listY = listY;
+    }
+
+    public int getCountUser() {
+        return countUser;
+    }
+
+    public void setCountUser(int countUser) {
+        this.countUser = countUser;
+    }
+
     @Override
     public String toString() {
         return "Area{" +
@@ -71,6 +99,7 @@ public class Area {
                 "capacity=" + capacity +
                 ", coordinatesXY=" + coordinatesXY +
                 ", name='" + name + '\'' +
+                ", countUser=" + countUser +
                 '}';
     }
 }

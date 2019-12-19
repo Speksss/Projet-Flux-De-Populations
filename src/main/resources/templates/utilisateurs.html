@@ -1,9 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="content(User, listUser)">
+<div th:fragment="content(Users, listUser)">
     <div class="jumbotron jumbotron-fluid title-section">
         <div class="container">
-            <h3 class="display-4">Gestion des utilisateurs</h3>
-
+            <h1 class="title-content">Gestion des utilisateurs</h1>
             <div class="content">
                 <form>
                     <table class="table table-striped">
@@ -31,8 +30,7 @@
                                 <td style="color : red"> Inactif </td>
                             </span>
                             <td>
-
-                                <form th:action="@{/updateUser}" th:object="${User}" th:method="post" method="post">
+                                <form th:action="@{/updateUser}" th:object="${User}" method="post">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                         <input name="email" type="hidden" th:value="${user.getEmail()}" />
                                         <i class="fas fa-pen" style="color : white;"></i>
@@ -52,16 +50,16 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <p> Prénom :
-                                                        <input type="text" class="form-control" id="firstName" name="firstName" th:field="*{firstName}" placeholder="Votre nouveau prénom"/>
+                                                            <input type="text" class="form-control" id="firstName" name="firstName" th:field="*{firstName}" placeholder="Votre nouveau prénom"/>
                                                         </p>
                                                         <p> Nom:
-                                                        <input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}" placeholder="Votre nouveau nom"/>
+                                                            <input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}" placeholder="Votre nouveau nom"/>
                                                         </p>
                                                         <p> Etat :
-                                                        <select class="form-control" id="active" name="active" th:field="*{active}">
-                                                            <option th:value="true"> Actif </option>
-                                                            <option th:value="false"> Inactif </option>
-                                                        </select>
+                                                            <select class="form-control" id="active" name="active" th:field="*{active}">
+                                                                <option th:value="true"> Actif </option>
+                                                                <option th:value="false"> Inactif </option>
+                                                            </select>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -90,4 +88,3 @@
         </div>
     </div>
 </div>
-

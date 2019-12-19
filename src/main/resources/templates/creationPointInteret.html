@@ -1,0 +1,74 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<span th:fragment="content(Area)">
+    <div class="jumbotron jumbotron-fluid title-section">
+        <div class="container">
+            <div>
+                <h1 class="title-content title-marge">Créer une zone d'intérêt</h1>
+                <form action="#" th:action="@{/creation}" th:object="${Area}" method="post" class="needs-validation" role="form" id="creationForm" novalidate>
+                    <div class="form-group">
+                        <label for="name"><b>Titre</b></label>
+                        <input type="text" th:field="*{name}" class="form-control" id="name" size="20" placeholder="Nom de la zone" required/>
+                        <div class="form-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="capacity"><b>Capacité</b></label>
+                        <input type="number" th:field="*{capacity}" class="form-control" id="capacity" required/>
+                        <div class="form-error"></div>
+                    </div>
+                    <input type="hidden" th:field="*{listY}" class="form-control" id="listY" required/>
+                    <input class="btn btn-primary" id="form-submit" type="submit" value="Création"/>
+
+                    <h1 class="title-content title-marge mt-5">Placer vos points sur la carte : </h1>
+                    <input type="hidden" th:field="*{listX}" class="form-control" id="listX" required/>
+                    <div class="form-error mt-2"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <script th:inline="javascript">
+
+        var listX = [];
+        var listY = [];
+
+        function initMap() {
+
+            // Styles a map in night mode.
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 50.324367, lng: 3.512873},
+                zoom: 15
+            });
+
+            var count = 0;
+
+            //Clic listener : A chaque clic on ajoute un marqueur sur la -position
+            google.maps.event.addListener(map, 'click', (e) => {
+                if(count < 4) {
+                    this.addMarker(map, e.latLng);
+                    count++;
+                }
+                if(count == 4){
+                    document.getElementById("listX").value = listX;
+                    document.getElementById("listY").value = listY;
+                }
+            });
+        }
+
+        function addMarker(map,location){
+
+            new google.maps.Marker({
+                map: map,
+                animation: google.maps.Animation.DROP,
+                position:  location,
+            });
+            var latitude = location.lat();
+            var longitude = location.lng();
+            listX.push(latitude);
+            listY.push(longitude);
+        }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcKwxj6ZNHR5rdHZ3bvdRyE7MHp0oJJzU&callback=initMap">
+    </script>
+</span>
