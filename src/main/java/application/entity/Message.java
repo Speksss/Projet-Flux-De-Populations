@@ -3,6 +3,7 @@ package application.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Entité message
@@ -21,7 +22,8 @@ public class Message {
 
     private String messageBody;
 
-    private long creationTimestamp;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date date;
 
     public Message(){}
 
@@ -49,11 +51,7 @@ public class Message {
         this.messageBody = messageBody;
     }
 
-    public long getCreationTimestamp() {
-        return creationTimestamp;
-    }
+    public Date getDate() {return date;}
 
-    public void setCreationTimestamp(long creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
+    public void setDate(Date date) {this.date = date;}
 }

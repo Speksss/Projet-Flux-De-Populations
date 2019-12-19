@@ -121,7 +121,7 @@ public class MessageController {
             Message message = new Message();
             message.setTransmitter(transmitter);
             message.setMessageBody(messageBody);
-            message.setCreationTimestamp(new Date().getTime());
+            message.setDate(new Date());
             if(messageService.saveMessage(message) != null)
                 return new ResponseEntity<>("Message envoyé",HttpStatus.CREATED);
             else
