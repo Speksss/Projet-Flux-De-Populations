@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Entité Zone
@@ -82,6 +83,17 @@ public class Area {
                 + Point.getAreaTriangle(a, d, c));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Area area = (Area) o;
+        return Objects.equals(id, area.id) &&
+                Objects.equals(name, area.name);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }
