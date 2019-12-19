@@ -51,14 +51,16 @@ public class EventController {
             event.setActive(true);
             event.setDate(new Date(Long.parseLong(date)));
             List<Area> areaList = areaService.findAreasByCoordinates(latitude, longitude);
-            Area tmp = areaList.get(0);
-            // On prend la zone la plus précise i.e. la zone avec l'aire la plus faible
-            for (int i = 1; i < areaList.size(); i++) {
-                if (areaList.get(i).getAreaArea() < tmp.getAreaArea()) {
-                    tmp = areaList.get(i);
+            if (areaList.size() > 0) {
+                Area tmp = areaList.get(0);
+                // On prend la zone la plus précise i.e. la zone avec l'aire la plus faible
+                for (int i = 1; i < areaList.size(); i++) {
+                    if (areaList.get(i).getAreaArea() < tmp.getAreaArea()) {
+                        tmp = areaList.get(i);
+                    }
                 }
+                event.setArea(tmp);
             }
-            event.setArea(tmp);
             event.setEventType(type);
             event.setName(type.getName());
             eventService.saveEvent(event);
