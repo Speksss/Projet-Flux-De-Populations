@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
-import { HttpClient , HttpHeaders } from '@angular/common/http';
-import {AuthService} from 'src/app/services/auth.service';
-import { MenuController} from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
+import { NavController } from '@ionic/angular';
+
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -12,6 +9,11 @@ import { MenuController} from '@ionic/angular';
 })
 export class TabsPage {
 
-  constructor(){}
+  constructor(private authService: AuthService, private navCtrl: NavController) {}
+
+  logOut() {
+    this.authService.logout();
+    this.navCtrl.navigateRoot('/welcome');
+  }
 
 }

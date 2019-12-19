@@ -6,15 +6,17 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
 import {AuthService} from 'src/app/services/auth.service';
 import { MenuController} from '@ionic/angular';
+import { EnvService } from '../services/env.service';
+import { AfterContentInit, OnInit , ViewChild } from '@angular/core';
+declare var google;
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit , AfterContentInit{
 
-  API_URL = 'http://35.206.157.216:8080/';
-  PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
   positionSubscription;
     timetest: any;
     options : any;
@@ -22,11 +24,15 @@ export class Tab1Page {
     locationCoords:any;
     newEmail : String;
     isTracking:boolean;
+    map;
+   geolocation: Geolocation;
+    @ViewChild('mapElement',{static: true}) mapElement;
+    marker;
     constructor(
+      private env:EnvService,
       private menu: MenuController,
       private  http: HttpClient,
       private androidPermissions: AndroidPermissions,
-      private geolocation: Geolocation,
       private locationAccuracy: LocationAccuracy,
       private authService : AuthService
     ) {
@@ -46,14 +52,104 @@ export class Tab1Page {
         this.checkGPSPermission();
         this.trackMe();
       }
+      ngOnInit():void{
+      }
 
+      ngAfterContentInit(): void{
+
+        this.map = new google.maps.Map(
+          this.mapElement.nativeElement,
+          {
+            //Centrer sur notre campus
+            center : {lat: 50.321683, lng: 3.513588},
+            zoom: 20,
+            heading: 90,
+            tilt: 45
+          });
+
+          //Clic listener : A chaque clic on ajoute un marqueur sur la -position
+          google.maps.event.addListener(this.map, 'click', <LeafletMouseEvent>(e) => {
+            this.addMarker(this.map,e.latLng);
+          });
+
+          //Creation d'une zoone selon les coordonnées.
+          var triangleCoords = [
+                    {lat:50.32087142621793,lng: 3.5134653484242335 },
+                    {lat:50.32087142621793, lng: 3.513956192673959},
+                    {lat:50.320328542569726, lng:  3.513956192673959},
+                    {lat:50.320328542569726, lng: 3.5134653484242335}
+                  ];
+
+                  // Istv3
+                  var bermudaTriangle = new google.maps.Polygon({
+                    paths: triangleCoords,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35
+                  });
+                  bermudaTriangle.setMap(this.map);
+
+
+                }
+
+      centerOnUser(){
+        this.map = new google.maps.Map(
+          this.mapElement.nativeElement,
+          {
+            //Centrer sur notre campus
+            center : {lat: this.locationCoords.latitude, lng: this.locationCoords.longitude},
+            zoom: 20,
+            heading: 90,
+            tilt: 45
+          });
+      }
+
+       createZone(){
+         this.getAllZone().subscribe( data => {
+           var zones = data['area'];
+             for (var i = 0; i < zones.length; i++) {
+               var coords = zones[i].coordinates;
+               this.createZoneOnCoord(coords);
+            }
+         }
+       );
+      }
+
+     getAllZone(){
+       return this.http.get(this.env.PROXY_URL + this.env.API_URL + "/area/all");
+      }
+
+      createZoneOnCoord(coords)  {
+          var zone = new google.maps.Polygon({
+            paths: coords,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
+          });
+          zone.setMap(this.map);
+        }
+      //Ajoute un marqueur sur lA map
+        addMarker(map:any,location){
+
+        new google.maps.Marker({
+        map: map,
+        animation: google.maps.Animation.DROP,
+        position:  location,
+      });
+       var latitude = location.lat();
+       var longitude = location.lng();
+        }
     //Check if application having GPS access permission
     checkGPSPermission() {
       this.sendPos(this.locationCoords.longitude,this.locationCoords.latitude).subscribe(data =>{
-        console.log("reussi");
+        console.log("");
       },
       error => {
-        console.log("erreur :");
+        console.log("no access to position ");
             });
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
         result => {
@@ -76,7 +172,7 @@ export class Tab1Page {
     requestGPSPermission() {
       this.locationAccuracy.canRequest().then((canRequest: boolean) => {
         if (canRequest) {
-          console.log("4");
+          console.log("");
         } else {
           //Show 'GPS Permission Request' dialogue
           this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
@@ -111,10 +207,10 @@ export class Tab1Page {
      this.isTracking = true;
      navigator.geolocation.watchPosition((position) => {
        this.sendPos(position.coords.longitude,position.coords.latitude).subscribe(data =>{
-         alert("Reussi");
+         console.log(data);
        } ,
        error => {
-         console.log("Track erreur,veuilez activer le gps");
+         console.log("Error tracking");
              });
      });
    } else {
@@ -135,9 +231,8 @@ export class Tab1Page {
     }
 
     sendPos(longitude:number,latitude:number){
-      console.log("Envoie à l'email :");
-      console.log(this.token["__zone_symbol__value"]["email"]);
-    return this.http.post(this.PROXY_URL+this.API_URL + 'location/update?userMail='+this.token["__zone_symbol__value"]["email"]+'&latitude='+latitude+'&longitude='+longitude,
+    return this.http.post(this.env.PROXY_URL+this.env.API_URL +
+       'location/update?userMail='+this.token["__zone_symbol__value"]["email"]+'&latitude='+latitude+'&longitude='+longitude,
         {},
         {responseType: "text" });
   }

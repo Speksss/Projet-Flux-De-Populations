@@ -1,9 +1,8 @@
 <li>
-<div class="d-flex mr-md-5">
 Type d'évènement : {{eventType.name}}
 <br/>
-Lieu de l'évènement : {{area.name}}
-<div class="d-flex justify-content-end"><button type="button" class="btn btn-primary">S'abonner</button></div>
-</div>
+Lieu de l'évènement : <div *ngIf='area !== null'>{{area.name}}</div><div *ngIf='area === null'>null</div>
+<button class="btn btn-primary" type="button" (click)="subscribeToEvent()" *ngIf='isSub === false'>S'abonner</button>
+<button class="btn btn-danger" type="button" (click)="unsubscribeToEvent()"*ngIf='isSub === true'>Abonné</button>
 
 </li>

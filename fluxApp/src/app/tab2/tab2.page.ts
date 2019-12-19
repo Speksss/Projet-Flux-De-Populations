@@ -13,14 +13,14 @@ export class Tab2Page {
   events : Array<any>;
 
   constructor(private http : HttpClient , private env : EnvService) {
-    let requestAPI = env.PROXY_URL + env.API_URL + "event/all"
+    let requestAPI = env.PROXY_URL + env.API_URL + "event/all";
     http.get(requestAPI , {responseType : "text"}).subscribe(
       (response) => {
         this.events = JSON.parse(response);
         console.log(this.events)
       },
       (error) => {
-        console.log('Erreur ! : ' + error);
+        console.log(error);
       }
     );
 

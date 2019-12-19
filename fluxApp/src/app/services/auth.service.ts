@@ -56,19 +56,17 @@ export class AuthService {
     )
   }
 
+  update(email: String, requete: String) {
+    return this.http.post(this.env.PROXY_URL + this.env.API_URL + 'message/new?emailTransmitter=' + email + '&messageBody=' + requete,
+    {emailTransmitter: email, messageBody: requete},
+    {responseType: "text" }
+  )
+  }
+
   logout() {
-    const headers = new HttpHeaders({
-      'Authorization': this.token["token_type"]+" "+this.token["access_token"]
-    });
-    return this.http.get(this.env.PROXY_URL + this.env.API_URL + 'auth/logout', { headers: headers })
-    .pipe(
-      tap(data => {
-        this.storage.remove("token");
-        this.isLoggedIn = false;
-        delete this.token;
-        return data;
-      })
-    )
+    this.storage.remove("token");
+    this.isLoggedIn = false;
+    delete this.token;
   }
 
   user() {

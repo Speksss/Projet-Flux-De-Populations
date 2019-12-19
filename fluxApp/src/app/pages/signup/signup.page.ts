@@ -62,7 +62,7 @@ export class SignupPage implements OnInit {
               console.log(error);
             },
             () => {
-              this.dismissRegister();
+        //      this.dismissRegister();
               this.navCtrl.navigateRoot('/tabs');
             }
           );

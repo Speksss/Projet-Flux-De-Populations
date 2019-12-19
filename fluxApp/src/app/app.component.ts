@@ -51,6 +51,7 @@ export class AppComponent {
     });
   }
 
+/*
   // When logout button is pressed
   logout() {
     this.authService.logout().subscribe(
@@ -64,5 +65,5 @@ export class AppComponent {
         this.navCtrl.navigateRoot('/welcome');
       }
     );
-  }
+  }*/
 }

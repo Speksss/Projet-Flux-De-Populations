@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Contact
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Changement information</h1>
+  <form #form="ngForm" (ngSubmit)="changement(form)" method="post">
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" value={{newEmail}} ngModel name="email" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Requête</ion-label>
+            <ion-textarea ngModel name="requete" ></ion-textarea>
+        </ion-item>
+    </ion-list>
+      <ion-button type="submit" expand="full" share="round" color="success">Requête</ion-button>
+  </form>
+
+</ion-content>

@@ -1,13 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Page1
+      Carte
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="token != undefined">
-     Welcome {{ token["__zone_symbol__value"]["firstName"] }} {{ token["__zone_symbol__value"]["lastName"] }}
-   </div>
+    <div #mapElement class="map"></div>
 </ion-content>
