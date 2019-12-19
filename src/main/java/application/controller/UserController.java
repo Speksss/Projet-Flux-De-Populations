@@ -70,7 +70,7 @@ public class UserController {
 
     /**
      * Vérifie si le mot de passe fourni en paramètre correspond avec le mot de passe stocké dans la BD (pour l'email en
-     * paramètre)
+     * paramètre) et verifie si le compte utilisateur est actif (ex: bannissement temporaire)
      *
      * @param email : addresse email permettant d'identifier l'utilsateur
      * @param password : mot de passe à vérifier

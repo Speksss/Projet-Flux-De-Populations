@@ -127,4 +127,14 @@ public class EventService {
     public List<Event> findAllByAreaAndEventTypeAndActive(Area a,EventType et,boolean b){
         return this.eventRepository.findAllByAreaAndEventTypeAndActive(a,et,b);
     }
+
+
+    /**
+     * Supprime un evenement
+     * @param e Evenement a supprimer
+     */
+    public void delete(Event e){
+        this.eventRepository.delete(e);
+    }
+
 }
