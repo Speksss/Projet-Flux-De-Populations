@@ -4,86 +4,86 @@
         <div class="container">
             <h1 class="title-content">Gestion des utilisateurs</h1>
             <div class="content">
-                <form>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Prénom</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Etat</th>
-                            <th scope="col">Modifier</th>
-                            <th scope="col">Supprimer</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user : ${listUser}">
-                            <td th:text="${user.getId()}"> </td>
-                            <td th:text="${user.getLastName()}"> X </td>
-                            <td th:text="${user.getFirstName()}"> X </td>
-                            <td th:text="${user.getEmail()}"> X </td>
-                            <span th:if="${user.isActive() }">
-                                <td style="color : green"> Actif </td>
-                            </span>
-                            <span th:unless="${user.isActive() }">
-                                <td style="color : red"> Inactif </td>
-                            </span>
-                            <td>
-                                <form th:action="@{/updateUser}" th:object="${User}" method="post">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                        <input name="email" type="hidden" th:value="${user.getEmail()}" />
-                                        <i class="fas fa-pen" style="color : white;"></i>
-                                    </button>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Modifier</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${listUser}">
+                        <td th:text="${user.getId()}"> </td>
+                        <td th:text="${user.getLastName()}"> X </td>
+                        <td th:text="${user.getFirstName()}"> X </td>
+                        <td th:text="${user.getEmail()}"> X </td>
+                        <span th:if="${user.isActive() }">
+                            <td style="color : green"> Actif </td>
+                        </span>
+                        <span th:unless="${user.isActive() }">
+                            <td style="color : red"> Inactif </td>
+                        </span>
+                        <td>
+                            <form th:action="@{/updateUser}" th:object="${User}" th:method="post">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    <input name="id" type="hidden" th:value="${user.getId()}" />
+                                    <input name="lastName" type="hidden" th:value="${user.getLastName()}" />
+                                    <input name="firstName" type="hidden" th:value="${user.getFirstName()}" />
+                                    <input name="email" type="hidden" th:value="${user.getEmail()}" />
+                                    <input name="active" type="hidden" th:value="${user.isActive()}" />
+                                    <i class="fas fa-pen" style="color : white;"></i>
+                                </button>
+                                <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3> Formulaire de modification </h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
 
-                                    <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h3> Formulaire de modification </h3>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <p> Prénom :
+                                                        <input type="text" class="form-control" id="newFirstName" name="newFirstName" th:field="*{newFirstName}" placeholder="Votre nouveau prénom"/>
+                                                    </p>
+                                                    <p> Nom:
+                                                        <input type="text" class="form-control" id="newLastName" name="newLastName" th:field="*{newLastName}" placeholder="Votre nouveau nom"/>
+                                                    </p>
+                                                    <p> Etat :
+                                                        <select class="form-control" id="newActive" name="newActive" th:field="*{newActive}">
+                                                            <option th:value="true"> Actif </option>
+                                                            <option th:value="false"> Inactif </option>
+                                                        </select>
+                                                    </p>
                                                 </div>
-
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <p> Prénom :
-                                                            <input type="text" class="form-control" id="firstName" name="firstName" th:field="*{firstName}" placeholder="Votre nouveau prénom"/>
-                                                        </p>
-                                                        <p> Nom:
-                                                            <input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}" placeholder="Votre nouveau nom"/>
-                                                        </p>
-                                                        <p> Etat :
-                                                            <select class="form-control" id="active" name="active" th:field="*{active}">
-                                                                <option th:value="true"> Actif </option>
-                                                                <option th:value="false"> Inactif </option>
-                                                            </select>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" value="Submit" class="btn btn-success"> Valider </button>
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" value="Submit" class="btn btn-success"> Valider </button>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </td>
+                                </div>
+                            </form>
+                        </td>
 
-                            <td>
-                                <form th:action="@{/deleteUser}" th:method="post">
-                                    <input name="email" type="hidden" th:value="${user.getEmail()}" />
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-times" style="color : white;"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
+                        <td>
+                            <form th:action="@{/deleteUser}" th:method="post">
+                                <input name="email" type="hidden" th:value="${user.getEmail()}" />
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-times" style="color : white;"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

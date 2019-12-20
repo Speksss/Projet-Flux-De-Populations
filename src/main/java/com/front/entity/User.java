@@ -15,6 +15,9 @@ public class User {
     private String firstName;
     private String lastName;
     private boolean active;
+    private String newFirstName;
+    private String newLastName;
+    private boolean newActive;
     private List<String> roles;
 
     public User(String email, String password, String firstName, String lastName) {
@@ -24,11 +27,22 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User(String email, String firstName, String lastName, boolean active) {
+    public User(int id, String email, String firstName, String lastName, boolean active) {
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.active = active;
+    }
+
+    public User(String newFirstName, String newLastName, boolean newActive) {
+        this.newFirstName = newFirstName;
+        this.newLastName = newLastName;
+        this.newActive = newActive;
+    }
+
+    public User(String email) {
+        this.email = email;
     }
 
     public User() { }
@@ -87,6 +101,30 @@ public class User {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getNewFirstName() {
+        return newFirstName;
+    }
+
+    public void setNewFirstName(String newFirstName) {
+        this.newFirstName = newFirstName;
+    }
+
+    public String getNewLastName() {
+        return newLastName;
+    }
+
+    public void setNewLastName(String newLastName) {
+        this.newLastName = newLastName;
+    }
+
+    public boolean isNewActive() {
+        return newActive;
+    }
+
+    public void setNewActive(boolean newActive) {
+        this.newActive = newActive;
     }
 
     @Override

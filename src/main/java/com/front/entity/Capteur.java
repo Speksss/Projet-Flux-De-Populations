@@ -3,7 +3,7 @@ package com.front.entity;
 
 
 public class Capteur {
-    
+
     private String id;
     private String datas;//Données au format JSON
 
@@ -30,10 +30,10 @@ public class Capteur {
         this.datas = datas;
     }
 
-	@Override
-	public String toString() {
-		return "Capteur [id=" + id + ", datas=" + datas + "]";
-	}
-    
-    
+    @Override
+    public String toString() {
+        return "Capteur [id=" + id + ", datas=" + datas + "]";
+    }
+
+
 }
