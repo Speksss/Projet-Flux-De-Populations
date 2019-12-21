@@ -290,32 +290,28 @@ public class ApplicationController {
     }
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    public String updateUser(@RequestParam("id") int id,
-                             @RequestParam("email") String email,
-                             @RequestParam("newFirstName") String newFirstName,
-                             @RequestParam("newLastName") String newLastName,
-                             @RequestParam("newActive") boolean newActive,
+    public String updateUser(@RequestParam("email") String email,
+                             @RequestParam("firstName") String newFirstName,
+                             @RequestParam("lastName") String newLastName,
+                             @RequestParam("active") boolean newActive,
                              HttpServletRequest request,
                              Model model) {
 
         String admin = request.getSession().getAttribute("user").toString();
-        final String uri = adresse + "admin/user/update?emailAdmin=" + admin + "&email=" + email;
+        String uri = adresse + "admin/user/update?emailAdmin=" + admin + "&email=" + email;
 
-        User Update = new User(newFirstName, newLastName, newActive);
-//        RestTemplate restTemplate = new RestTemplate();
-//        restTemplate.put(uri, Update, User.class);
+        if(newFirstName != null){ uri += "&firstName=" + newFirstName; }
+        if(newLastName != null){ uri += "&lastName=" + newLastName; }
+        uri += "&isActive=" + newActive;
 
-        // Data attached to the request.
-        HttpEntity<User> requestBody = new HttpEntity<>(Update, new HttpHeaders());
-
+        User Update = new User(email, newFirstName, newLastName, newActive);
         RestTemplate restTemplate = new RestTemplate();
-        // Send request with PUT method.
-        restTemplate.put(uri, requestBody);
+        String response = restTemplate.postForObject(uri, Update, String.class);
 
-        log.info("User updated");
-        model.addAttribute("header", "utilisateurs");
+        log.info(response);
 
         userModel(model);
+        model.addAttribute("header", "utilisateurs");
         return "index";
 
     }
