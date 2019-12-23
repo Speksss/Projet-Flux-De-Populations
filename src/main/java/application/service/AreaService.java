@@ -1,6 +1,7 @@
 package application.service;
 
 import application.entity.Area;
+import application.entity.Schedule;
 import application.repository.AreaRepository;
 import application.utils.Point;
 import org.json.JSONObject;
@@ -9,10 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +21,9 @@ public class AreaService {
     @Autowired
     private AreaRepository areaRepository;
 
+    @Autowired
+    private ScheduleService scheduleService;
+
     /**
      * Sauvegarde d'une zone
      * @param area : zone à sauvegarder
@@ -31,6 +31,10 @@ public class AreaService {
      */
     public Area saveNewArea(Area area){
         log.info("saveNewArea() : {}", area.toString());
+        Schedule schedule = new Schedule();
+        schedule.setData(Schedule.buildBasicJson(area.getCapacity()));
+        area.setSchedule(schedule);
+
         return this.areaRepository.save(area);
     }
 

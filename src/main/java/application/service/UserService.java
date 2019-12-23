@@ -12,7 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Services liés aux utilisateurs
@@ -36,7 +38,9 @@ public class UserService {
 
     /**
      * Sauvegarde d'un utilisateur dans la BD
+     *
      * @param user : l'utilisateur à sauvegarder
+     *
      * @return un objet User correspondant aux informations stockées
      */
     public User saveUser(User user) {
@@ -50,7 +54,9 @@ public class UserService {
 
     /**
      * Mofifie un utilisateur
+     *
      * @param user : l'utilisateur à modifier
+     *
      * @return un objet User correspondant aux informations stockées
      */
     public User updateUser(User user) {
@@ -59,7 +65,9 @@ public class UserService {
 
     /**
      * Supprimer un utilisateur de la BD
+     *
      * @param user : l'utilisateur à supprimer
+     *
      * @return TRUE / FALSE en fonction de la réussite de l'opération
      */
     public boolean deleteUser(User user) {
@@ -69,7 +77,9 @@ public class UserService {
 
     /**
      * Recherche d'un utilisateur par son ID
+     *
      * @param id : id de l'utilisateur à chercher
+     *
      * @return User ou NUll (si pas d'utilisateur avec l'id en paramètre)
      */
     public User findUserById(long id) {
@@ -78,7 +88,9 @@ public class UserService {
 
     /**
      * Recherche d'un utilisateur par son addresse email
+     *
      * @param email : email de l'utilisateur à chercher
+     *
      * @return User ou NUll (si pas d'utilisateur avec l'email en paramètre)
      */
     public User findUserByEmail(String email) {
@@ -87,7 +99,9 @@ public class UserService {
 
     /**
      * Recherche des utilisateurs par leur nom
+     *
      * @param lastName : nom de(s) utilisateur(s) à chercher
+     *
      * @return List d'utilisateurs ou NULL
      */
     public List<User> findUsersByLastName(String lastName) {
@@ -96,7 +110,9 @@ public class UserService {
 
     /**
      * Recherche des utilisateurs par leur prénom
+     *
      * @param firstName : prénom de(s) utilisateur(s) à chercher
+     *
      * @return List d'utilisateurs ou NULL
      */
     public List<User> findUsersByFirstName(String firstName) {
@@ -105,6 +121,7 @@ public class UserService {
 
     /**
      * Recherche tous les utilisateurs de la BD
+     *
      * @return List d'utilisateurs
      */
     public List<User> findAllUsers() {
@@ -113,6 +130,7 @@ public class UserService {
 
     /**
      * Trouve tous les utilisateurs inactifs
+     *
      * @return La liste des utilisateurs inactifs
      */
     public List<User> findAllInactiveUsers() {
@@ -121,40 +139,57 @@ public class UserService {
 
     /**
      * Trouve les utilisateurs selon une zone
+     *
      * @param id : id de la zone dans laquelle trouver les utilisateurs
+     *
      * @return La liste des utilisateurs se trouvant dans la zone
      */
-    public List <User> findAllUsersByArea(Integer id){
+    public List<User> findAllUsersByArea(Integer id) {
         List<UserLocation> userLocations = userLocationService.getAll();
-        Area a = areaService.findAreaById(id);
-        if(a == null )
-            return null;
-        List<UserLocation> goodUserLocation=new ArrayList<>();
+        Area               a             = areaService.findAreaById(id);
+        if(a == null) return null;
+        List<UserLocation> goodUserLocation = new ArrayList<>();
         for(UserLocation uL : userLocations) {
-            Point p = new Point(
-                    uL.getLatitude(),
-                    uL.getLongitude()
-            );
-            if (this.areaService.isPointInArea(a, p )){
+            Point p = new Point(uL.getLatitude(), uL.getLongitude());
+            if(AreaService.isPointInArea(a, p)) {
                 goodUserLocation.add(uL);
             }
 
         }
-        List<User> userlistes= new ArrayList<>();
+        List<User> userlistes = new ArrayList<>();
 
-        for(UserLocation gd: goodUserLocation){
+        for(UserLocation gd : goodUserLocation) {
             User u = userRepository.findByUserLocation(gd);
-            if(u !=null){
+            if(u != null) {
                 userlistes.add(u);
             }
         }
-      return  userlistes;
+        return userlistes;
+    }
+
+    public Map<Integer, Integer> countAllUsersByAreaId() {
+        List<UserLocation>    userLocations = userLocationService.getAll();
+        List<Area>            areas         = areaService.findAllAreas();
+        Map<Integer, Integer> result        = new HashMap<>();
+        for(UserLocation userLocation : userLocations) {
+            Point p = new Point(userLocation.getLatitude(), userLocation.getLongitude());
+            for(Area area : areas) {
+                if(AreaService.isPointInArea(area, p)) {
+                    result.putIfAbsent(area.getId(), 0);
+                    result.put(area.getId(), result.get(area.getId()) + 1);
+                }
+            }
+        }
+
+        return result;
     }
 
 
     /**
      * Crypte un mot de passe avec le BCryptPasswordEncoder
+     *
      * @param password : string à encoder
+     *
      * @return String encodée
      */
     public String encodePassword(String password) {
@@ -163,8 +198,10 @@ public class UserService {
 
     /**
      * Compare un mot de passe décrypté et sa version cryptée
+     *
      * @param rawPassword : le mot de passe classique
      * @param encryptedPassword : le mot de passe crypté
+     *
      * @return true ou false
      */
     public boolean comparePassword(String rawPassword, String encryptedPassword) {

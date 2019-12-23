@@ -25,6 +25,10 @@ public class Area {
 
     private String coordinates; // Format json
 
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
+
     public Integer getId() {
         return id;
     }
@@ -49,6 +53,13 @@ public class Area {
 
     public void setCapacity(Integer capacity) { this.capacity = capacity; }
 
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
 
     /**
      * Retourne l'aire de la zone
