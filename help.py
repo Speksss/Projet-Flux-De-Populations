@@ -96,7 +96,7 @@ while not network.nodes[2].is_awake:
 #while not network.is_ready:
 #    pass
 prev_res = {}
-id_cc = [32,49,48]
+id_cc = [32,49,48,128]
 #id_cc = [0, 32, 34, 128, 132, 133, 134, 142, 48, 49, 112, 113, 114, 115, 86, 90, 156, 94]
 timer = time.time()
 #print(timer)
