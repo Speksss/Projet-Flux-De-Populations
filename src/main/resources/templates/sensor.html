@@ -19,7 +19,8 @@
 							<tr>
 								<th scope="col">Id</th>
 								<th scope="col">Nom</th>
-								<th scope="col">Emplacement</th>
+								<th scope="col">Latitude</th>
+								<th scope="col">Longitude</th>
 								<th scope="col">Température</th>
 								<th scope="col">Luminance</th>
 								<th scope="col">Niveau de Batterie</th>
@@ -30,7 +31,8 @@
 							<tr class="rowSensor">
 								<td class="td-id" th:text="${capteur.idSensor}"></td>
 								<td class="td-name" th:text="${capteur.sensorName}"></td>
-								<td class="td-location">RU2</td>
+								<td class="td-latitude" th:text="${capteur.latitude}"></td>
+								<td class="td-longitude" th:text="${capteur.longitude}"></td>
 								<td class="td-temperature" th:text="${capteur.temperature}">22</td>
 								<td class="td-brightness" th:text="${capteur.luminance}">800</td>
 								<td class="td-battery" th:text="${capteur.batteryLevel}">80</td>
