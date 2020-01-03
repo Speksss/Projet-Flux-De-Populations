@@ -12,7 +12,7 @@
                             <th scope="col">Nom</th>
                             <th scope="col">Emplacement</th>
                             <th scope="col">Niveau de Batterie</th>
-                            <th scope="col">Statut</th>
+                            <!--<th scope="col">Statut</th>-->
                             <th scope="col">Voir</th>
                             <!-- Edition et suppression en standby -->
                             <!--
@@ -22,59 +22,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- Dès qu'on a récupéré les données de l'API -->
-                        <!-- <tr th:each="capteur : ${capteurs}"> -->
-                        <tr id="1-rowSensor" class="rowSensor">
-
-                            <!--  <div th:text="${capteur.id}"></div> -->
-                            <!--  <div th:text="${capteur.datas}"></div> -->
-
-                            <td class="td-id">1</td>
-                            <td class="td-name">Nom Capteur</td>
-                            <td class="td-location">RU2</td>
-                            <td class="td-battery">80</td>
-                            <td class="td-statut">Fonctionnel</td>
-                            <td class="td-show text-center">
-                                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
-                                    <input type="hidden" name="select" th:value="capteur"/>
-                                    <input type="hidden" name="sensorId" th:value="1" />
-                                    <button class="btn btn-success" type="submit"><i class="fas fa-angle-right"></i></button>
-                                </form>
-                            </td>
-                            <!-- Edition et suppression en standby -->
-                            <!--
-                            <td class="td-modify text-center">
-                                <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                            </td>
-                            <td class="td-delete text-center">
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                            </td>
-                             -->
-                        </tr>
-                        <tr id="2-rowSensor" class="rowSensor">
-                            <td class="td-id">2</td>
-                            <td class="td-name">Nom Capteur</td>
-                            <td class="td-location">RU1</td>
-                            <td class="td-battery">90</td>
-                            <td class="td-statut">Erreur</td>
-                            <td class="td-show text-center">
-                                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
-                                    <input type="hidden" name="select" th:value="capteur"/>
-                                    <input type="hidden" name="sensorId" th:value="2" />
-                                    <button class="btn btn-success" type="submit"><i class="fas fa-angle-right"></i></button>
-                                </form>
-                            </td>
-
-                            <!-- Edition et suppression en standby -->
-                            <!--
-                            <td class="td-modify text-center">
-                                <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                            </td>
-                            <td class="td-delete text-center">
-                                <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                            </td>
-                             -->
-                        </tr>
+                        
+                        <div th:each="capteurData : ${capteursDatas}">
+	                        <tr class="rowSensor">
+	                            <td class="td-id" th:text="${capteurData.value.idSensor}"></td>
+	                            <td class="td-name" th:text="${capteurData.key}"></td>
+	                            <td class="td-location">RU2</td>
+	                            <td class="td-battery" th:text="${capteurData.value.batteryLevel}"></td>
+	                            <!-- <td class="td-statut">Fonctionnel</td> -->
+	                            <td class="td-show text-center">
+	                                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
+	                                    <input type="hidden" name="select" th:value="capteur"/>
+	                                    <input type="hidden" name="sensorId" th:value="${capteurData.value.idSensor}" />
+	                                    <button class="btn btn-success" type="submit"><i class="fas fa-angle-right"></i></button>
+	                                </form>
+	                            </td>
+	                            <!-- Edition et suppression en standby -->
+	                            <!--
+	                            <td class="td-modify text-center">
+	                                <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+	                            </td>
+	                            <td class="td-delete text-center">
+	                                <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+	                            </td>
+	                             -->
+	                        </tr>
+	                        </div>
                         </tbody>
                     </table>
                 </div>

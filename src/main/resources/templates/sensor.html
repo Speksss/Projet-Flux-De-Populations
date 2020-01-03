@@ -4,7 +4,7 @@
 		<div class="container">
 			<!-- En attente de l'API, données en brutes pour l'instant -->
 			<!--             <h1 class="title-content" th:text="'Capteur #' + ${capteur.id}"></h1> -->
-			<h1 class="title-content" th:text="'Capteur #' + ${capteur}"></h1>
+			<h1 class="title-content" th:text="'Capteur #' + ${capteur.idSensor}"></h1>
 
 			<form action="#" th:action="@{/application}" th:object="${String}" method="post">
 				<input type="hidden" name="select" th:value="capteurs"/>
@@ -23,18 +23,18 @@
 								<th scope="col">Température</th>
 								<th scope="col">Luminance</th>
 								<th scope="col">Niveau de Batterie</th>
-								<th scope="col">Statut</th>
+								<!-- <th scope="col">Statut</th> -->
 							</tr>
 							</thead>
 							<tbody>
 							<tr class="rowSensor">
-								<td class="td-id">1</td>
-								<td class="td-name">Nom Capteur</td>
+								<td class="td-id" th:text="${capteur.idSensor}"></td>
+								<td class="td-name" th:text="${capteur.sensorName}"></td>
 								<td class="td-location">RU2</td>
-								<td class="td-temperature">22</td>
-								<td class="td-brightness">800</td>
-								<td class="td-battery">80</td>
-								<td class="td-statut">Fonctionnel</td>
+								<td class="td-temperature" th:text="${capteur.temperature}">22</td>
+								<td class="td-brightness" th:text="${capteur.luminance}">800</td>
+								<td class="td-battery" th:text="${capteur.batteryLevel}">80</td>
+								<!-- <td class="td-statut">Fonctionnel</td> -->
 							</tr>
 							</tbody>
 						</table>
