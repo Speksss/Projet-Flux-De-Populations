@@ -11,9 +11,9 @@ export class TabsPage {
 
   constructor(private authService: AuthService, private navCtrl: NavController) {}
 
-  logOut() {
+/*  logOut() {
     this.authService.logout();
     this.navCtrl.navigateRoot('/welcome');
-  }
+  }*/
 
 }
