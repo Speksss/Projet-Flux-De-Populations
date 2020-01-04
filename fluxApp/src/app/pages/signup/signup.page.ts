@@ -17,7 +17,6 @@ import { NgModule } from '@angular/core';
   ]
 })
 export class SignupPage implements OnInit {
-   modalB: boolean = false;
 
   constructor(
     private modalController: ModalController,
@@ -31,18 +30,15 @@ export class SignupPage implements OnInit {
 
   // Dismiss Register Modal
   dismissRegister() {
-    if(this.modalB == true){
     this.modalController.dismiss();
-    this.modalB=false;
-    }
   }
 
+  // On Login button tap, dismiss Register modal and open login Modal
   async loginModal() {
     this.dismissRegister();
     const loginModal = await this.modalController.create({
       component: LoginPage,
     });
-    this.modalB = true
     return await loginModal.present();
   }
 
@@ -62,7 +58,7 @@ export class SignupPage implements OnInit {
               console.log(error);
             },
             () => {
-        //      this.dismissRegister();
+              this.dismissRegister();
               this.navCtrl.navigateRoot('/tabs');
             }
           );
