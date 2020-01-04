@@ -51,9 +51,9 @@ export class AppComponent {
     });
   }
 
-/*
+
   // When logout button is pressed
-  logout() {
+/*  logout() {
     this.authService.logout().subscribe(
       data => {
         this.alertService.presentToast(data['message']);
