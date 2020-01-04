@@ -5,9 +5,13 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
 import {AuthService} from 'src/app/services/auth.service';
+import { AlertService } from '../services/alert.service';
 import { MenuController} from '@ionic/angular';
 import { EnvService } from '../services/env.service';
 import { AfterContentInit, OnInit , ViewChild } from '@angular/core';
+import { Platform, NavController } from '@ionic/angular';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 declare var google;
 
 @Component({
@@ -29,13 +33,19 @@ export class Tab1Page implements OnInit , AfterContentInit{
     @ViewChild('mapElement',{static: true}) mapElement;
     marker;
     constructor(
+      private platform: Platform,
+      private splashScreen: SplashScreen,
+      private statusBar: StatusBar,
+      private navCtrl: NavController,
       private env:EnvService,
       private menu: MenuController,
       private  http: HttpClient,
+      private alertService: AlertService,
       private androidPermissions: AndroidPermissions,
       private locationAccuracy: LocationAccuracy,
       private authService : AuthService
     ) {
+      this.token = this.authService.storage.getItem('token');
       this.locationCoords = {
         latitude: "",
         longitude: "",
@@ -235,6 +245,27 @@ export class Tab1Page implements OnInit , AfterContentInit{
        'location/update?userMail='+this.token["__zone_symbol__value"]["email"]+'&latitude='+latitude+'&longitude='+longitude,
         {},
         {responseType: "text" });
+  }
+
+  // When logout button is pressed
+  logout() {
+    console.log("inside logout");
+    console.log("Email :");
+    console.log(this.token["__zone_symbol__value"]["email"]);
+    console.log("Password :");
+    console.log(this.authService.password);
+    this.authService.logout(this.token["__zone_symbol__value"]["email"], this.authService.password).subscribe(
+      data => {
+        this.alertService.presentToast(data['message']);
+      },
+      error => {
+        console.log("Error");
+        console.log(error);
+      },
+      () => {
+        this.navCtrl.navigateRoot('/welcome');
+      }
+    );
   }
 
 }
