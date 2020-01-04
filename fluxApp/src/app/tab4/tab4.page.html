@@ -21,5 +21,10 @@
     </ion-list>
       <ion-button type="submit" expand="full" share="round" color="success">Requête</ion-button>
   </form>
-
+  <ion-item (click)="logout()" ng-class="bot">
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      <ion-label>
+         Logout
+      </ion-label>
+  </ion-item>
 </ion-content>

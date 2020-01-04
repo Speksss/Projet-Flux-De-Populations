@@ -4,6 +4,10 @@ import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { NgForm } from '@angular/forms';
+import { Platform, NavController } from '@ionic/angular';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+
 
 @Component({
   selector: 'app-tab4',
@@ -17,12 +21,27 @@ export class Tab4Page  implements OnInit {
   newLastName: String;
   newFirstName: String;
   token: any;
-  constructor(private menu: MenuController, private authService: AuthService, private alertService: AlertService) {
+  pass: any;
+  constructor(private platform: Platform,
+  private splashScreen: SplashScreen,
+  private statusBar: StatusBar,
+  private navCtrl: NavController,private menu: MenuController, private authService: AuthService, private alertService: AlertService) {
     this.menu.enable(true);
+    this.initializeApp();
   }
 
   ngOnInit() {
 
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      // Commenting splashScreen Hide, so it won't hide splashScreen before auth check
+      //this.splashScreen.hide();
+      this.token = this.authService.storage.getItem('token');
+      this.pass = this.authService.storage.getItem('password');
+    });
   }
 
   ionViewWillEnter() {
@@ -64,5 +83,26 @@ export class Tab4Page  implements OnInit {
         }
 
       );*/
+  }
+
+  // When logout button is pressed
+  logout() {
+    console.log("inside logout");
+    console.log("Email :");
+    console.log(this.token["__zone_symbol__value"]["email"]);
+    console.log("Password :");
+    console.log(this.pass["__zone_symbol__value"]);
+    this.authService.logout(this.token["__zone_symbol__value"]["email"], this.pass["__zone_symbol__value"]).subscribe(
+      data => {
+        this.alertService.presentToast(data['message']);
+      },
+      error => {
+        console.log("Error");
+        console.log(error);
+      },
+      () => {
+        this.navCtrl.navigateRoot('/welcome');
+      }
+    );
   }
 }
