@@ -11,6 +11,7 @@ import { User } from '../models/user';
 export class AuthService {
   isLoggedIn = false;
   token:any;
+  password: any;
 
   constructor(
     private http: HttpClient,
@@ -26,6 +27,7 @@ export class AuthService {
     ).pipe(
       tap(
         token => {
+        this.storage.setItem('password', password);
         this.storage.setItem('token', token)
         .then(
           () => {
@@ -35,6 +37,10 @@ export class AuthService {
           error => console.error('Error storing item', error)
         );
         this.token = token;
+        console.log("Password :");
+        console.log(password);
+        this.password = password;
+        this.token["password"] = password;
         this.isLoggedIn = true;
         return token;
       },
@@ -63,17 +69,26 @@ export class AuthService {
   )
   }
 
-  logout() {
-    this.storage.remove("token");
-    this.isLoggedIn = false;
-    delete this.token;
+  logout(email: String, password: String) {
+    const headers = new HttpHeaders({
+      'Authorization' : this.token["token_type"]+" "+this.token["access_token"]
+    });
+    return this.http.get(this.env.PROXY_URL + this.env.API_URL  + 'login?email=' + email + '&password=' + password, { headers: headers })
+    .pipe(
+      tap(data => {
+        this.storage.remove("token");
+        this.isLoggedIn = false;
+        delete this.token;
+        return data;
+      })
+    )
   }
 
   user() {
     const headers = new HttpHeaders({
       'Authorization': this.token["token_type"]+" "+this.token["access_token"]
     });
-    return this.http.get<User>(this.env.PROXY_URL + this.env.API_URL  + 'login?email=' + this.token["email"] + '&password=keras59490' , { headers: headers })
+    return this.http.get<User>(this.env.PROXY_URL + this.env.API_URL  + 'login?email=' + this.token["email"] + '&password=' + this.token["password"] , { headers: headers })
     .pipe(
       tap(user => {
         return user;
