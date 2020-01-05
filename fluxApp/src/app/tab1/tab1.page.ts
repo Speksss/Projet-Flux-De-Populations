@@ -71,6 +71,7 @@ export class Tab1Page implements OnInit , AfterContentInit{
 
       ngAfterContentInit(): void{
 
+        this.addMarker(this.map,this.locationCoords.latLng);
         this.map = new google.maps.Map(
           this.mapElement.nativeElement,
           {
@@ -85,13 +86,9 @@ export class Tab1Page implements OnInit , AfterContentInit{
           this.getArreasData();
           console.log('Area done');
 
-          //Clic listener : A chaque clic on ajoute un marqueur sur la -position
-          google.maps.event.addListener(this.map, 'click', <LeafletMouseEvent>(e) => {
-            this.addMarker(this.map,e.latLng);
-          });
+          }
 
-                }
-
+      //Centre la map sur la position de l'utilisateur
       centerOnUser(){
         this.map = new google.maps.Map(
           this.mapElement.nativeElement,
@@ -153,8 +150,6 @@ export class Tab1Page implements OnInit , AfterContentInit{
         animation: google.maps.Animation.DROP,
         position:  location,
       });
-       var latitude = location.lat();
-       var longitude = location.lng();
         }
     //Check if application having GPS access permission
     checkGPSPermission() {
