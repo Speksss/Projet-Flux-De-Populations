@@ -21,6 +21,10 @@ declare var google;
 })
 export class Tab1Page implements OnInit , AfterContentInit{
 
+    arreas : Array<any>;
+    coordinate : Array<any>;
+    API_URL = 'http://35.206.157.216:8080/';
+    PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
   positionSubscription;
     timetest: any;
     options : any;
@@ -77,30 +81,14 @@ export class Tab1Page implements OnInit , AfterContentInit{
             tilt: 45
           });
 
+          console.log('View Enter');
+          this.getArreasData();
+          console.log('Area done');
+
           //Clic listener : A chaque clic on ajoute un marqueur sur la -position
           google.maps.event.addListener(this.map, 'click', <LeafletMouseEvent>(e) => {
             this.addMarker(this.map,e.latLng);
           });
-
-          //Creation d'une zoone selon les coordonnées.
-          var triangleCoords = [
-                    {lat:50.32087142621793,lng: 3.5134653484242335 },
-                    {lat:50.32087142621793, lng: 3.513956192673959},
-                    {lat:50.320328542569726, lng:  3.513956192673959},
-                    {lat:50.320328542569726, lng: 3.5134653484242335}
-                  ];
-
-                  // Istv3
-                  var bermudaTriangle = new google.maps.Polygon({
-                    paths: triangleCoords,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                  });
-                  bermudaTriangle.setMap(this.map);
-
 
                 }
 
@@ -108,7 +96,7 @@ export class Tab1Page implements OnInit , AfterContentInit{
         this.map = new google.maps.Map(
           this.mapElement.nativeElement,
           {
-            //Centrer sur notre campus
+            //Centrer sur l'utilisateur
             center : {lat: this.locationCoords.latitude, lng: this.locationCoords.longitude},
             zoom: 20,
             heading: 90,
@@ -116,33 +104,48 @@ export class Tab1Page implements OnInit , AfterContentInit{
           });
       }
 
-       createZone(){
-         this.getAllZone().subscribe( data => {
-           var zones = data['area'];
-             for (var i = 0; i < zones.length; i++) {
-               var coords = zones[i].coordinates;
-               this.createZoneOnCoord(coords);
-            }
-         }
-       );
-      }
+      //Recupere le JSON correspondant aux données de chaque zone.
+        getArreasData(){
+            console.log('Getting Area data from API');
+            let request = this.env.PROXY_URL + this.env.API_URL + "/area/all";
+            this.http.get(request , {responseType : "text"}).subscribe(
+              (response) => {
+                console.log('reussi');
+              this.arreas = JSON.parse(response);
+              this.createZone();
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+          }
 
-     getAllZone(){
-       return this.http.get(this.env.PROXY_URL + this.env.API_URL + "/area/all");
-      }
-
-      createZoneOnCoord(coords)  {
-          var zone = new google.maps.Polygon({
-            paths: coords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35
-          });
-          zone.setMap(this.map);
+        //Recupere les coordonnées de l'api pour creer les oznes.
+        createZone(){
+          for(let i = 0;i<this.arreas.length;i++){
+          var coords  = JSON.parse(this.arreas[i].coordinates);
+          console.log(coords.x1);
+          var zoneCoord =  [
+                    {lat:parseFloat(coords.x1),lng:parseFloat(coords.y1)},
+                    {lat:parseFloat(coords.x2),lng:parseFloat(coords.y2)},
+                    {lat:parseFloat(coords.x3),lng:parseFloat(coords.y3)},
+                    {lat:parseFloat(coords.x4),lng:parseFloat(coords.y4)}
+                  ];
+          this.createZoneOnCoord(zoneCoord);
         }
-      //Ajoute un marqueur sur lA map
+       }
+       //Creation d'une zone selon les coordonnées
+        createZoneOnCoord(coords)  {
+            var zone = new google.maps.Polygon({
+              paths: coords,
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#3AFF33',
+              fillOpacity: 0.2
+            });
+            zone.setMap(this.map);
+          }  //Ajoute un marqueur sur lA map
         addMarker(map:any,location){
 
         new google.maps.Marker({
