@@ -43,35 +43,35 @@
 					</div>
 				</div>
 				<div id="mapCapteur" class="mx-4 mb-4" style="height:200px;" ></div>
-			    <script>
-			
-				function initMap() {
-				  var latitude = parseFloat(document.getElementById("latitude").innerText);
-				  var longitude = parseFloat(document.getElementById("longitude").innerText);
-				  var location = {lat: latitude, lng: longitude};
-				  
-				  var map = new google.maps.Map(
-				      document.getElementById('mapCapteur'), {zoom: 15, center: location});
-				  
-				  var marker = new google.maps.Marker({position: location, map: map});
-				}
-	
-				
-				    </script>
+				<script>
+
+					function initMap() {
+						var latitude = parseFloat(document.getElementById("latitude").innerText);
+						var longitude = parseFloat(document.getElementById("longitude").innerText);
+						var location = {lat: latitude, lng: longitude};
+
+						var map = new google.maps.Map(
+								document.getElementById('mapCapteur'), {zoom: 17, center: location});
+
+						var marker = new google.maps.Marker({position: location, map: map});
+					}
+
+
+				</script>
 				<div class="row mt-4" >
 					<div class="sensorsContainer text-center col-12 col-md-12 col-sm-12">
-						
+
 						<div id="temperature0" class="gauge mx-4" ></div>
 						<div id="brightness0" class="gauge mx-4"></div>
 						<div id="battery0" class="gauge mx-4"></div>
 					</div>
 				</div>
 			</div>
-			
-    
-		    <script async defer
-		            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcKwxj6ZNHR5rdHZ3bvdRyE7MHp0oJJzU&callback=initMap">
-		    </script>
+
+
+			<script async defer
+					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcKwxj6ZNHR5rdHZ3bvdRyE7MHp0oJJzU&callback=initMap">
+			</script>
 		</div>
 	</div>
 </div>
