@@ -2,9 +2,6 @@ package com.front.controller;
 
 import com.front.Main;
 import com.front.entity.*;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +16,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import static com.front.config.adresse;
 
@@ -259,8 +258,9 @@ public class ApplicationController {
 
     public void userModel(Model model){
 
-        final String uri = adresse + "user/all";
+        listUser.clear(); // Nettoyage de la liste
 
+        final String uri = adresse + "user/all";
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<User[]> response = restTemplate.getForEntity(uri, User[].class);
@@ -300,6 +300,13 @@ public class ApplicationController {
                              HttpServletRequest request,
                              Model model) {
 
+        User userToUpdate = null;
+        for (User u : listUser) {
+          if(u.getEmail().equals(email)){
+              userToUpdate = u;
+          }
+        }
+
         String admin = request.getSession().getAttribute("user").toString();
         String uri = adresse + "admin/user/update?emailAdmin=" + admin + "&email=" + email;
 
@@ -307,11 +314,14 @@ public class ApplicationController {
         if(newLastName != null){ uri += "&lastName=" + newLastName; }
         uri += "&isActive=" + newActive;
 
-        User Update = new User(email, newFirstName, newLastName, newActive);
-        RestTemplate restTemplate = new RestTemplate();
-        String response = restTemplate.postForObject(uri, Update, String.class);
+        userToUpdate.setFirstName(newFirstName);
+        userToUpdate.setLastName(newLastName);
+        userToUpdate.setActive(newActive);
 
-        log.info(response);
+        RestTemplate restTemplate = new RestTemplate();
+        String response = restTemplate.postForObject(uri, userToUpdate, String.class);
+
+        log.info(response.toString());
 
         userModel(model);
         model.addAttribute("header", "utilisateurs");
@@ -336,35 +346,37 @@ public class ApplicationController {
 
     public void sensorsModel(Model model) {
 
-    	final String uri = adresse +"capteurs";
-    	RestTemplate restTemplate = new RestTemplate();
+        final String uri = adresse +"capteurs";
+        RestTemplate restTemplate = new RestTemplate();
+
         ResponseEntity<Capteur[]> response = restTemplate.getForEntity(uri, Capteur[].class);
         Capteur[] capteurs = response.getBody();
         model.addAttribute("capteurs", capteurs);
+
         Map<String,Datas> capteursDatas = new HashMap<>();
         for(Capteur capteur : capteurs) {
-        	
-        	String json = capteur.getDatas();
+
+            String json = capteur.getDatas();
             JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
             for (String key: jsonObject.keySet()){
-            	
-            	JsonObject jsonObjectDatas = new JsonParser().parse(jsonObject.get(key).toString()).getAsJsonObject();
-            	
-            	String idSensor = capteur.getId();
-            	String longitude = jsonObjectDatas.get("longitude").toString().substring(1,jsonObjectDatas.get("longitude").toString().length()-1) ;
-            	String latitude = jsonObjectDatas.get("latitude").toString().substring(1,jsonObjectDatas.get("latitude").toString().length()-1) ;
-            	String batteryLevel;
-            	try{
-            		batteryLevel = jsonObjectDatas.get("Battery Level").toString().substring(1,jsonObjectDatas.get("Battery Level").toString().length()-1) ;
-            	}
-            	catch(Exception NullPointerException){
-            		batteryLevel = "";
-            	}
-            	
-				Datas sensorDatas = new Datas(idSensor,latitude,longitude,batteryLevel);
-            	capteursDatas.put(key,sensorDatas);
+
+                JsonObject jsonObjectDatas = new JsonParser().parse(jsonObject.get(key).toString()).getAsJsonObject();
+
+                String idSensor = capteur.getId();
+                String longitude = jsonObjectDatas.get("longitude").toString().substring(1,jsonObjectDatas.get("longitude").toString().length()-1) ;
+                String latitude = jsonObjectDatas.get("latitude").toString().substring(1,jsonObjectDatas.get("latitude").toString().length()-1) ;
+                String batteryLevel;
+                try{
+                    batteryLevel = jsonObjectDatas.get("Battery Level").toString().substring(1,jsonObjectDatas.get("Battery Level").toString().length()-1) ;
+                }
+                catch(Exception NullPointerException){
+                    batteryLevel = "";
+                }
+
+                Datas sensorDatas = new Datas(idSensor,latitude,longitude,batteryLevel);
+                capteursDatas.put(key,sensorDatas);
             }
-    	}
+        }
         model.addAttribute("capteursDatas", capteursDatas);
     }
 
@@ -373,39 +385,39 @@ public class ApplicationController {
     }
 
     public void showOneSensor(Model model, String sensorId) {
-    	final String uri = adresse +"capteur?id=" + sensorId;
-    	RestTemplate restTemplate = new RestTemplate();
+
+        final String uri = adresse +"capteur?id=" + sensorId;
+        RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<Capteur> response = restTemplate.getForEntity(uri, Capteur.class);
         Capteur capteur = response.getBody();
-        
         String json = capteur.getDatas();
         Object sensorDatas = null;
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
         for (String key: jsonObject.keySet()){
-        	
-        	JsonObject jsonObjectDatas = new JsonParser().parse(jsonObject.get(key).toString()).getAsJsonObject();
-        	
-        	String idSensor = capteur.getId();
-        	String sensorName = key;
-        	String luminance = jsonObjectDatas.get("Luminance").toString().substring(1,jsonObjectDatas.get("Luminance").toString().length()-1) ;
-        	String temperature = jsonObjectDatas.get("Temperature").toString().substring(1,jsonObjectDatas.get("Temperature").toString().length()-1);
-        	String longitude = jsonObjectDatas.get("longitude").toString().substring(1,jsonObjectDatas.get("longitude").toString().length()-1) ;
-        	String latitude = jsonObjectDatas.get("latitude").toString().substring(1,jsonObjectDatas.get("latitude").toString().length()-1) ;
-        	String batteryLevel;
-        	try{
-        		batteryLevel = jsonObjectDatas.get("Battery Level").toString().substring(1,jsonObjectDatas.get("Battery Level").toString().length()-1) ;
-        	}
-        	catch(Exception NullPointerException){
-        		batteryLevel = "";
-        	}
-        	
-			sensorDatas = new Datas(idSensor,latitude,longitude,temperature,luminance,batteryLevel,sensorName);
-        	
+
+            JsonObject jsonObjectDatas = new JsonParser().parse(jsonObject.get(key).toString()).getAsJsonObject();
+
+            String idSensor = capteur.getId();
+            String sensorName = key;
+            String luminance = jsonObjectDatas.get("Luminance").toString().substring(1,jsonObjectDatas.get("Luminance").toString().length()-1) ;
+            String temperature = jsonObjectDatas.get("Temperature").toString().substring(1,jsonObjectDatas.get("Temperature").toString().length()-1);
+            String longitude = jsonObjectDatas.get("longitude").toString().substring(1,jsonObjectDatas.get("longitude").toString().length()-1) ;
+            String latitude = jsonObjectDatas.get("latitude").toString().substring(1,jsonObjectDatas.get("latitude").toString().length()-1) ;
+            String batteryLevel;
+            try{
+                batteryLevel = jsonObjectDatas.get("Battery Level").toString().substring(1,jsonObjectDatas.get("Battery Level").toString().length()-1) ;
+            }
+            catch(Exception NullPointerException){
+                batteryLevel = "";
+            }
+
+            sensorDatas = new Datas(idSensor,latitude,longitude,temperature,luminance,batteryLevel,sensorName);
+
         }
-	
-        
-		model.addAttribute("capteur", sensorDatas);
+
+
+        model.addAttribute("capteur", sensorDatas);
     }
 
     public void AllMesssage(Model model, HttpServletRequest request){
