@@ -31,11 +31,7 @@
                         <td>
                             <form th:action="@{/updateUser}" th:object="${User}" th:method="post">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    <input name="id" type="hidden" th:value="${user.getId()}" />
-                                    <input name="lastName" type="hidden" th:value="${user.getLastName()}" />
-                                    <input name="firstName" type="hidden" th:value="${user.getFirstName()}" />
                                     <input name="email" type="hidden" th:value="${user.getEmail()}" />
-                                    <input name="active" type="hidden" th:value="${user.isActive()}" />
                                     <i class="fas fa-pen" style="color : white;"></i>
                                 </button>
                                 <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
