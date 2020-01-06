@@ -59,7 +59,7 @@
             <span th:if="${header == 'creationPointInteret'}" th:insert="creationPointInteret.html :: content(Area=${Area})"></span>
             <div th:if="${header == 'capteurs'}"><div th:insert="capteurs.html :: content"></div></div>
             <div th:if="${header == 'capteur'}"><div th:insert="sensor.html :: content"></div></div>
-            <div th:if="${header == 'utilisateurs'}"><div th:insert="utilisateurs.html :: content(Users=${Users}, listUser=${listUser})"></div></div>
+            <div th:if="${header == 'utilisateurs'}"><div th:insert="utilisateurs.html :: content(User=${User}, listUser=${listUser})"></div></div>
             <div th:if="${header == 'evenements'}"><div th:insert="evenements.html :: content(listEvent=${listEvent})"></div></div>
             <div th:if="${header == 'messages'}"><div th:insert="messages.html :: content(listMessage=${listMessage})"></div></div>
         </div>

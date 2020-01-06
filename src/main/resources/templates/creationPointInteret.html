@@ -67,6 +67,39 @@
             listY.push(longitude);
         }
 
+        //Formulaire de zone
+        $("#creationForm").submit(function(event){
+            // cancels the form submission
+            event.preventDefault();
+            if(creationValidation()){
+                document.getElementById("creationForm").submit();
+            }
+
+        });
+
+        function creationValidation(){
+            var valid = true;
+
+            if($("#name").val() == ""){
+                $("#name").css("border-color","red");
+                $("#name").next(".form-error").fadeIn().text("Veuillez entrer un nom !");
+                valid=false;
+            }
+
+            if($("#capacity").val() == ""){
+                $("#capacity").css("border-color","red");
+                $("#capacity").next(".form-error").fadeIn().text("Veuillez entrer une capacité !");
+                valid=false;
+            }
+
+            if(document.getElementById("listX").value.length < 4){
+                $("#listX").next(".form-error").fadeIn().text("Veuillez choisir 4 points d'intérêt !");
+                valid=false;
+            }
+
+            return valid;
+        }
+
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcKwxj6ZNHR5rdHZ3bvdRyE7MHp0oJJzU&callback=initMap">

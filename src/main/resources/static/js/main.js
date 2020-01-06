@@ -30,37 +30,4 @@ $(document).ready(function(){
 
         return valid;
     }
-
-    //Formulaire de zone
-    $("#creationForm").submit(function(event){
-        // cancels the form submission
-        event.preventDefault();
-        if(creationValidation()){
-            document.getElementById("creationForm").submit();
-        }
-
-    });
-
-    function creationValidation(){
-        var valid = true;
-
-        if($("#name").val() == ""){
-            $("#name").css("border-color","red");
-            $("#name").next(".form-error").fadeIn().text("Veuillez entrer un nom !");
-            valid=false;
-        }
-
-        if($("#capacity").val() == "" || isNaN($("#cp").val())){
-            $("#capacity").css("border-color","red");
-            $("#capacity").next(".form-error").fadeIn().text("Veuillez entrer une capacité !");
-            valid=false;
-        }
-
-        if($("#listX").length == null || $("#listX").length < 4){
-            $("#listX").next(".form-error").fadeIn().text("Veuillez choisir 4 points d'intérêt !");
-            valid=false;
-        }
-
-        return valid;
-    }
 });

@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="content(Users, listUser)">
+<div th:fragment="content(User, listUser)">
     <div class="jumbotron jumbotron-fluid title-section">
         <div class="container">
             <h1 class="title-content">Gestion des utilisateurs</h1>
@@ -7,7 +7,7 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Id</th>
+                        <th scope="col">N°</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
                         <th scope="col">Email</th>
@@ -31,7 +31,6 @@
                         <td>
                             <form th:action="@{/updateUser}" th:object="${User}" th:method="post">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    <input name="email" type="hidden" th:value="${user.getEmail()}" />
                                     <i class="fas fa-pen" style="color : white;"></i>
                                 </button>
                                 <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -43,7 +42,6 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <p> Prénom :
@@ -61,14 +59,14 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" value="Submit" class="btn btn-success"> Valider </button>
+                                                <input name="email" type="hidden" th:value="${user.getEmail()}" />
+                                                <button type="submit" class="btn btn-success"> Valider </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </td>
-
                         <td>
                             <form th:action="@{/deleteUser}" th:method="post">
                                 <input name="email" type="hidden" th:value="${user.getEmail()}" />

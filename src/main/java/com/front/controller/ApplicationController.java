@@ -310,18 +310,23 @@ public class ApplicationController {
         String admin = request.getSession().getAttribute("user").toString();
         String uri = adresse + "admin/user/update?emailAdmin=" + admin + "&email=" + email;
 
-        if(newFirstName != null){ uri += "&firstName=" + newFirstName; }
-        if(newLastName != null){ uri += "&lastName=" + newLastName; }
+        if(newFirstName != null && !newFirstName.equals("")){
+            uri += "&firstName=" + newFirstName;
+            userToUpdate.setFirstName(newFirstName);
+        }
+        if(newLastName != null && !newLastName.equals("")){
+            uri += "&lastName=" + newLastName;
+            userToUpdate.setLastName(newLastName);
+        }
         uri += "&isActive=" + newActive;
-
-        userToUpdate.setFirstName(newFirstName);
-        userToUpdate.setLastName(newLastName);
         userToUpdate.setActive(newActive);
+
+        log.info(email);
 
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.postForObject(uri, userToUpdate, String.class);
 
-        log.info(response.toString());
+        log.info(response);
 
         userModel(model);
         model.addAttribute("header", "utilisateurs");

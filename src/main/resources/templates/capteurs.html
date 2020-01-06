@@ -8,10 +8,10 @@
                     <table class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
-                            <th scope="col">Id</th>
+                            <th scope="col">N°</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Latitude</th>
-							<th scope="col">Longitude</th>
+                            <th scope="col">Longitude</th>
                             <th scope="col">Niveau de Batterie</th>
                             <!--<th scope="col">Statut</th>-->
                             <th scope="col">Voir</th>
@@ -23,33 +23,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        
+
                         <div th:each="capteurData : ${capteursDatas}">
-	                        <tr class="rowSensor">
-	                            <td class="td-id" th:text="${capteurData.value.idSensor}"></td>
-	                            <td class="td-name" th:text="${capteurData.key}"></td>
-	                            <td class="td-latitude" th:text="${capteurData.value.latitude}"></td>
-								<td class="td-longitude" th:text="${capteurData.value.longitude}"></td>
-	                            <td class="td-battery" th:text="${capteurData.value.batteryLevel}"></td>
-	                            <!-- <td class="td-statut">Fonctionnel</td> -->
-	                            <td class="td-show text-center">
-	                                <form action="#" th:action="@{/application}" th:object="${String}" method="post">
-	                                    <input type="hidden" name="select" th:value="capteur"/>
-	                                    <input type="hidden" name="sensorId" th:value="${capteurData.value.idSensor}" />
-	                                    <button class="btn btn-success" type="submit"><i class="fas fa-angle-right"></i></button>
-	                                </form>
-	                            </td>
-	                            <!-- Edition et suppression en standby -->
-	                            <!--
-	                            <td class="td-modify text-center">
-	                                <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
-	                            </td>
-	                            <td class="td-delete text-center">
-	                                <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-	                            </td>
-	                             -->
-	                        </tr>
-	                        </div>
+                            <tr class="rowSensor">
+                                <td class="td-id" th:text="${capteurData.value.idSensor}"></td>
+                                <td class="td-name" th:text="${capteurData.key}"></td>
+                                <td class="td-latitude" th:text="${capteurData.value.latitude}"></td>
+                                <td class="td-longitude" th:text="${capteurData.value.longitude}"></td>
+                                <td class="td-battery" th:text="${capteurData.value.batteryLevel}"></td>
+                                <!-- <td class="td-statut">Fonctionnel</td> -->
+                                <td class="td-show text-center">
+                                    <form action="#" th:action="@{/application}" th:object="${String}" method="post">
+                                        <input type="hidden" name="select" th:value="capteur"/>
+                                        <input type="hidden" name="sensorId" th:value="${capteurData.value.idSensor}" />
+                                        <button class="btn btn-success" type="submit"><i class="fas fa-angle-right"></i></button>
+                                    </form>
+                                </td>
+                                <!-- Edition et suppression en standby -->
+                                <!--
+                                <td class="td-modify text-center">
+                                    <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                </td>
+                                <td class="td-delete text-center">
+                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                                 -->
+                            </tr>
+                        </div>
                         </tbody>
                     </table>
                 </div>
