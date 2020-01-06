@@ -31,25 +31,47 @@
 							<tr class="rowSensor">
 								<td class="td-id" th:text="${capteur.idSensor}"></td>
 								<td class="td-name" th:text="${capteur.sensorName}"></td>
-								<td class="td-latitude" th:text="${capteur.latitude}"></td>
-								<td class="td-longitude" th:text="${capteur.longitude}"></td>
-								<td class="td-temperature" th:text="${capteur.temperature}">22</td>
-								<td class="td-brightness" th:text="${capteur.luminance}">800</td>
-								<td class="td-battery" th:text="${capteur.batteryLevel}">80</td>
+								<td class="td-latitude" id="latitude" th:text="${capteur.latitude}"></td>
+								<td class="td-longitude" id="longitude" th:text="${capteur.longitude}"></td>
+								<td class="td-temperature" th:text="${capteur.temperature}"></td>
+								<td class="td-brightness" th:text="${capteur.luminance}"></td>
+								<td class="td-battery" th:text="${capteur.batteryLevel}"></td>
 								<!-- <td class="td-statut">Fonctionnel</td> -->
 							</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
+				<div id="mapCapteur" class="mx-4 mb-4" style="height:200px;" ></div>
+			    <script>
+			
+				function initMap() {
+				  var latitude = parseFloat(document.getElementById("latitude").innerText);
+				  var longitude = parseFloat(document.getElementById("longitude").innerText);
+				  var location = {lat: latitude, lng: longitude};
+				  
+				  var map = new google.maps.Map(
+				      document.getElementById('mapCapteur'), {zoom: 15, center: location});
+				  
+				  var marker = new google.maps.Marker({position: location, map: map});
+				}
+	
+				
+				    </script>
 				<div class="row mt-4" >
 					<div class="sensorsContainer text-center col-12 col-md-12 col-sm-12">
+						
 						<div id="temperature0" class="gauge mx-4" ></div>
 						<div id="brightness0" class="gauge mx-4"></div>
 						<div id="battery0" class="gauge mx-4"></div>
 					</div>
 				</div>
 			</div>
+			
+    
+		    <script async defer
+		            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcKwxj6ZNHR5rdHZ3bvdRyE7MHp0oJJzU&callback=initMap">
+		    </script>
 		</div>
 	</div>
 </div>
